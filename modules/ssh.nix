@@ -1,33 +1,14 @@
-{ config, pkgs, ... }:
-
+{ pkgs, config, ... }:
 {
-  networking.wireless.enable = false; # Wireless support via wpa_supplicant
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
-
-  # Rename network interfaces
-  systemd.network.links = {
-    "10-eth0" = {
-      matchConfig.PermanentMACAddress = "54:e1:ad:6e:4e:d1";
-      linkConfig.Name = "eth0";
-    };
-  };
-
-  # SSH config
   services.openssh = {
     enable = true;
     ports = [ 6968 ];
     settings = {
       PasswordAuthentication = true;
-      AllowUsers = null; # Allows all users by default. Can be [ "luka" "root" ]
+      AllowUsers = [ "luka" ]; # Allows all users by default. Can be [ "luka" "root" ]
       UseDns = true;
       X11Forwarding = false;
-      PermitRootLogin = "no"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
+      PermitRootLogin = "no";
     };
   };
 
@@ -46,7 +27,7 @@
   networking.firewall = {
     enable = true;
 
-    allowedTCPPorts = [ 53 6968 80 443 39998 ]; 
-    allowedUDPPorts = [ 53 39999 39998 ];
+    allowedTCPPorts = [ 53 6968 80 443 39998 ];
+    allowedUDPPorts = [ 53 39998 ];
   };
 }

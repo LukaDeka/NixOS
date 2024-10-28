@@ -1,8 +1,9 @@
 { config, pkgs, ... }:
 
 {
-  # Enable IP forwarding
-  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1; # Enable IP forwarding
+
+  networking.firewall.allowedUDPPorts = [ 39999 ];
 
   networking.wg-quick.interfaces = {
     # "wg0" is the network interface name. You can name the interface arbitrarily.
@@ -10,10 +11,8 @@
       # Determines the IP/IPv6 address and subnet of the client's end of the tunnel interface
       address = [ "10.20.30.1/24" ];
 
-      # The port that WireGuard listens to - recommended that this be changed from default
       listenPort = 39999;
 
-      # Path to the server's private key
       privateKeyFile = "/home/luka/env/wireguard/private";
 
       # This allows the wireguard server to route your traffic to the internet and hence be like a VPN

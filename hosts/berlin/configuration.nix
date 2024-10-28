@@ -1,33 +1,41 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, inputs, ... }:
 
 {
   imports =
     [ 
-      ./hardware-configuration.nix   # Include the results of the hardware scan
-      ./networking.nix               # SSH, firewall settings
+      ./hardware-configuration.nix
 
       ######## Server configuration ########
       ./../../modules/wireguard.nix  # VPN
-      ./../../modules/samba.nix      # TODO: figure out what to do with samba
-      # ./../../modules/nginx.nix      
-      ./../../modules/seafile.nix      # TODO: TODO TODO TODO
-      # ./../../modules/caddy.nix
-      # ./../../modules/docker.nix     # TODO: Modularize config
-      #./../../modules/blocky.nix     # DNS server/adblocker TODO: Diagnose why it's not working/switch to Pihole Docker container
+      ./../../modules/samba.nix      # TODO: Figure out what to do with Samba
+      ./../../modules/seafile.nix    # TODO: Fix Seafile
+      ./../../modules/ssh.nix
       ./../../modules/aliases.nix    # BASH aliases
-      # ./../../modules/fish.nix       # TODO: Learn fish
       ./../../modules/extra.nix      # Battery settings, lid close, etc.
 
       ######## Scripts ########
       ./../../scripts/scripts.nix    # TODO: Separate/modularize scripts
+
+      # ./../../modules/blocky.nix     # DNS server/adblocker TODO: Diagnose why it's not working/switch to Pihole Docker container
+      # ./../../modules/fish.nix       # TODO: Learn fish
+      # ./../../modules/nginx.nix      
+      # ./../../modules/caddy.nix
+      # ./../../modules/docker.nix     # TODO: Modularize config
     ];
 
   networking.hostName = "berlin";
+  networking.networkmanager.enable = true;
+  networking.wireless.enable = false; # Wireless support via wpa_supplicant
 
+  # Rename network interface
+  systemd.network.links = {
+    "10-eth0" = {
+      matchConfig.PermanentMACAddress = "54:e1:ad:6e:4e:d1";
+      linkConfig.Name = "eth0";
+    };
+  };
+
+  # Send email, when RAID drive fails
   boot.swraid.mdadmConf = ''
     MAILADDR=luka.dekanozishvili1@gmail.com
   '';
@@ -35,10 +43,7 @@
   # List packages installed in system profile. To search, run: nix search [package]
   environment.systemPackages = let
     unstable = inputs.unstable.legacyPackages.${pkgs.system};
-  in (with unstable; [
-    #seafile-server
-    #seahub
-  ]) ++ (with pkgs; [
+  in with pkgs; [
     ######## Must-haves ########
     vim
     neovim
@@ -53,8 +58,8 @@
     # caddy
     # docker
     # docker-compose
-    #unstable.seafile-server
-    #unstable.seahub
+    unstable.seafile-server
+    unstable.seahub
 
     wireguard-tools
     iptables
@@ -68,7 +73,20 @@
 
     ######## Etc. ########
     fastfetch
-  ]);
+  ];
+
+  # Define a user account. Don't forget to set a password with ‘passwd’
+  users.users.luka = {
+    isNormalUser = true;
+    description = "luka";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [];
+  };
+
+  # Never prompt "wheel" users for a root password; potential security issue!
+  security.sudo.wheelNeedsPassword = false;
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bootloader
   boot.loader.systemd-boot.enable = true;
@@ -97,19 +115,6 @@
     layout = "us";
     variant = "";
   };
-
-  # Define a user account. Don't forget to set a password with ‘passwd’
-  users.users.luka = {
-    isNormalUser = true;
-    description = "luka";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
-  };
-
-  # Never prompt "wheel" users for a root password; potential security issue!
-  security.sudo.wheelNeedsPassword = false;
-
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
