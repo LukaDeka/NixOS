@@ -1,8 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   services.seafile = {
     enable = true;
+    seafilePackage = inputs.unstable.legacyPackages.${pkgs.system}.seahub;
     ccnetSettings.General.SERVICE_URL = "https://seafile.lukadeka.com";
     adminEmail = "luka.dekanozishvili1@gmail.com";
     initialAdminPassword = "defaultpassword";

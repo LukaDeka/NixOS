@@ -58,20 +58,20 @@
     # caddy
     # docker
     # docker-compose
-    unstable.seafile-server
-    unstable.seahub
+    #unstable.seafile-server
+    #unstable.seahub
 
-    wireguard-tools
-    iptables
-    mdadm
 
     ######## Monitoring & tools ########
+    mdadm
     btop
     acpi 
     ncdu
+    iptables
     qrencode
 
     ######## Etc. ########
+    wireguard-tools
     fastfetch
   ];
 
@@ -115,14 +115,6 @@
     layout = "us";
     variant = "";
   };
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
