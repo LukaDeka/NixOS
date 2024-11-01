@@ -1,24 +1,42 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, ... } @ args:
 
+let
+  unstable = inputs.unstable.legacyPackages.${pkgs.system};
+in
 {
+  imports = [ "${args.inputs.unstable}/nixos/modules/services/networking/seafile.nix" ];
+
   services.seafile = {
     enable = true;
-    seafilePackage = inputs.unstable.legacyPackages.${pkgs.system}.seahub;
-    ccnetSettings.General.SERVICE_URL = "https://seafile.lukadeka.com";
-    adminEmail = "luka.dekanozishvili1@gmail.com";
-    initialAdminPassword = "defaultpassword";
+    seahubPackage = unstable.seahub;
 
-    #seahubAddress = "0.0.0.0:39998";
+    adminEmail = "luka.dekanozishvili1@gmail.com";
+    initialAdminPassword = "thispasswordwillbechanged";
+
+    seahubAddress = "0.0.0.0:39998";
+    ccnetSettings.General.SERVICE_URL = "https://seafile.lukadeka.com";
     seahubExtraConf = ''
-      SERVICE_URL = 'https://seafile.lukadeka.com'
+      # SERVICE_URL = 'https://seafile.lukadeka.com'
       FILE_SERVER_ROOT = 'https://seafile.lukadeka.com/seafhttp'
-      CSRF_TRUSTED_ORIGINS = ["https://seafile.lukadeka.com"]
+      ALLOWED_HOSTS = ['.lukadeka.com','10.10.10.10','10.10.10.10:39998']
+      CSRF_TRUSTED_ORIGINS = ['https://seafile.lukadeka.com','10.10.10.10:39998','10.10.10.10']
+
+      ENABLE_ENCRYPTED_LIBRARY = True
+
+      # Enable cloude mode and hide `Organization` tab.
+      CLOUD_MODE = True
+
+      # Disable global address book
+      ENABLE_GLOBAL_ADDRESSBOOK = False
     '';
-    workers = 2; # Default processes is 4
+
+    # workers = 2; # Default processes is 4
+
+    #dataDir = "/mnt/md0/seafile";
 
     seafileSettings = {
       fileserver = {
-        host = "127.0.0.1";
+        host = "ipv4:127.0.0.1";
         port = 8082; # TCP port
         use_go_fileserver = true;
         max_sync_file_count = 1000000;
@@ -26,7 +44,7 @@
       };
 
       database = {
-        #type = "mariadb";
+        type = "mysql";
         host = "127.0.0.1";
         user = "root";
         password = "root";
@@ -53,7 +71,7 @@
 #[library_trash]
 #expire_days = 5;
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "python3.11-django-3.2.25"
-  ];
+  #nixpkgs.config.permittedInsecurePackages = [
+  #  "python3.11-django-3.2.25"
+  #];
 }

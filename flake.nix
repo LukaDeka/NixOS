@@ -11,6 +11,7 @@
       specialArgs = { inherit inputs; };
       modules = [
         ./hosts/berlin/configuration.nix
+	./modules/seafile.nix
       ];
     };
   };

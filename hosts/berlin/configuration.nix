@@ -19,7 +19,7 @@
       # ./../../modules/blocky.nix     # DNS server/adblocker TODO: Diagnose why it's not working/switch to Pihole Docker container
       # ./../../modules/fish.nix       # TODO: Learn fish
       # ./../../modules/nginx.nix      
-      # ./../../modules/caddy.nix
+      ./../../modules/caddy.nix
       # ./../../modules/docker.nix     # TODO: Modularize config
     ];
 
@@ -39,6 +39,13 @@
   boot.swraid.mdadmConf = ''
     MAILADDR=luka.dekanozishvili1@gmail.com
   '';
+
+  nixpkgs.overlays =
+  [(final: prev: {
+    seafile = pkgs.unstable.seafile;
+  })];
+
+  disabledModules = [ "services/networking/seafile.nix" ];
 
   # List packages installed in system profile. To search, run: nix search [package]
   environment.systemPackages = let
