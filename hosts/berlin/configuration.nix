@@ -11,7 +11,7 @@
       ./../../modules/seafile.nix    # TODO: Fix Seafile
       ./../../modules/ssh.nix
       ./../../modules/aliases.nix    # BASH aliases
-      ./../../modules/extra.nix      # Battery settings, lid close, etc.
+      ./../../modules/extra.nix      # Battery settings, lid close, fonts...
 
       ######## Scripts ########
       ./../../scripts/scripts.nix    # TODO: Separate/modularize scripts
@@ -19,7 +19,8 @@
       # ./../../modules/blocky.nix     # DNS server/adblocker TODO: Diagnose why it's not working/switch to Pihole Docker container
       # ./../../modules/fish.nix       # TODO: Learn fish
       # ./../../modules/nginx.nix      
-      ./../../modules/caddy.nix
+      ./../../modules/nextcloud.nix
+      # ./../../modules/caddy.nix
       # ./../../modules/docker.nix     # TODO: Modularize config
     ];
 
@@ -54,6 +55,8 @@
     ######## Must-haves ########
     vim
     neovim
+    helix
+    nil # Nix LSP
     tmux
     git
     wget

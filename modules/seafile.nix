@@ -11,15 +11,15 @@ in
     seahubPackage = unstable.seahub;
 
     adminEmail = "luka.dekanozishvili1@gmail.com";
-    initialAdminPassword = "thispasswordwillbechanged";
+    initialAdminPassword = "gamosacdeliparoli";
 
-    seahubAddress = "0.0.0.0:39998";
+    seahubAddress = "127.0.0.1:39998";
     ccnetSettings.General.SERVICE_URL = "https://seafile.lukadeka.com";
     seahubExtraConf = ''
       # SERVICE_URL = 'https://seafile.lukadeka.com'
       FILE_SERVER_ROOT = 'https://seafile.lukadeka.com/seafhttp'
-      ALLOWED_HOSTS = ['.lukadeka.com','10.10.10.10','10.10.10.10:39998']
-      CSRF_TRUSTED_ORIGINS = ['https://seafile.lukadeka.com','10.10.10.10:39998','10.10.10.10']
+      ALLOWED_HOSTS = ['seafile.lukadeka.com','10.10.10.10','10.10.10.10:39998']
+      CSRF_TRUSTED_ORIGINS = ['https://seafile.lukadeka.com','10.10.10.10','10.10.10.10:39998']
 
       ENABLE_ENCRYPTED_LIBRARY = True
 
@@ -32,15 +32,15 @@ in
 
     # workers = 2; # Default processes is 4
 
-    #dataDir = "/mnt/md0/seafile";
+    # dataDir = "/mnt/md0/seafile";
 
     seafileSettings = {
       fileserver = {
         host = "ipv4:127.0.0.1";
         port = 8082; # TCP port
         use_go_fileserver = true;
-        max_sync_file_count = 1000000;
-        max_upload_size = 50000; # Default is unlimited
+        # max_sync_file_count = 1000000;
+        # max_upload_size = 50000; # Default is unlimited
       };
 
       database = {
@@ -52,12 +52,12 @@ in
         connection_charset = "utf8";
         max_connections = 100;
       };
-    };
 
-#      quota = {
-#        # Default user quota in GB, integer only
-#        default = 50;
-#      };
+      quota = {
+        # Default user quota in GB, integer only
+        default = 50;
+      };
+    };
   };
 
 #[fileserver]
@@ -71,7 +71,4 @@ in
 #[library_trash]
 #expire_days = 5;
 
-  #nixpkgs.config.permittedInsecurePackages = [
-  #  "python3.11-django-3.2.25"
-  #];
 }

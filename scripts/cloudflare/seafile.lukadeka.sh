@@ -1,7 +1,7 @@
 #!/bin/bash
 ## change to "bin/sh" when necessary
 
-date +'%d/%m/%y %H:%M' >> /home/luka/nixos/scripts/cloudflare/seafile.lukadeka.log
+date +'%d/%m/%y %H:%M' >> /home/luka/nixos/scripts/cloudflare/logs/seafile.lukadeka.log
 
 auth_email="luka.dekanozishvili1@gmail.com"         # The email used to login 'https://dash.cloudflare.com'
 auth_method="global"                                # Set to "global" for Global API Key or "token" for Scoped API Token

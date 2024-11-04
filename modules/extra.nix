@@ -20,5 +20,10 @@
       STOP_CHARGE_THRESH_BAT1 = 50;
     };
   };
+
+  # Add fonts
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "CascadiaMono" ]; })
+  ];
 }
 

@@ -30,6 +30,15 @@
           bash /home/luka/nixos/scripts/cloudflare/seafile.lukadeka.sh
         '';
       };
+      "cloudflare-nextcloud.lukadeka" = {
+        after = [ "network.target" "blocky.service" ];
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig.Type = "simple";
+        path = with pkgs; [ bash curl ];
+        script = ''
+          bash /home/luka/nixos/scripts/cloudflare/nextcloud.lukadeka.sh
+        '';
+      };
     };
 
     timers = {
@@ -50,6 +59,12 @@
         timerConfig.Persistent = true;
         timerConfig.OnUnitActiveSec = "30m";
         timerConfig.Unit = "cloudflare-seafile.lukadeka.service";
+      };
+      "cloudflare-nextcloud.lukadeka" = {
+        wantedBy = [ "timers.target" ];
+        timerConfig.Persistent = true;
+        timerConfig.OnUnitActiveSec = "30m";
+        timerConfig.Unit = "cloudflare-nextcloud.lukadeka.service";
       };
     };
   };

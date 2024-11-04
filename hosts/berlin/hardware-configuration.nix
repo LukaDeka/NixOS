@@ -25,7 +25,7 @@
     };
 
   fileSystems."/mnt/md0" =
-    { device = "/dev/disk/by-uuid/11f5fd68-702d-4851-ae3a-e6db892813a3";
+    { device = "/dev/md0";
       fsType = "ext4";
     };
 
@@ -39,6 +39,7 @@
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.eth0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wg0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp5s0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wwp0s20f0u9i12.useDHCP = lib.mkDefault true;
 
