@@ -25,8 +25,6 @@ in
 
       # Enable cloude mode and hide `Organization` tab.
       CLOUD_MODE = True
-
-      # Disable global address book
       ENABLE_GLOBAL_ADDRESSBOOK = False
     '';
 

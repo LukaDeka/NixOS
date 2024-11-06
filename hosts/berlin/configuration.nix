@@ -7,8 +7,9 @@
 
       ######## Server configuration ########
       ./../../modules/wireguard.nix  # VPN
-      ./../../modules/samba.nix      # TODO: Figure out what to do with Samba
+      ./../../modules/nextcloud.nix
       ./../../modules/seafile.nix    # TODO: Fix Seafile
+      ./../../modules/samba.nix      # TODO: Figure out what to do with Samba
       ./../../modules/ssh.nix
       ./../../modules/aliases.nix    # BASH aliases
       ./../../modules/extra.nix      # Battery settings, lid close, fonts...
@@ -19,7 +20,6 @@
       # ./../../modules/blocky.nix     # DNS server/adblocker TODO: Diagnose why it's not working/switch to Pihole Docker container
       # ./../../modules/fish.nix       # TODO: Learn fish
       # ./../../modules/nginx.nix      
-      ./../../modules/nextcloud.nix
       # ./../../modules/caddy.nix
       # ./../../modules/docker.nix     # TODO: Modularize config
     ];
@@ -46,6 +46,7 @@
     seafile = pkgs.unstable.seafile;
   })];
 
+  # Unstable branch
   disabledModules = [ "services/networking/seafile.nix" ];
 
   # List packages installed in system profile. To search, run: nix search [package]
@@ -75,8 +76,9 @@
     ######## Monitoring & tools ########
     mdadm
     btop
-    acpi 
+    acpi
     ncdu
+    smartmontools # smartctl
     iptables
     qrencode
 
