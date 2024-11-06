@@ -15,13 +15,13 @@
       ./../../modules/extra.nix      # Battery settings, lid close, fonts...
 
       ######## Scripts ########
-      ./../../scripts/scripts.nix    # TODO: Separate/modularize scripts
+      ./../../scripts/scripts.nix    # TODO: Modularize scripts
 
       # ./../../modules/blocky.nix     # DNS server/adblocker TODO: Diagnose why it's not working/switch to Pihole Docker container
       # ./../../modules/fish.nix       # TODO: Learn fish
-      # ./../../modules/nginx.nix      
+      ./../../modules/nginx.nix      
       # ./../../modules/caddy.nix
-      # ./../../modules/docker.nix     # TODO: Modularize config
+      # ./../../modules/docker.nix
     ];
 
   networking.hostName = "berlin";
@@ -41,12 +41,11 @@
     MAILADDR=luka.dekanozishvili1@gmail.com
   '';
 
+  # Unstable branch
   nixpkgs.overlays =
   [(final: prev: {
     seafile = pkgs.unstable.seafile;
   })];
-
-  # Unstable branch
   disabledModules = [ "services/networking/seafile.nix" ];
 
   # List packages installed in system profile. To search, run: nix search [package]
@@ -64,26 +63,21 @@
     fzf # TODO: Learn how to use this
 
     ######## Server programs ########
-    # nextcloud29
-    # nginx
     # caddy
     # docker
     # docker-compose
-    #unstable.seafile-server
-    #unstable.seahub
-
 
     ######## Monitoring & tools ########
     mdadm
     btop
     acpi
-    ncdu
+    ncdu # Disk space
     smartmontools # smartctl
     iptables
-    qrencode
 
     ######## Etc. ########
     wireguard-tools
+    qrencode
     fastfetch
   ];
 

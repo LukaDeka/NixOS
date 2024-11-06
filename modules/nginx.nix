@@ -47,27 +47,27 @@
          client_max_body_size 0;
 	'';
       };
-      locations."/seafhttp" = {
-        proxyPass = "http://127.0.0.1:8082";
-	proxyWebsockets = true;
-	extraConfig = ''
-	  rewrite ^/seafhttp(.*)$ $1 break;
-	  client_max_body_size 0;
-          proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-
-          proxy_connect_timeout  36000s;
-          proxy_read_timeout  36000s;
-          proxy_send_timeout  36000s;
-
-          send_timeout  36000s;
-
-          #access_log      /var/log/nginx/seafhttp.access.log seafileformat;
-          #error_log       /var/log/nginx/seafhttp.error.log;
-	'';
-      };
-      locations."/media" = {
-        root = "/var/lib/seafile/seahub";
-      };
+#      locations."/seafhttp" = {
+#        proxyPass = "http://127.0.0.1:8082";
+#	proxyWebsockets = true;
+#	extraConfig = ''
+#	  rewrite ^/seafhttp(.*)$ $1 break;
+#	  client_max_body_size 0;
+#          proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+#
+#          proxy_connect_timeout  36000s;
+#          proxy_read_timeout  36000s;
+#          proxy_send_timeout  36000s;
+#
+#          send_timeout  36000s;
+#
+#          #access_log      /var/log/nginx/seafhttp.access.log seafileformat;
+#          #error_log       /var/log/nginx/seafhttp.error.log;
+#	'';
+#      };
+#      locations."/media" = {
+#        root = "/var/lib/seafile/seahub";
+#      };
     };
   };
 

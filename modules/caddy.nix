@@ -6,7 +6,7 @@
     virtualHosts = {
       "seafile.lukadeka.com".extraConfig = ''
         tls /etc/ssl/certs/lukadeka.com.pem /etc/ssl/certs/lukadeka.com.key
-        # reverse_proxy http://127.0.0.1:39998 
+        reverse_proxy https://127.0.0.1:39998 
 
         handle_path /seafile/notification/* {
           @websockets {
@@ -30,10 +30,10 @@
         }
       '';
 
-      "nextcloud.lukadeka.com".extraConfig = ''
-        tls /etc/ssl/certs/lukadeka.com.pem /etc/ssl/certs/lukadeka.com.key
-	reverse_proxy http://127.0.0.1:39996
-      '';
+#      "nextcloud.lukadeka.com".extraConfig = ''
+#        tls /etc/ssl/certs/lukadeka.com.pem /etc/ssl/certs/lukadeka.com.key
+#	reverse_proxy http://127.0.0.1:39996
+#      '';
     };
   };
 }
