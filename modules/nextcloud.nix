@@ -27,15 +27,15 @@
     };
 
     settings = let
-      # prot = "https"; # or https
-      # host = "nextcloud.lukadeka.com";
-      # dir = "/nextcloud";
+      prot = "https"; # or https
+      host = "nextcloud.lukadeka.com";
+      port = "39997";
     in {
       trusted_domains = [ "10.10.10.10" ];
       # overwriteprotocol = prot;
-      # overwritehost = host;
+      # overwritehost = "${host}:${port}";
       # overwritewebroot = dir;
-      # overwrite.cli.url = "${prot}://${host}${dir}/";
+      # overwrite.cli.url = "${prot}://${host}:${port}/";
       # htaccess.RewriteBase = dir;
     };
   };
@@ -50,10 +50,10 @@
     enableACME = true;
     sslCertificate = "/etc/ssl/certs/lukadeka.com.pem"; # TODO: update location
     sslCertificateKey = "/etc/ssl/certs/lukadeka.com.key";
-    #listen = [ {
-    #  addr = "127.0.0.1";
-    #  port = 39997; # NOT an exposed port
-    #} ];
+    listen = [ {
+      addr = "127.0.0.1";
+      port = 39997; # NOT an exposed port
+    } ];
   };
 
   security.acme = {

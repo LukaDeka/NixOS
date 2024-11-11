@@ -7,10 +7,11 @@
 
       ######## Server configuration ########
       ./../../modules/wireguard.nix  # VPN
-      ./../../modules/nextcloud.nix
+      # ./../../modules/nextcloud.nix
       ./../../modules/seafile.nix    # TODO: Fix Seafile
-      ./../../modules/samba.nix      # TODO: Figure out what to do with Samba
+      # ./../../modules/samba.nix      # TODO: Figure out what to do with Samba
       ./../../modules/ssh.nix
+      ./../../modules/printing.nix
       ./../../modules/aliases.nix    # BASH aliases
       ./../../modules/extra.nix      # Battery settings, lid close, fonts...
 
@@ -19,7 +20,7 @@
 
       # ./../../modules/blocky.nix     # DNS server/adblocker TODO: Diagnose why it's not working/switch to Pihole Docker container
       # ./../../modules/fish.nix       # TODO: Learn fish
-      ./../../modules/nginx.nix      
+      # ./../../modules/nginx.nix      
       # ./../../modules/caddy.nix
       # ./../../modules/docker.nix
     ];
@@ -41,17 +42,8 @@
     MAILADDR=luka.dekanozishvili1@gmail.com
   '';
 
-  # Unstable branch
-  nixpkgs.overlays =
-  [(final: prev: {
-    seafile = pkgs.unstable.seafile;
-  })];
-  disabledModules = [ "services/networking/seafile.nix" ];
-
   # List packages installed in system profile. To search, run: nix search [package]
-  environment.systemPackages = let
-    unstable = inputs.unstable.legacyPackages.${pkgs.system};
-  in with pkgs; [
+  environment.systemPackages = with pkgs; [
     ######## Must-haves ########
     vim
     neovim
@@ -72,6 +64,8 @@
     btop
     acpi
     ncdu # Disk space
+    hdparm
+    cups # Printing
     smartmontools # smartctl
     iptables
 
@@ -121,6 +115,8 @@
     layout = "us";
     variant = "";
   };
+
+  nix.package = pkgs.nixVersions.latest;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

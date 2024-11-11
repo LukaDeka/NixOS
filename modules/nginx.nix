@@ -29,9 +29,9 @@
 
     virtualHosts."seafile.lukadeka.com" = {
       forceSSL = true;
+      enableACME = true;
       sslCertificate = "/etc/ssl/certs/lukadeka.com.pem";
       sslCertificateKey = "/etc/ssl/certs/lukadeka.com.key";
-      enableACME = true;
 
       locations."/" = {
         proxyPass = "http://127.0.0.1:39998";

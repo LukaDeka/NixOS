@@ -1,72 +1,73 @@
-{ config, pkgs, inputs, ... } @ args:
+{ config, pkgs, ... }:
 
-let
-  unstable = inputs.unstable.legacyPackages.${pkgs.system};
-in
 {
-  imports = [ "${args.inputs.unstable}/nixos/modules/services/networking/seafile.nix" ];
-
   services.seafile = {
     enable = true;
-    seahubPackage = unstable.seahub;
-
     adminEmail = "luka.dekanozishvili1@gmail.com";
-    initialAdminPassword = "gamosacdeliparoli";
-
-    seahubAddress = "127.0.0.1:39998";
+    initialAdminPassword = "kacishedissaxinkleshi";
     ccnetSettings.General.SERVICE_URL = "https://seafile.lukadeka.com";
-    seahubExtraConf = ''
-      # SERVICE_URL = 'https://seafile.lukadeka.com'
-      FILE_SERVER_ROOT = 'https://seafile.lukadeka.com/seafhttp'
-      ALLOWED_HOSTS = ['seafile.lukadeka.com','10.10.10.10','10.10.10.10:39998']
-      CSRF_TRUSTED_ORIGINS = ['https://seafile.lukadeka.com','10.10.10.10','10.10.10.10:39998']
+    seafileSettings = {
+      history.keep_days = "30";
+      quota.default = "50"; # GB
+      fileserver.host = "unix:/run/seafile/server.sock";
 
-      ENABLE_ENCRYPTED_LIBRARY = True
-
-      # Enable cloude mode and hide `Organization` tab.
-      CLOUD_MODE = True
-      ENABLE_GLOBAL_ADDRESSBOOK = False
-    '';
-
-    # workers = 2; # Default processes is 4
+      # fileserver.database = {
+      #   type = "mysql";
+      #   host = "127.0.0.1";
+      #   port = 8082; # TCP port
+      #   user = "root";
+      #   password = "root";
+      #   db_name = "seafile_db";
+      #   connection_charset = "utf8";
+      #   max_connections = 100;
+      # };
+    };
 
     # dataDir = "/mnt/md0/seafile";
+    gc = {
+      enable = true;
+      dates = [ "Sun 03:00:00" ];
+    };
+  };
 
-    seafileSettings = {
-      fileserver = {
-        host = "ipv4:127.0.0.1";
-        port = 8082; # TCP port
-        use_go_fileserver = true;
-        # max_sync_file_count = 1000000;
-        # max_upload_size = 50000; # Default is unlimited
+  services.nginx = {
+    enable = true;
+  };
+  services.nginx.virtualHosts."seafile.lukadeka.com" = {
+    sslCertificate = "/etc/ssl/certs/lukadeka.com.pem";
+    sslCertificateKey = "/etc/ssl/certs/lukadeka.com.key";
+    forceSSL = true;
+    enableACME = true;
+    locations = {
+      "/" = {
+        proxyPass = "http://unix:/run/seahub/gunicorn.sock";
+        extraConfig = ''
+          proxy_set_header   Host $host;
+          proxy_set_header   X-Real-IP $remote_addr;
+          proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header   X-Forwarded-Host $server_name;
+          proxy_read_timeout  1200s;
+          client_max_body_size 0;
+        '';
       };
-
-      database = {
-        type = "mysql";
-        host = "127.0.0.1";
-        user = "root";
-        password = "root";
-        db_name = "seafile_db";
-        connection_charset = "utf8";
-        max_connections = 100;
-      };
-
-      quota = {
-        # Default user quota in GB, integer only
-        default = 50;
+      "/seafhttp" = {
+        proxyPass = "http://unix:/run/seafile/server.sock";
+        extraConfig = ''
+          rewrite ^/seafhttp(.*)$ $1 break;
+          client_max_body_size 0;
+          proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_connect_timeout  36000s;
+          proxy_read_timeout  36000s;
+          proxy_send_timeout  36000s;
+          send_timeout  36000s;
+        '';
       };
     };
   };
 
-#[fileserver]
-# default is false
-# check_virus_on_web_upload = true;
-
-#[zip]
-# The file name encoding of the downloaded zip file.
-#windows_encoding = "iso-8859-1";
-
-#[library_trash]
-#expire_days = 5;
-
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "luka.dekanozishvili1@gmail.com";
+  };
 }
+

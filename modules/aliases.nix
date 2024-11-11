@@ -10,7 +10,7 @@
       ".." = "cd ..";
       n = "cd /home/luka/nixos";
       c = "vim /home/luka/nixos/hosts/berlin/configuration.nix";
-      s = "sudo git add .; sudo nixos-rebuild switch --flake ~/nixos --option eval-cache false";
+      s = "sudo git add /home/luka/nixos/. && sudo nixos-rebuild switch --flake /home/luka/nixos";
       vim = "nvim";
     };
     shellInit = ''
