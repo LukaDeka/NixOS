@@ -3,7 +3,7 @@
 {
   virtualisation.docker.enable = true;
 
-  users.users."luka".extraGroups = [ "docker" ];
+  users.users.${config.vars.username}.extraGroups = [ "docker" ];
 
   # "It is extremely likely that you want to turn off the userland-proxy, which is designed for Windoze"
   virtualisation.docker.daemon.settings = {

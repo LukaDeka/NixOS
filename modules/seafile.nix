@@ -1,11 +1,15 @@
 { config, pkgs, ... }:
 
+let
+  domain = config.vars.domain;
+  email = config.vars.email;
+in
 {
   services.seafile = {
     enable = true;
-    adminEmail = "luka.dekanozishvili1@gmail.com";
-    initialAdminPassword = "kacishedissaxinkleshi";
-    ccnetSettings.General.SERVICE_URL = "https://seafile.lukadeka.com";
+    adminEmail = email;
+    initialAdminPassword = "internetiskabeli";
+    ccnetSettings.General.SERVICE_URL = "https://seafile.${domain}";
     seafileSettings = {
       history.keep_days = "30";
       quota.default = "50"; # GB
@@ -33,9 +37,9 @@
   services.nginx = {
     enable = true;
   };
-  services.nginx.virtualHosts."seafile.lukadeka.com" = {
-    sslCertificate = "/etc/ssl/certs/lukadeka.com.pem";
-    sslCertificateKey = "/etc/ssl/certs/lukadeka.com.key";
+  services.nginx.virtualHosts."seafile.${domain}" = {
+    sslCertificate = "/etc/env/ssl/certs/${domain}.pem";
+    sslCertificateKey = "/etc/env/ssl/certs/${domain}.key";
     forceSSL = true;
     enableACME = true;
     locations = {
@@ -67,7 +71,7 @@
 
   security.acme = {
     acceptTerms = true;
-    defaults.email = "luka.dekanozishvili1@gmail.com";
+    defaults.email = email;
   };
 }
 

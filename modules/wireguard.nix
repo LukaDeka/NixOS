@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 
+let
+  homeDir = config.vars.homeDir;
+in
 {
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1; # Enable IP forwarding
 
@@ -13,7 +16,7 @@
 
       listenPort = 39999;
 
-      privateKeyFile = "/home/luka/env/wireguard/private";
+      privateKeyFile = "${homeDir}/env/wireguard/private";
 
       # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
       postUp = ''
@@ -34,7 +37,7 @@
       peers = [
         { # LG Gram
           publicKey = "ru0iGynezM5INvTDk1LmRb3v4+NSIuBFc7CvCj3O1no=";
-          presharedKeyFile = "/home/luka/env/wireguard/psk";
+          presharedKeyFile = "${homeDir}/env/wireguard/psk";
           allowedIPs = [ "10.20.30.2/32" ];
         }
         { # Moto G30

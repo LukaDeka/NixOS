@@ -30,8 +30,8 @@
     virtualHosts."seafile.lukadeka.com" = {
       forceSSL = true;
       enableACME = true;
-      sslCertificate = "/etc/ssl/certs/lukadeka.com.pem";
-      sslCertificateKey = "/etc/ssl/certs/lukadeka.com.key";
+      sslCertificate = "/etc/env/ssl/certs/${config.vars.domain}.pem";
+      sslCertificateKey = "/etc/env/ssl/certs/${config.vars.domain}.key";
 
       locations."/" = {
         proxyPass = "http://127.0.0.1:39998";
@@ -73,7 +73,7 @@
 
   security.acme = {
     acceptTerms = true;
-    defaults.email = "luka.dekanozishvili1@gmail.com";
+    defaults.email = config.vars.email;
   };
 
   networking.firewall = {

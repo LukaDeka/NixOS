@@ -7,25 +7,37 @@
 
       ######## Server configuration ########
       ./../../modules/wireguard.nix  # VPN
-      # ./../../modules/nextcloud.nix
-      ./../../modules/seafile.nix    # TODO: Fix Seafile
+      ./../../modules/nextcloud.nix
+      # ./../../modules/seafile.nix    # TODO: Fix Seafile
       # ./../../modules/samba.nix      # TODO: Figure out what to do with Samba
       ./../../modules/ssh.nix
       ./../../modules/printing.nix
-      ./../../modules/aliases.nix    # BASH aliases
-      ./../../modules/extra.nix      # Battery settings, lid close, fonts...
 
       ######## Scripts ########
-      ./../../scripts/scripts.nix    # TODO: Modularize scripts
+      # ./../../scripts/scripts.nix    # TODO: Modularize scripts
 
       # ./../../modules/blocky.nix     # DNS server/adblocker TODO: Diagnose why it's not working/switch to Pihole Docker container
       # ./../../modules/fish.nix       # TODO: Learn fish
       # ./../../modules/nginx.nix      
       # ./../../modules/caddy.nix
       # ./../../modules/docker.nix
+
+      ######## etc. ########
+      # ./../../modules/neovim.nix
+      # ./../../modules/nixvim.nix
+      ./../../modules/variables.nix
+      ./../../modules/extra.nix      # Battery settings, lid close, fonts...
+      ./../../modules/aliases.nix    # BASH aliases
     ];
 
-  networking.hostName = "berlin";
+  vars.username = "luka";
+  vars.hostname = "berlin";
+  vars.email = "luka.dekanozishvili1@gmail.com";
+  vars.domain = "lukadeka.com";
+  vars.ddnsDomain = "lukadeka.duckdns.org";
+  vars.ip = "10.10.10.10";
+  
+
   networking.networkmanager.enable = true;
   networking.wireless.enable = false; # Wireless support via wpa_supplicant
 
@@ -39,12 +51,13 @@
 
   # Send email, when RAID drive fails
   boot.swraid.mdadmConf = ''
-    MAILADDR=luka.dekanozishvili1@gmail.com
+    MAILADDR=${config.vars.email}
   '';
 
   # List packages installed in system profile. To search, run: nix search [package]
   environment.systemPackages = with pkgs; [
     ######## Must-haves ########
+    lunarvim
     vim
     neovim
     helix
@@ -76,9 +89,9 @@
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’
-  users.users.luka = {
+  users.users.${config.vars.username} = {
     isNormalUser = true;
-    description = "luka";
+    description = config.vars.username;
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
   };
@@ -98,16 +111,18 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "de_DE.UTF-8";
-    LC_IDENTIFICATION = "de_DE.UTF-8";
-    LC_MEASUREMENT = "de_DE.UTF-8";
-    LC_MONETARY = "de_DE.UTF-8";
-    LC_NAME = "de_DE.UTF-8";
-    LC_NUMERIC = "de_DE.UTF-8";
-    LC_PAPER = "de_DE.UTF-8";
-    LC_TELEPHONE = "de_DE.UTF-8";
-    LC_TIME = "de_DE.UTF-8";
+  i18n.extraLocaleSettings = let
+    locale = "de_DE.UTF-8";
+  in {
+    LC_ADDRESS = locale;
+    LC_IDENTIFICATION = locale;
+    LC_MEASUREMENT = locale;
+    LC_MONETARY = locale;
+    LC_NAME = locale;
+    LC_NUMERIC = locale;
+    LC_PAPER = locale;
+    LC_TELEPHONE = locale;
+    LC_TIME = locale;
   };
 
   # Configure keymap in X11

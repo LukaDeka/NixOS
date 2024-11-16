@@ -1,5 +1,9 @@
 { config, pkgs, ... }:
 
+let
+  homeDir = config.vars.homeDir;
+  domain = config.vars.domain;
+in
 {
   systemd = {
     services = {
@@ -9,34 +13,34 @@
         serviceConfig.Type = "simple";
         path = with pkgs; [ bash curl ];
         script = ''
-          bash /home/luka/nixos/scripts/duckdns/duck.sh
+          bash ${homeDir}/nixos/scripts/duckdns/duck.sh
         '';
       };
-      "cloudflare-lukadeka" = {
+      "cf-${domain}" = {
         after = [ "network.target" "blocky.service" ];
         wantedBy = [ "multi-user.target" ];
         serviceConfig.Type = "simple";
         path = with pkgs; [ bash curl ];
         script = ''
-          bash /home/luka/nixos/scripts/cloudflare/lukadeka.sh
+          bash ${homeDir}/nixos/scripts/cloudflare/${domain}.sh
         '';
       };
-      "cloudflare-seafile.lukadeka" = {
+      "cf-seafile.${domain}lukadeka" = {
         after = [ "network.target" "blocky.service" ];
         wantedBy = [ "multi-user.target" ];
         serviceConfig.Type = "simple";
         path = with pkgs; [ bash curl ];
         script = ''
-          bash /home/luka/nixos/scripts/cloudflare/seafile.lukadeka.sh
+          bash ${homeDir}/nixos/scripts/cloudflare/seafile.${domain}.sh
         '';
       };
-      "cloudflare-nextcloud.lukadeka" = {
+      "cf-nextcloud.${domain}" = {
         after = [ "network.target" "blocky.service" ];
         wantedBy = [ "multi-user.target" ];
         serviceConfig.Type = "simple";
         path = with pkgs; [ bash curl ];
         script = ''
-          bash /home/luka/nixos/scripts/cloudflare/nextcloud.lukadeka.sh
+          bash ${homeDir}/nixos/scripts/cloudflare/nextcloud.${domain}.sh
         '';
       };
     };
@@ -48,23 +52,23 @@
         timerConfig.OnUnitActiveSec = "30m"; # Run every x minutes
         timerConfig.Unit = "duckdns-service.service";
       };
-      "cloudflare-lukadeka" = {
+      "cf-${domain}" = {
         wantedBy = [ "timers.target" ];
         timerConfig.Persistent = true;
         timerConfig.OnUnitActiveSec = "30m";
-        timerConfig.Unit = "cloudflare-lukadeka.service";
+        timerConfig.Unit = "cf-${domain}.service";
       };
-      "cloudflare-seafile.lukadeka" = {
+      "cf-seafile.${domain}" = {
         wantedBy = [ "timers.target" ];
         timerConfig.Persistent = true;
         timerConfig.OnUnitActiveSec = "30m";
-        timerConfig.Unit = "cloudflare-seafile.lukadeka.service";
+        timerConfig.Unit = "cf-seafile.${domain}.service";
       };
-      "cloudflare-nextcloud.lukadeka" = {
+      "cf-nextcloud.${domain}" = {
         wantedBy = [ "timers.target" ];
         timerConfig.Persistent = true;
         timerConfig.OnUnitActiveSec = "30m";
-        timerConfig.Unit = "cloudflare-nextcloud.lukadeka.service";
+        timerConfig.Unit = "cf-nextcloud.${domain}.service";
       };
     };
   };

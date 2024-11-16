@@ -1,5 +1,9 @@
 { config, pkgs, ... }:
 
+let
+  host = config.vars.hostname;
+  homeDir = config.vars.homeDir;
+in
 {
   programs.bash = {
     shellAliases = {
@@ -8,9 +12,9 @@
       gs = "git status";
       ga = "git add .";
       ".." = "cd ..";
-      n = "cd /home/luka/nixos";
-      c = "vim /home/luka/nixos/hosts/berlin/configuration.nix";
-      s = "sudo git add /home/luka/nixos/. && sudo nixos-rebuild switch --flake /home/luka/nixos";
+      n = "cd ${homeDir}/nixos";
+      c = "vim ${homeDir}/nixos/hosts/${host}/configuration.nix";
+      s = "sudo git add ${homeDir}/nixos/. && sudo nixos-rebuild switch --flake ${homeDir}/nixos";
       vim = "nvim";
     };
     shellInit = ''

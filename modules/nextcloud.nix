@@ -1,11 +1,19 @@
 { config, pkgs, ... }:
 
+let
+  domain = config.vars.domain;
+  ip = config.vars.ip;
+in
 {
+  # services.postgresql = {
+  #   enable = true;
+    # dataDir = "/mnt/md0/postgresql";
+  # };
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud29;
+    package = pkgs.nextcloud30;
 
-    hostName = "nextcloud.lukadeka.com";
+    hostName = "nextcloud.${domain}";
     https = true;
 
     configureRedis = true;
@@ -28,10 +36,10 @@
 
     settings = let
       prot = "https"; # or https
-      host = "nextcloud.lukadeka.com";
+      host = "nextcloud.${domain}";
       port = "39997";
     in {
-      trusted_domains = [ "10.10.10.10" ];
+      trusted_domains = [ "${ip}" ];
       # overwriteprotocol = prot;
       # overwritehost = "${host}:${port}";
       # overwritewebroot = dir;
@@ -48,18 +56,18 @@
   services.nginx.virtualHosts.${config.services.nextcloud.hostName} = {
     forceSSL = true;
     enableACME = true;
-    sslCertificate = "/etc/ssl/certs/lukadeka.com.pem"; # TODO: update location
-    sslCertificateKey = "/etc/ssl/certs/lukadeka.com.key";
-    listen = [ {
-      addr = "127.0.0.1";
-      port = 39997; # NOT an exposed port
-    } ];
+    sslCertificate = "/etc/env/ssl/certs/${domain}.pem"; # TODO: update location
+    sslCertificateKey = "/etc/env/ssl/certs/${domain}.key";
+    # listen = [ {
+    #  addr = "0.0.0.0";
+    #  port = 39997; # NOT an exposed port
+    #} ];
   };
 
   security.acme = {
     acceptTerms = true;   
     certs = { 
-      ${config.services.nextcloud.hostName}.email = "luka.dekanozishvili1@gmail.com";
+      ${config.services.nextcloud.hostName}.email = config.vars.email;
     }; 
   };
 

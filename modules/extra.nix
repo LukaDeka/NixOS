@@ -9,15 +9,15 @@
     AllowSuspendThenHibernate=no
   '';
 
-  # Enable battery care (charge up to 50%)
+  # Enable battery care (charge up to 50% by default)
   services.tlp = {
     enable = true;
     settings = {
-      START_CHARGE_THRESH_BAT0 = 40;
-      STOP_CHARGE_THRESH_BAT0 = 50;
+      START_CHARGE_THRESH_BAT0 = config.vars.startChargeThresh;
+      STOP_CHARGE_THRESH_BAT0 = config.vars.stopChargeThresh;
 
-      START_CHARGE_THRESH_BAT1 = 40;
-      STOP_CHARGE_THRESH_BAT1 = 50;
+      START_CHARGE_THRESH_BAT1 = config.vars.startChargeThresh;
+      STOP_CHARGE_THRESH_BAT1 = config.vars.stopChargeThresh;
     };
   };
 

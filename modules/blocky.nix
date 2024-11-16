@@ -17,7 +17,7 @@
 
       # Enable Blocking of unwanted domains
       blocking = {
-        blackLists = {
+        denylists = {
           ads = [ "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts" ];
         };
 
