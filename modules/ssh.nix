@@ -5,8 +5,6 @@ let
   hostname = config.vars.hostname;
 in
 {
-  networking.hostName = hostname;
-
   services.openssh = {
     enable = true;
     ports = [ 6968 ];

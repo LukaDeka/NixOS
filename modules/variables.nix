@@ -34,8 +34,9 @@
       default = null;
     };
 
+    # TODO: make this work
     #strippedDomain = let
-    #  parts = builtins.splitString "." config.vars.domain;
+    #  parts = lib.splitString "." config.vars.domain;
     #in if builtins.length parts > 1 then builtins.elemAt parts 0 else config.domain;
 
     ddnsDomain = lib.mkOption {

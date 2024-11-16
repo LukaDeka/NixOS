@@ -14,7 +14,7 @@
       ./../../modules/printing.nix
 
       ######## Scripts ########
-      # ./../../scripts/scripts.nix    # TODO: Modularize scripts
+      ./../../scripts/scripts.nix    # TODO: Modularize scripts
 
       # ./../../modules/blocky.nix     # DNS server/adblocker TODO: Diagnose why it's not working/switch to Pihole Docker container
       # ./../../modules/fish.nix       # TODO: Learn fish
@@ -38,6 +38,7 @@
   vars.ip = "10.10.10.10";
   
 
+  networking.hostName = config.vars.hostname;
   networking.networkmanager.enable = true;
   networking.wireless.enable = false; # Wireless support via wpa_supplicant
 
