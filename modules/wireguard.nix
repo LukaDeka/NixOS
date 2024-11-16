@@ -16,7 +16,7 @@ in
 
       listenPort = 39999;
 
-      privateKeyFile = "${homeDir}/env/wireguard/private";
+      privateKeyFile = "${homeDir}/env/wireguard/private"; # TODO: move to /etc/env
 
       # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
       postUp = ''

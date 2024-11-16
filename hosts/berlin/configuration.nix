@@ -38,7 +38,7 @@
   vars.ip = "10.10.10.10";
   
 
-  networking.hostName = config.vars.hostname;
+  networking.hostName = config.vars.hostname; # Set the hostname
   networking.networkmanager.enable = true;
   networking.wireless.enable = false; # Wireless support via wpa_supplicant
 
@@ -69,9 +69,6 @@
     fzf # TODO: Learn how to use this
 
     ######## Server programs ########
-    # caddy
-    # docker
-    # docker-compose
 
     ######## Monitoring & tools ########
     mdadm
