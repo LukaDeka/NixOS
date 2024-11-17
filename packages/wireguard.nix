@@ -16,7 +16,7 @@ in
 
       listenPort = 39999;
 
-      privateKeyFile = "${homeDir}/env/wireguard/private"; # TODO: move to /etc/env
+      privateKeyFile = "/etc/env/wireguard/private";
 
       # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
       postUp = ''
@@ -37,7 +37,7 @@ in
       peers = [
         { # LG Gram
           publicKey = "ru0iGynezM5INvTDk1LmRb3v4+NSIuBFc7CvCj3O1no=";
-          presharedKeyFile = "${homeDir}/env/wireguard/psk";
+          presharedKeyFile = "/etc/env/wireguard/psk";
           allowedIPs = [ "10.20.30.2/32" ];
         }
         { # Moto G30

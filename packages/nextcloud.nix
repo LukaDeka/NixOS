@@ -1,14 +1,16 @@
 { config, pkgs, ... }:
 
 let
+  storageDir = config.vars.storageDir;
   domain = config.vars.domain;
   ip = config.vars.ip;
 in
 {
-  # services.postgresql = {
-  #   enable = true;
-    # dataDir = "/mnt/md0/postgresql";
-  # };
+  services.postgresql = {
+    enable = true;
+    dataDir = "${config.vars.storageDir}/postgresql/${config.services.postgresql.package.psqlSchema}";
+  };
+
   services.nextcloud = {
     enable = true;
     package = pkgs.nextcloud30;
@@ -19,6 +21,9 @@ in
     configureRedis = true;
     database.createLocally = true;
     maxUploadSize = "50G";
+
+    datadir = "${storageDir}/nextcloud";
+    # home = "${storageDir}/nextcloud";
 
     config = {
       dbtype = "pgsql";

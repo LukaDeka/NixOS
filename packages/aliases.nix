@@ -13,6 +13,7 @@ in
       ga = "git add .";
       ".." = "cd ..";
       n = "cd ${homeDir}/nixos";
+      f = "vim ${homeDir}/nixos/flake.nix";
       c = "vim ${homeDir}/nixos/hosts/${host}/configuration.nix";
       s = "sudo git add ${homeDir}/nixos/. && sudo nixos-rebuild switch --flake ${homeDir}/nixos";
       vim = "nvim";

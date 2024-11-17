@@ -12,6 +12,7 @@
   vars.domain = "lukadeka.com";
   vars.ddnsDomain = "lukadeka.duckdns.org";
   vars.ip = "10.10.10.10";
+  vars.storageDir = "/mnt/md0";
   
   networking.hostName = config.vars.hostname; # Set the hostname
   networking.networkmanager.enable = true;
@@ -24,11 +25,6 @@
       linkConfig.Name = "eth0";
     };
   };
-
-  # Send email, when RAID drive fails
-  boot.swraid.mdadmConf = ''
-    MAILADDR=${config.vars.email}
-  '';
 
   # List packages installed in system profile. To search, run: nix search [package]
   environment.systemPackages = with pkgs; [
@@ -57,6 +53,11 @@
     qrencode
     iptables
   ];
+
+  # Send email, when RAID drive fails
+  boot.swraid.mdadmConf = ''
+    MAILADDR=${config.vars.email}
+  '';
 
   # Define a user account. Don't forget to set a password with ‘passwd’
   users.users.${config.vars.username} = {
@@ -102,6 +103,12 @@
   };
 
   nix.package = pkgs.nixVersions.latest;
+
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

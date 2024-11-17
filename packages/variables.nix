@@ -53,6 +53,13 @@
       default = null;
     };
 
+    storageDir = lib.mkOption {
+      type = lib.types.str;
+      description = "The path where to store data/databases. Change if you mounted additional drives.";
+      example = "/mnt/md0";
+      default = "/var/lib";
+    };
+
     startChargeThresh = lib.mkOption {
       type = lib.types.int;
       description = "Start battery charging before dropping below this percentage.";
