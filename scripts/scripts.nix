@@ -1,74 +1,54 @@
 { config, pkgs, ... }:
 
 let
-  homeDir = config.vars.homeDir;
-  domain = config.vars.domain;
+  scriptPath = "${config.vars.homeDir}/nixos/scripts";
+  execAfter = [ "network.target" ]; # Ensure network is up
 in
 {
-  systemd = {
-    services = {
-      "duckdns" = {
-        after = [ "network.target" "blocky.service" ]; # Ensure network is up
-        wantedBy = [ "multi-user.target" ];
-        serviceConfig.Type = "simple";
-        path = with pkgs; [ bash curl ];
-        script = ''
-          bash ${homeDir}/nixos/scripts/duckdns/duck.sh
-        '';
+  systemd.services = {
+    "duckdns" = {
+      after = execAfter;
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+	User = "root";
       };
-      "cf-${domain}" = {
-        after = [ "network.target" "blocky.service" ];
-        wantedBy = [ "multi-user.target" ];
-        serviceConfig.Type = "simple";
-        path = with pkgs; [ bash curl ];
-        script = ''
-          bash ${homeDir}/nixos/scripts/cloudflare/${domain}.sh
-        '';
+      path = with pkgs; [ bash curl ];
+      script = ''
+        bash ${scriptPath}/duckdns/duck.sh
+      '';
+    };
+    "cf-ddns-updater" = {
+      after = execAfter;
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+	User = "root";
       };
-      "cf-seafile.${domain}lukadeka" = {
-        after = [ "network.target" "blocky.service" ];
-        wantedBy = [ "multi-user.target" ];
-        serviceConfig.Type = "simple";
-        path = with pkgs; [ bash curl ];
-        script = ''
-          bash ${homeDir}/nixos/scripts/cloudflare/seafile.${domain}.sh
-        '';
-      };
-      "cf-nextcloud.${domain}" = {
-        after = [ "network.target" "blocky.service" ];
-        wantedBy = [ "multi-user.target" ];
-        serviceConfig.Type = "simple";
-        path = with pkgs; [ bash curl ];
-        script = ''
-          bash ${homeDir}/nixos/scripts/cloudflare/nextcloud.${domain}.sh
-        '';
+      path = with pkgs; [ bash curl ];
+      script = ''
+        bash ${scriptPath}/cloudflare/ddns.sh
+      '';
+    };
+  };
+
+  systemd.timers = {
+    "duckdns" = {
+      wantedBy = [ "timers.target" ];
+      partOf = [ "duckdns.service" ];
+      timerConfig = {
+        Persistent = true; # Execute immediately if missed
+        OnUnitActiveSec = "30m"; # Run every x minutes
+        Unit = "duckdns.service";
       };
     };
-
-    timers = {
-      "duckdns" = {
-        wantedBy = [ "timers.target" ];
-        timerConfig.Persistent = true; # Execute immediately if missed
-        timerConfig.OnUnitActiveSec = "30m"; # Run every x minutes
-        timerConfig.Unit = "duckdns-service.service";
-      };
-      "cf-${domain}" = {
-        wantedBy = [ "timers.target" ];
-        timerConfig.Persistent = true;
-        timerConfig.OnUnitActiveSec = "30m";
-        timerConfig.Unit = "cf-${domain}.service";
-      };
-      "cf-seafile.${domain}" = {
-        wantedBy = [ "timers.target" ];
-        timerConfig.Persistent = true;
-        timerConfig.OnUnitActiveSec = "30m";
-        timerConfig.Unit = "cf-seafile.${domain}.service";
-      };
-      "cf-nextcloud.${domain}" = {
-        wantedBy = [ "timers.target" ];
-        timerConfig.Persistent = true;
-        timerConfig.OnUnitActiveSec = "30m";
-        timerConfig.Unit = "cf-nextcloud.${domain}.service";
+    "cf-ddns-updater" = {
+      wantedBy = [ "timers.target" ];
+      partOf = [ "cf-ddns-updater.service" ];
+      timerConfig = {
+        Persistent = true;
+        OnUnitActiveSec = "30m";
+        Unit = "cf-ddns-updater.service";
       };
     };
   };

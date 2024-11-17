@@ -1,13 +1,14 @@
-#!/usr/bin/env
+#! /usr/bin/env nix-shell
 
-TOKEN=$(cat ~/env/duckdns/token.txt)
+domain="lukadeka"
+token=$(< /etc/env/duckdns/token)
+logfile_path="/home/luka/nixos/scripts/duckdns/duck.log"
 
-DOMAIN="lukadeka"
-DUCKDNS_URL="https://www.duckdns.org/update?domains=${DOMAIN}&token=${TOKEN}&ip="
+duckdns_url="https://www.duckdns.org/update?domains=${domain}&token=${token}&ip="
 
-# Update DuckDNS IP and log the output
-curl -k -o /home/luka/nixos/scripts/duckdns/duck.log -K - <<< "url=${DUCKDNS_URL}"
+# Update DuckDNS IP
+status=$(curl ${duckdns_url})
 
-# Log date and time
-date +'%d/%m/%y %H:%M' >> /home/luka/nixos/scripts/duckdns/duck.txt
+# Log timestamp and status code (OK for success, KO for failure)
+echo "[$(date +'%d/%m/%y %H:%M')] ${status} ">> ${logfile_path}
 
