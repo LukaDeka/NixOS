@@ -1,33 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports =
     [ 
       ./hardware-configuration.nix
-
-      ######## Server configuration ########
-      ./../../modules/wireguard.nix  # VPN
-      ./../../modules/nextcloud.nix
-      # ./../../modules/seafile.nix    # TODO: Fix Seafile
-      # ./../../modules/samba.nix      # TODO: Figure out what to do with Samba
-      ./../../modules/ssh.nix
-      ./../../modules/printing.nix
-
-      ######## Scripts ########
-      ./../../scripts/scripts.nix    # TODO: Modularize scripts
-
-      # ./../../modules/blocky.nix     # DNS server/adblocker TODO: Diagnose why it's not working/switch to Pihole Docker container
-      # ./../../modules/fish.nix       # TODO: Learn fish
-      # ./../../modules/nginx.nix      
-      # ./../../modules/caddy.nix
-      # ./../../modules/docker.nix
-
-      ######## etc. ########
-      # ./../../modules/neovim.nix
-      # ./../../modules/nixvim.nix
-      ./../../modules/variables.nix
-      ./../../modules/extra.nix      # Battery settings, lid close, fonts...
-      ./../../modules/aliases.nix    # BASH aliases
     ];
 
   vars.username = "luka";
@@ -37,7 +13,6 @@
   vars.ddnsDomain = "lukadeka.duckdns.org";
   vars.ip = "10.10.10.10";
   
-
   networking.hostName = config.vars.hostname; # Set the hostname
   networking.networkmanager.enable = true;
   networking.wireless.enable = false; # Wireless support via wpa_supplicant
@@ -57,33 +32,30 @@
 
   # List packages installed in system profile. To search, run: nix search [package]
   environment.systemPackages = with pkgs; [
-    ######## Must-haves ########
-    lunarvim
-    vim
+    ######## Text editors ########
     neovim
+    lunarvim
     helix
-    nil # Nix LSP
-    tmux
-    git
-    wget
-    fzf # TODO: Learn how to use this
+    nil # Nix language server
 
-    ######## Server programs ########
+    ######## CLI tools ########
+    git
+    tmux
+    wget
+    fzf # TODO: Learn how to use fzf
 
     ######## Monitoring & tools ########
-    mdadm
-    btop
-    acpi
+    fastfetch
+    mdadm # RAID
+    btop # Task manager
+    acpi # Battery level
     ncdu # Disk space
     hdparm
-    cups # Printing
     smartmontools # smartctl
-    iptables
 
     ######## Etc. ########
-    wireguard-tools
     qrencode
-    fastfetch
+    iptables
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’
@@ -91,7 +63,7 @@
     isNormalUser = true;
     description = config.vars.username;
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
+    # packages = with pkgs; [];
   };
 
   # Never prompt "wheel" users for a root password; potential security issue!
