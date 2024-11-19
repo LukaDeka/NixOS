@@ -29,6 +29,7 @@
   # List packages installed in system profile. To search, run: nix search [package]
   environment.systemPackages = with pkgs; [
     ######## Text editors ########
+    vim
     neovim
     lunarvim
     helix
@@ -54,6 +55,7 @@
     ######## Etc. ########
     qrencode
     iptables
+    openssl # Generating secure passwords with: $ openssl rand -base64 48
   ];
 
   # Send email, when RAID drive fails

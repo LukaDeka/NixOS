@@ -1,0 +1,13 @@
+[Interface]
+PrivateKey = # Local client private key
+ListenPort = 39999
+Address = 10.20.30.2/24 # Local IP of the client
+DNS = 1.1.1.1
+
+
+[Peer]
+PublicKey = # Remote server public key
+# PresharedKey = # Optional
+Endpoint = example.duckdns.org:39999
+AllowedIPs = 0.0.0.0/0, ::/0
+PersistentKeepalive = 25

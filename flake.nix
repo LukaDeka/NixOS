@@ -24,6 +24,7 @@
           ./packages/nextcloud.nix
           # ./packages/seafile.nix    # TODO: Fix Seafile
           # ./packages/samba.nix      # TODO: Figure out what to do with Samba
+	  ./packages/vaultwarden.nix
           ./packages/printing.nix
 
           ######## Networking ########

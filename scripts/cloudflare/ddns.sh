@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # A list of domain names to be synced
-declare -a domains=("lukadeka.com" "nextcloud.lukadeka.com" "seafile.lukadeka.com")
+declare -a domains=("lukadeka.com" "nextcloud.lukadeka.com" "seafile.lukadeka.com" "vaultwarden.lukadeka.com")
 logfile_path="/home/luka/nixos/scripts/cloudflare/ddns.log"
 
 auth_email="luka.dekanozishvili1@gmail.com"         # The email used to login 'https://dash.cloudflare.com'
