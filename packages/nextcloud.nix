@@ -3,6 +3,7 @@
 let
   storageDir = config.vars.storageDir;
   domain = config.vars.domain;
+  username = config.vars.username;
   ip = config.vars.ip;
 in
 {
@@ -23,11 +24,11 @@ in
     maxUploadSize = "50G";
 
     datadir = "${storageDir}/nextcloud";
-    # home = "${storageDir}/nextcloud";
+    home = "${storageDir}/nextcloud";
 
     config = {
       dbtype = "pgsql";
-      adminuser = "admin";
+      adminuser = username; # Your main linux username
       adminpassFile = "/etc/env/nextcloud/adminpass";
     };
 
@@ -36,37 +37,37 @@ in
     extraApps = with config.services.nextcloud.package.packages.apps; {
         # List of apps we want to install and are already packaged in
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/nextcloud/packages/nextcloud-apps.json
-        inherit calendar contacts mail notes onlyoffice tasks;
+        inherit calendar contacts notes tasks
+	  end_to_end_encryption forms 
+	  spreed whiteboard polls onlyoffice mail; # TODO: Fix/test out these apps
     };
 
-    settings = let
-      prot = "https"; # or https
-      host = "nextcloud.${domain}";
-      port = "39997";
-    in {
+    settings = {
       trusted_domains = [ "${ip}" ];
-      # overwriteprotocol = prot;
-      # overwritehost = "${host}:${port}";
-      # overwritewebroot = dir;
-      # overwrite.cli.url = "${prot}://${host}:${port}/";
-      # htaccess.RewriteBase = dir;
     };
   };
 
-#  services.onlyoffice = {
-#    enable = true;
-#    hostname = "onlyoffice.lukadeka.com";
-#  };
+  services.onlyoffice = {
+    enable = false;
+    port = 39990;
+    hostname = "onlyoffice.${domain}";
+  };
 
-  services.nginx.virtualHosts.${config.services.nextcloud.hostName} = {
+  #services.nextcloud.webfinger = true;
+  services.nginx.virtualHosts."nextcloud.${domain}" = {
     forceSSL = true;
     enableACME = true;
-    sslCertificate = "/etc/env/ssl/certs/${domain}.pem"; # TODO: update location
+    sslCertificate = "/etc/env/ssl/certs/${domain}.pem";
     sslCertificateKey = "/etc/env/ssl/certs/${domain}.key";
-    # listen = [ {
-    #  addr = "0.0.0.0";
-    #  port = 39997; # NOT an exposed port
-    #} ];
+    locations."/" = {
+      root = storageDir;
+      extraConfig = ''
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass unix:/run/phpfpm/nextcloud.sock;
+        include ${pkgs.nginx}/conf/fastcgi_params;
+        include ${pkgs.nginx}/conf/fastcgi.conf;
+      '';
+    };
   };
 
   security.acme = {
@@ -75,44 +76,4 @@ in
       ${config.services.nextcloud.hostName}.email = config.vars.email;
     }; 
   };
-
-#  services.nginx.virtualHosts."localhost".listen = [ {
-#    addr = "127.0.0.1";
-#    port = 39996;
-#  } ];
-
-#  services.nginx.virtualHosts."localhost".locations = {
-#    "^~ /.well-known" = {
-#      priority = 9000;
-#      extraConfig = ''
-#        absolute_redirect off;
-#        location ~ ^/\\.well-known/(?:carddav|caldav)$ {
-#          return 301 /nextcloud/remote.php/dav;
-#        }
-#        location ~ ^/\\.well-known/host-meta(?:\\.json)?$ {
-#          return 301 /nextcloud/public.php?service=host-meta-json;
-#        }
-#        location ~ ^/\\.well-known/(?!acme-challenge|pki-validation) {
-#          return 301 /nextcloud/index.php$request_uri;
-#        }
-#        try_files $uri $uri/ =404;
-#      '';
-#    };
-#  };
-
-#  services.nginx.virtualHosts."localhost".locations = {
-#    "/nextcloud/" = {
-#      priority = 9999;
-#      extraConfig = ''
-#        proxy_set_header X-Real-IP $remote_addr;
-#        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-#        proxy_set_header X-NginX-Proxy true;
-#        proxy_set_header X-Forwarded-Proto http;
-#        proxy_pass http://127.0.0.1:39996/; # tailing / is important!
-#        proxy_set_header Host $host;
-#        proxy_cache_bypass $http_upgrade;
-#        proxy_redirect off;
-#      '';
-#    };
-#  };
 }

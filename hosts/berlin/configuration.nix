@@ -44,6 +44,8 @@
     fastfetch
     mdadm # RAID
     btop # Task manager
+    iotop
+    dool # dstat fork
     acpi # Battery level
     ncdu # Disk space
     hdparm
