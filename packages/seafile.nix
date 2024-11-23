@@ -2,41 +2,40 @@
 
 let
   domain = config.vars.domain;
+  ip = config.vars.ip;
   email = config.vars.email;
+  storageDir = config.vars.storageDir;
 in
 {
   services.seafile = {
     enable = true;
     adminEmail = email;
-    initialAdminPassword = "internetiskabeli";
+    initialAdminPassword = "giganturivardi1";
     ccnetSettings.General.SERVICE_URL = "https://seafile.${domain}";
-    seafileSettings = {
-      history.keep_days = "30";
-      quota.default = "50"; # GB
-      fileserver.host = "unix:/run/seafile/server.sock";
 
-      # fileserver.database = {
-      #   type = "mysql";
-      #   host = "127.0.0.1";
-      #   port = 8082; # TCP port
-      #   user = "root";
-      #   password = "root";
-      #   db_name = "seafile_db";
-      #   connection_charset = "utf8";
-      #   max_connections = 100;
-      # };
+    # TODO: Figure out how to architect local access
+    # seahubAddress = "127.0.0.1:39997";
+    seahubExtraConf = ''
+      SRF_TRUSTED_ORIGINS = ["https://${domain}","${ip}"]
+    '';
+
+    seafileSettings = {
+      history.keep_days = "3";
+      quota.default = "50"; # Amount of GB allotted to users
+
+      fileserver = {
+	# use_go_fileserver = true; # TODO: Diagnose why this option is broken
+        web_token_expire_time = 18000; # Set max "upload time" to 5h
+      };
     };
 
-    # dataDir = "/mnt/md0/seafile";
+    dataDir = "${storageDir}/seafile";
+
     gc = {
       enable = true;
-      dates = [ "Sun 03:00:00" ];
     };
   };
 
-  services.nginx = {
-    enable = true;
-  };
   services.nginx.virtualHosts."seafile.${domain}" = {
     sslCertificate = "/etc/env/ssl/certs/${domain}.pem";
     sslCertificateKey = "/etc/env/ssl/certs/${domain}.key";

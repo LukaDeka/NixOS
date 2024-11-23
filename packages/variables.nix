@@ -71,13 +71,6 @@
       description = "Stop battery charging after reaching this percentage.";
       default = 50;
     };
-
-    # printerDriver = lib.mkOption {
-    #   type = lib.types.str;
-    #   description = "Optional, the relative path to the printer driver from ./";
-    #   example = "etc/drivers/Samsung_M2020_Series.ppd";
-    #   default = null;
-    # };
   };
 
 

@@ -13,7 +13,20 @@
   vars.ddnsDomain = "lukadeka.duckdns.org";
   vars.ip = "10.10.10.10";
   vars.storageDir = "/mnt/md0";
-  
+
+  # Define a user account. Don't forget to set a password with ‘passwd’
+  users.users.${config.vars.username} = {
+    isNormalUser = true;
+    description = config.vars.username;
+    extraGroups = [ "networkmanager" "wheel" ];
+    hashedPassword = "$y$j9T$nTWoHxqAJvwjcV70wHbQQ0$ePd3MfeST62/9eAlaHvi9iquC2j5PNQTCki8U8fznAD";
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFXTIyuRIpZhHkPZwwK2ZedlxtqkzAE9UQidyu3ah6xZ lukad@gram" # Win11
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGIq7SWl7gSb2WVrjInZpEIYxo0RcuSIh/KMuVfAdnKb luka" # WSL
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICY63LU9IuSAAs4juNtaGWc067MuUH8LbhaNxQGKP4A1 u0_a637@localhost" # Termux
+    ];
+  };
+
   networking.hostName = config.vars.hostname; # Set the hostname
   networking.networkmanager.enable = true;
   networking.wireless.enable = false; # Wireless support via wpa_supplicant
@@ -62,14 +75,6 @@
   boot.swraid.mdadmConf = ''
     MAILADDR=${config.vars.email}
   '';
-
-  # Define a user account. Don't forget to set a password with ‘passwd’
-  users.users.${config.vars.username} = {
-    isNormalUser = true;
-    description = config.vars.username;
-    extraGroups = [ "networkmanager" "wheel" ];
-    # packages = with pkgs; [];
-  };
 
   # Never prompt "wheel" users for a root password; potential security issue!
   security.sudo.wheelNeedsPassword = false;

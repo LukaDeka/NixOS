@@ -22,8 +22,7 @@
           ./hosts/berlin/configuration.nix
           ######## Server configuration ########
           ./packages/nextcloud.nix
-          # ./packages/seafile.nix    # TODO: Fix Seafile
-          # ./packages/samba.nix      # TODO: Figure out what to do with Samba
+          ./packages/seafile.nix
 	  ./packages/vaultwarden.nix
           ./packages/printing.nix
 
@@ -32,7 +31,8 @@
           ./packages/ssh.nix
 
           # ./packages/blocky.nix     # DNS server/adblocker TODO: Diagnose why it's not working/switch to Pihole Docker container
-          # ./packages/nginx.nix      
+          # ./packages/samba.nix      # TODO: Figure out what to do with Samba
+          # ./packages/nginx.nix
           # ./packages/caddy.nix
           # ./packages/docker.nix
 

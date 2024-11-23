@@ -4,10 +4,14 @@
   # Keep laptop running with lid closed
   systemd.sleep.extraConfig = ''
     AllowSuspend=no
-    AllowHibernation=no
-    AllowHybridSleep=no
-    AllowSuspendThenHibernate=no
   '';
+
+    #AllowHibernation=no
+    #AllowHybridSleep=no
+    #AllowSuspendThenHibernate=no
+  #services.logind.lidSwitch = "ignore";
+  #services.logind.lidSwitchExternalPower = "ignore";
+  #services.logind.lidSwitchDocked = "ignore";
 
   # Enable battery care (charge up to 50% by default)
   services.tlp = {
