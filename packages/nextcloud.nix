@@ -9,7 +9,7 @@ in
 {
   services.postgresql = {
     enable = true;
-    dataDir = "${config.vars.storageDir}/postgresql/${config.services.postgresql.package.psqlSchema}";
+    dataDir = "${storageDir}/postgresql/${config.services.postgresql.package.psqlSchema}";
   };
 
   services.nextcloud = {
@@ -28,6 +28,7 @@ in
 
     config = {
       dbtype = "pgsql";
+
       adminuser = username; # Your main linux username
       adminpassFile = "/etc/env/nextcloud/adminpass";
     };
@@ -47,20 +48,20 @@ in
     };
   };
 
-  services.onlyoffice = {
-    enable = false;
-    port = 39990;
-    hostname = "onlyoffice.${domain}";
-  };
+  #services.onlyoffice = {
+  #  enable = false;
+  #  port = 39990;
+  #  hostname = "onlyoffice.${domain}";
+  #};
 
   #services.nextcloud.webfinger = true;
   services.nginx.virtualHosts."nextcloud.${domain}" = {
+    sslCertificate = "/etc/env/ssl/${domain}.pem";
+    sslCertificateKey = "/etc/env/ssl/${domain}.key";
     forceSSL = true;
     enableACME = true;
-    sslCertificate = "/etc/env/ssl/certs/${domain}.pem";
-    sslCertificateKey = "/etc/env/ssl/certs/${domain}.key";
     locations."/" = {
-      root = storageDir;
+      root = "${storageDir}/nextcloud";
       extraConfig = ''
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
         fastcgi_pass unix:/run/phpfpm/nextcloud.sock;
@@ -74,6 +75,7 @@ in
     acceptTerms = true;   
     certs = { 
       ${config.services.nextcloud.hostName}.email = config.vars.email;
+      #defaults.email = config.vars.email;
     }; 
   };
 }

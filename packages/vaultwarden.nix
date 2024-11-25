@@ -2,12 +2,13 @@
 
 let
   domain = config.vars.domain;
+  email = config.vars.email;
 in
 {
   services.vaultwarden = {
     enable = true;
     environmentFile = "/etc/env/vaultwarden/secrets";
-    #dbBackend = "postgresql";
+    # dbBackend = "postgresql"; # TODO: Move to raid array
     backupDir = "/var/backup/vaultwarden";
     config = {
       DOMAIN = "https://vaultwarden.${domain}";
@@ -34,17 +35,19 @@ in
   services.nginx.virtualHosts."vaultwarden.${domain}" = {
     enableACME = true;
     forceSSL = true;
-    sslCertificate = "/etc/env/ssl/certs/${domain}.pem";
-    sslCertificateKey = "/etc/env/ssl/certs/${domain}.key";
+    sslCertificate = "/etc/env/ssl/${domain}.pem";
+    sslCertificateKey = "/etc/env/ssl/${domain}.key";
     locations."/" = {
       proxyPass = "http://127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}";
+      # root = config.vars.storageDir;
     };
   };
 
   security.acme = {
     acceptTerms = true;
     certs = {
-      "vaultwarden.${domain}".email = config.vars.email;
+      "vaultwarden.${domain}".email = email;
     };
   };
 }
+

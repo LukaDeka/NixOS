@@ -10,7 +10,7 @@ in
   services.seafile = {
     enable = true;
     adminEmail = email;
-    initialAdminPassword = "giganturivardi1";
+    initialAdminPassword = "mananakitrisad";
     ccnetSettings.General.SERVICE_URL = "https://seafile.${domain}";
 
     # TODO: Figure out how to architect local access
@@ -24,21 +24,21 @@ in
       quota.default = "50"; # Amount of GB allotted to users
 
       fileserver = {
-	# use_go_fileserver = true; # TODO: Diagnose why this option is broken
+        # use_go_fileserver = true; # TODO: Diagnose why this option is broken
+	host = "unix:/run/seafile/server.sock";
         web_token_expire_time = 18000; # Set max "upload time" to 5h
       };
     };
 
-    dataDir = "${storageDir}/seafile";
+    dataDir = "${storageDir}/seafile/data";
 
-    gc = {
-      enable = true;
-    };
+    gc.enable = true;
   };
 
+  services.nginx.enable = true;
   services.nginx.virtualHosts."seafile.${domain}" = {
-    sslCertificate = "/etc/env/ssl/certs/${domain}.pem";
-    sslCertificateKey = "/etc/env/ssl/certs/${domain}.key";
+    sslCertificate = "/etc/env/ssl/${domain}.pem";
+    sslCertificateKey = "/etc/env/ssl/${domain}.key";
     forceSSL = true;
     enableACME = true;
     locations = {

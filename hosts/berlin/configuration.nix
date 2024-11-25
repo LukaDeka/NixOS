@@ -12,7 +12,7 @@
   vars.domain = "lukadeka.com";
   vars.ddnsDomain = "lukadeka.duckdns.org";
   vars.ip = "10.10.10.10";
-  vars.storageDir = "/mnt/md0";
+  vars.storageDir = "/mnt/zfs0";
 
   # Define a user account. Don't forget to set a password with ‘passwd’
   users.users.${config.vars.username} = {
@@ -25,6 +25,12 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGIq7SWl7gSb2WVrjInZpEIYxo0RcuSIh/KMuVfAdnKb luka" # WSL
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICY63LU9IuSAAs4juNtaGWc067MuUH8LbhaNxQGKP4A1 u0_a637@localhost" # Termux
     ];
+  };
+
+  programs.git.enable = true;
+  programs.git.config = {
+    user.name = config.vars.username;
+    user.email = config.vars.email;
   };
 
   networking.hostName = config.vars.hostname; # Set the hostname
@@ -49,14 +55,14 @@
     nil # Nix language server
 
     ######## CLI tools ########
-    git
+    # git
     tmux
     wget
     fzf # TODO: Learn how to use fzf
 
     ######## Monitoring & tools ########
     fastfetch
-    mdadm # RAID
+    zfs
     btop # Task manager
     iotop
     dool # dstat fork
@@ -70,11 +76,6 @@
     iptables
     openssl # Generating secure passwords with: $ openssl rand -base64 48
   ];
-
-  # Send email, when RAID drive fails
-  boot.swraid.mdadmConf = ''
-    MAILADDR=${config.vars.email}
-  '';
 
   # Never prompt "wheel" users for a root password; potential security issue!
   security.sudo.wheelNeedsPassword = false;
