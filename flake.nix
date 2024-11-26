@@ -9,14 +9,11 @@
     # nixvim.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nixpkgs, ... } @ inputs:
-  let
-
-  in {
+  outputs = { nixpkgs, ... } @ inputs: {
     nixosConfigurations = {
 
       berlin = nixpkgs.lib.nixosSystem {
-	system = "x86_64-linux";
+      system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/berlin/configuration.nix
@@ -24,7 +21,8 @@
           ######## Server configuration ########
           ./packages/nextcloud.nix
           ./packages/seafile.nix
-	  ./packages/vaultwarden.nix
+          ./packages/vaultwarden.nix
+          ./packages/nginx.nix      # Recommended settings
 
           ######## Networking ########
           ./packages/wireguard.nix  # VPN
@@ -33,7 +31,6 @@
 
           # ./packages/blocky.nix     # DNS server/adblocker TODO: Diagnose why it's not working/switch to Pihole Docker container
           # ./packages/samba.nix      # TODO: Figure out what to do with Samba
-          ./packages/nginx.nix      # Recommended settings
           # ./packages/caddy.nix
           # ./packages/docker.nix
 
@@ -43,14 +40,14 @@
           # ./packages/fish.nix       # TODO: Learn fish
           ./scripts/scripts.nix
           ./packages/variables.nix
-          ./packages/extra.nix      # Battery settings, lid close, fonts...
+          ./packages/extra.nix      # Battery settings, lid close, git, networking...
           ./packages/aliases.nix    # BASH aliases
           ./packages/zfs.nix        # Raid
         ];
       };
 
       tbilisi = nixpkgs.lib.nixosSystem {
-	system = "x86_64-linux";
+        system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/tbilisi/configuration.nix
@@ -58,8 +55,7 @@
           ######## Server configuration ########
           # ./packages/nextcloud.nix
           # ./packages/seafile.nix
-	  # ./packages/vaultwarden.nix
-          # ./packages/printing.nix
+          # ./packages/vaultwarden.nix
 
           ######## Networking ########
           ./packages/wireguard.nix  # VPN
@@ -68,9 +64,9 @@
           ######## etc. ########
           ./scripts/scripts.nix
           ./packages/variables.nix
-          ./packages/extra.nix      # Battery settings, lid close, fonts...
-          ./packages/aliases.nix    # BASH aliases
-          # ./packages/zfs.nix        # Raid
+          ./packages/extra.nix
+          ./packages/aliases.nix
+          # ./packages/zfs.nix
         ];
       };
     };

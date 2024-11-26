@@ -14,7 +14,6 @@
   vars.ip = "10.10.10.10";
   vars.storageDir = "/mnt/zfs0";
 
-  # Define a user account. Don't forget to set a password with ‘passwd’
   users.users.${config.vars.username} = {
     isNormalUser = true;
     description = config.vars.username;
@@ -27,17 +26,7 @@
     ];
   };
 
-  programs.git.enable = true;
-  programs.git.config = {
-    user.name = config.vars.username;
-    user.email = config.vars.email;
-  };
-
-  networking.hostName = config.vars.hostname; # Set the hostname
-  networking.networkmanager.enable = true;
-  networking.wireless.enable = false; # Wireless support via wpa_supplicant
-
-  # Rename network interface
+  # Rename the network interface
   systemd.network.links = {
     "10-eth0" = {
       matchConfig.PermanentMACAddress = "54:e1:ad:6e:4e:d1";
@@ -55,17 +44,16 @@
     nil # Nix language server
 
     ######## CLI tools ########
-    # git
     tmux
     wget
     fzf # TODO: Learn how to use fzf
 
     ######## Monitoring & tools ########
     fastfetch
-    zfs
+    zfs # Raid
     btop # Task manager
     iotop
-    dool # dstat fork
+    dool # dstat "fork"
     acpi # Battery level
     ncdu # Disk space
     hdparm
@@ -74,7 +62,7 @@
     ######## Etc. ########
     qrencode
     iptables
-    openssl # Generating secure passwords with: $ openssl rand -base64 48
+    openssl # Generate secure passwords with: $ openssl rand -base64 48
   ];
 
   # Never prompt "wheel" users for a root password; potential security issue!
