@@ -20,8 +20,8 @@ in
     '';
 
     seafileSettings = {
-      history.keep_days = "3";
       quota.default = "50"; # Amount of GB allotted to users
+      history.keep_days = "3";
 
       fileserver = {
         # use_go_fileserver = true; # TODO: Diagnose why this option is broken
@@ -32,7 +32,10 @@ in
 
     dataDir = "${storageDir}/seafile/data";
 
-    gc.enable = true;
+    gc = {
+      enable = true;
+      dates = [ "Sun 03:00:00" ];
+    };
   };
 
   services.nginx.enable = true;
