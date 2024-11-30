@@ -19,30 +19,35 @@
           ./hosts/berlin/configuration.nix
 
           ######## Server configuration ########
-          ./packages/nextcloud.nix
           ./packages/seafile.nix
+          ./packages/nextcloud.nix
           ./packages/vaultwarden.nix
-          ./packages/nginx.nix      # Recommended settings
+          ./packages/nginx.nix # Recommended settings
 
           ######## Networking ########
-          ./packages/wireguard.nix  # VPN
+          ./packages/wireguard.nix # VPN
           ./packages/ssh.nix
-          ./packages/printing.nix
+          ./packages/deluge.nix # Torrent client
 
-          # ./packages/blocky.nix     # DNS server/adblocker TODO: Diagnose why it's not working/switch to Pihole Docker container
-          # ./packages/samba.nix      # TODO: Figure out what to do with Samba
+          # ./packages/blocky.nix # TODO: Switch to Pihole Docker container
+          # ./packages/samba.nix # TODO: Figure out what to do with Samba
           # ./packages/caddy.nix
           # ./packages/docker.nix
 
-          ######## etc. ########
+          ######## Text editors/navigation ########
           # ./packages/neovim.nix
           # ./packages/nixvim.nix
-          # ./packages/fish.nix       # TODO: Learn fish
+          # ./packages/fish.nix # TODO: Learn fish
+
+          ######## etc. ########
           ./scripts/scripts.nix
           ./packages/variables.nix
-          ./packages/extra.nix      # Battery settings, lid close, git, networking...
-          ./packages/aliases.nix    # BASH aliases
-          ./packages/zfs.nix        # Raid
+          ./packages/extra.nix # Battery settings, lid close, git, networking...
+          ./packages/aliases.nix # BASH aliases
+
+          ######## User-specific ########
+          ./hosts/berlin/printing.nix # Cloud printing advertised to LAN
+          ./hosts/berlin/zfs.nix # Raid
         ];
       };
 
@@ -58,7 +63,7 @@
           # ./packages/vaultwarden.nix
 
           ######## Networking ########
-          ./packages/wireguard.nix  # VPN
+          ./packages/wireguard.nix
           ./packages/ssh.nix
 
           ######## etc. ########
@@ -66,7 +71,7 @@
           ./packages/variables.nix
           ./packages/extra.nix
           ./packages/aliases.nix
-          # ./packages/zfs.nix
+          # ./hosts/tbilisi/zfs.nix
         ];
       };
     };
