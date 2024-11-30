@@ -31,7 +31,7 @@
     drivers = [
       pkgs.samsung-unified-linux-driver
       (pkgs.writeTextDir "share/cups/model/Samsung_M2020_Series.ppd"
-        (builtins.readFile ../misc/drivers/Samsung_M2020_Series.ppd))
+        (builtins.readFile ../../misc/drivers/Samsung_M2020_Series.ppd))
     ];
     listenAddresses = [ "*:631" ];
     allowFrom = [ "all" ];
