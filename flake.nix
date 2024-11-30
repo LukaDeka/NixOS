@@ -21,6 +21,7 @@
           ######## Server configuration ########
           ./packages/seafile.nix
           ./packages/nextcloud.nix
+          ./packages/jellyfin.nix
           ./packages/vaultwarden.nix
           ./packages/nginx.nix # Recommended settings
 

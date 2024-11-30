@@ -12,7 +12,7 @@ in
     authFile = "/etc/env/deluge/authfile";
 
     config = {
-      download_location = "${storageDir}/deluge";
+      download_location = "${storageDir}/downloads/deluge";
       max_download_speed = 50000; # In KiB
       max_upload_speed = 1000;
       share_ratio_limit = 2.0;

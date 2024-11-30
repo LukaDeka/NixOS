@@ -17,8 +17,8 @@ fi
 
 read -p $'\n'"What do you want to name the pool? (Default: ${bold}zfs0${reset}): " pool_name
 pool_name=${pool_name:-zfs0}
-read -p $'\n'"Where do you want to mount the pool? (Default: ${bold}/mnt/${pool_name}${reset}: " mount_point
-mount_point=${mount_point:-/mnt/${pool_name}}
+read -p $'\n'"Where do you want to mount the pool? (Default: ${bold}/${pool_name}${reset}: " mount_point
+mount_point=${mount_point:-/${pool_name}}
 
 drive1="${1:-"sdb"}"
 drive2="${2:-"sdc"}"
@@ -35,8 +35,6 @@ if [[ ! "$answer" =~ ^[Yy]$ ]]; then
 	echo -e "\nExiting."
 	exit 0;
 fi
-
-exit 0; # For testing purposes
 
 # Wipe the file system info on all drives
 for device in "$@"; do

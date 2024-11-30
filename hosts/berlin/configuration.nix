@@ -12,7 +12,7 @@
   vars.domain = "lukadeka.com";
   vars.ddnsDomain = "lukadeka.duckdns.org";
   vars.ip = "10.10.10.10";
-  vars.storageDir = "/mnt/zfs0";
+  vars.storageDir = "/zfs";
 
   users.users.${config.vars.username} = {
     isNormalUser = true;
