@@ -25,11 +25,11 @@ in
   # Open ports in the firewall:
   #
   # 6968  TCP     - SSH
-  # 53    TCP/UDP - DNS queries to Blocky
+  # 53    TCP/UDP - DNS queries to Pihole
   # 39999     UDP - WireGuard VPN
   # 443   TCP     - nginx
   # 80    TCP     - nginx
-  # 25565 TCP     - Minecraft
+  # 25565 TCP     - Minecraft server
   networking.firewall = {
     enable = true;
 

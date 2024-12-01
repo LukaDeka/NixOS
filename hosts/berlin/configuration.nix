@@ -4,6 +4,7 @@
   imports =
     [ 
       ./hardware-configuration.nix
+      ../../packages/variables.nix # Provides config.vars.<option>
     ];
 
   vars.username = "luka";

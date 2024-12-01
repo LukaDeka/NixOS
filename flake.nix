@@ -19,21 +19,19 @@
           ./hosts/berlin/configuration.nix
 
           ######## Server configuration ########
-          ./packages/seafile.nix
+          ./packages/seafile.nix # File server
           ./packages/nextcloud.nix
-          ./packages/jellyfin.nix
-          ./packages/vaultwarden.nix
+          ./packages/jellyfin.nix # Media server
+          ./packages/vaultwarden.nix # Password manager
           ./packages/nginx.nix # Recommended settings
 
           ######## Networking ########
-          ./packages/wireguard.nix # VPN
           ./packages/ssh.nix
+          ./packages/wireguard.nix # VPN
+          ./packages/pihole.nix # DNS server/adblocker
           ./packages/deluge.nix # Torrent client
 
-          # ./packages/blocky.nix # TODO: Switch to Pihole Docker container
           # ./packages/samba.nix # TODO: Figure out what to do with Samba
-          # ./packages/caddy.nix
-          # ./packages/docker.nix
 
           ######## Text editors/navigation ########
           # ./packages/neovim.nix
@@ -41,8 +39,7 @@
           # ./packages/fish.nix # TODO: Learn fish
 
           ######## etc. ########
-          ./scripts/scripts.nix
-          ./packages/variables.nix
+          ./scripts/scripts.nix # Dynamic IP updater scripts
           ./packages/extra.nix # Battery settings, lid close, git, networking...
           ./packages/aliases.nix # BASH aliases
 
@@ -69,7 +66,6 @@
 
           ######## etc. ########
           ./scripts/scripts.nix
-          ./packages/variables.nix
           ./packages/extra.nix
           ./packages/aliases.nix
           # ./hosts/tbilisi/zfs.nix
