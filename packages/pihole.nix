@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  ip = config.vars.ip;
+  ip = "0.0.0.0"; # Accept DNS queries from all IPs TODO: Restrict to local network
 in
 {
   virtualisation.oci-containers.containers.pihole = {
