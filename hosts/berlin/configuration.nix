@@ -61,6 +61,7 @@
     smartmontools # smartctl
 
     ######## Etc. ########
+    cowsay
     qrencode
     iptables
     openssl # Generate secure passwords with: $ openssl rand -base64 48
