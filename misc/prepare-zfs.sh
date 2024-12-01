@@ -15,8 +15,8 @@ You can also call the script without arguments to use ${bold}sdb, sdc, sdd${rese
 	exit 1;
 fi
 
-read -p $'\n'"What do you want to name the pool? (Default: ${bold}zfs0${reset}): " pool_name
-pool_name=${pool_name:-zfs0}
+read -p $'\n'"What do you want to name the pool? (Default: ${bold}zfs${reset}): " pool_name
+pool_name=${pool_name:-zfs}
 read -p $'\n'"Where do you want to mount the pool? (Default: ${bold}/${pool_name}${reset}: " mount_point
 mount_point=${mount_point:-/${pool_name}}
 
