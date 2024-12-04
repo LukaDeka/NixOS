@@ -35,19 +35,18 @@
     };
   };
 
-  # List packages installed in system profile. To search, run: nix search [package]
   environment.systemPackages = with pkgs; [
     ######## Text editors ########
     vim
-    neovim
-    lunarvim
-    helix
-    nil # Nix language server
+    # lunarvim
+    # helix
+    # nil # Nix language server
 
     ######## CLI tools ########
     tmux
     wget
     fzf # TODO: Learn how to use fzf
+    wireguard-tools
 
     ######## Monitoring & tools ########
     fastfetch

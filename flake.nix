@@ -4,9 +4,6 @@
   inputs = {
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    # nixvim.url = "github:nix-community/nixvim";
-    # nixvim.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { nixpkgs, ... } @ inputs: {
@@ -34,8 +31,7 @@
           # ./packages/samba.nix # TODO: Figure out what to do with Samba
 
           ######## Text editors/navigation ########
-          # ./packages/neovim.nix
-          # ./packages/nixvim.nix
+          ./packages/neovim.nix # Tiny configuration
           # ./packages/fish.nix # TODO: Learn fish
 
           ######## etc. ########
