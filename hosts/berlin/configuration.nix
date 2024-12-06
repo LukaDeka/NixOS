@@ -2,7 +2,7 @@
 
 {
   imports =
-    [ 
+    [
       ./hardware-configuration.nix
       ../../packages/variables.nix # Provides config.vars.<option>
     ];
@@ -13,11 +13,11 @@
   vars.domain = "lukadeka.com";
   vars.ddnsDomain = "lukadeka.duckdns.org";
   vars.ip = "10.10.10.10";
+  vars.ethernetMAC = "54:e1:ad:6e:4e:d1";
   vars.storageDir = "/zfs";
 
   users.users.${config.vars.username} = {
     isNormalUser = true;
-    description = config.vars.username;
     extraGroups = [ "networkmanager" "wheel" ];
     hashedPassword = "$y$j9T$nTWoHxqAJvwjcV70wHbQQ0$ePd3MfeST62/9eAlaHvi9iquC2j5PNQTCki8U8fznAD";
     openssh.authorizedKeys.keys = [
@@ -25,14 +25,6 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGIq7SWl7gSb2WVrjInZpEIYxo0RcuSIh/KMuVfAdnKb luka" # WSL
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICY63LU9IuSAAs4juNtaGWc067MuUH8LbhaNxQGKP4A1 u0_a637@localhost" # Termux
     ];
-  };
-
-  # Rename the network interface
-  systemd.network.links = {
-    "10-eth0" = {
-      matchConfig.PermanentMACAddress = "54:e1:ad:6e:4e:d1";
-      linkConfig.Name = "eth0";
-    };
   };
 
   environment.systemPackages = with pkgs; [

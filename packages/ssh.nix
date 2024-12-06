@@ -24,16 +24,17 @@ in
 
   # Open ports in the firewall:
   #
-  # 6968  TCP     - SSH
   # 53    TCP/UDP - DNS queries to Pihole
-  # 39999     UDP - WireGuard VPN
-  # 443   TCP     - nginx
   # 80    TCP     - nginx
+  # 443   TCP     - nginx
+  # 3000  TCP     - Docker containers / development
+  # 6968  TCP     - SSH
   # 25565 TCP     - Minecraft server
+  # 39999     UDP - WireGuard VPN
   networking.firewall = {
     enable = true;
 
-    allowedTCPPorts = [ 53 80 443 39999 ];
+    allowedTCPPorts = [ 53 80 443 3000 ];
     allowedUDPPorts = [ 53 39999 ];
   };
 }

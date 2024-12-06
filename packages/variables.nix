@@ -8,7 +8,7 @@
       description = "The username for the current host.";
       default = "luka";
     };
-    
+
     homeDir = lib.mkOption {
       type = lib.types.str;
       description = "The user's home directory. This should only be set if it's in a non-default location.";
@@ -53,6 +53,13 @@
       default = null;
     };
 
+    ethernetMAC = lib.mkOption {
+      type = lib.types.str;
+      description = "The MAC address of the main ethernet interface to be renamed.";
+      example = "00:B0:D0:63:C2:26";
+      default = null;
+    };
+
     storageDir = lib.mkOption {
       type = lib.types.str;
       description = "The path where to store data/databases. Change if you mounted additional drives.";
@@ -73,7 +80,6 @@
     };
   };
 
-
   config.assertions = [
     {
       assertion = options.vars.hostname.isDefined;
@@ -86,6 +92,9 @@
     }
     {
       assertion = options.vars.ip.isDefined;
+    }
+    {
+      assertion = options.vars.ethernetMAC.isDefined;
     }
   ];
 }

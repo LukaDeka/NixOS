@@ -3,10 +3,17 @@
 let
   scriptPath = "${config.vars.homeDir}/nixos/scripts";
   execAfter = [ "network.target" ]; # Ensure network is up
+  envVars = {
+    VAR_EMAIL = config.vars.email;
+    VAR_DDNS = config.vars.ddnsDomain;
+    VAR_DOMAIN = config.vars.domain;
+    VAR_HOME_DIR = config.vars.homeDir;
+  };
 in
 {
   systemd.services = {
     "duckdns" = {
+      environment = envVars;
       after = execAfter;
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
@@ -19,6 +26,7 @@ in
       '';
     };
     "cf-ddns-updater" = {
+      environment = envVars;
       after = execAfter;
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {

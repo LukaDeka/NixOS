@@ -1,8 +1,8 @@
 #! /usr/bin/env nix-shell
 
-domain="lukadeka"
+domain="${VAR_DDNS%%.*}"
 token=$(< /etc/env/duckdns/token)
-logfile_path="/home/luka/nixos/scripts/duckdns/duck.log"
+logfile_path="${VAR_HOME_DIR}/nixos/scripts/duckdns/duck.log"
 
 duckdns_url="https://www.duckdns.org/update?domains=${domain}&token=${token}&ip="
 

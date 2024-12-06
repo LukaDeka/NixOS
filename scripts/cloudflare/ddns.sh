@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # A list of domain names to be synced
-declare -a domains=("lukadeka.com" "nextcloud.lukadeka.com" "seafile.lukadeka.com" "vaultwarden.lukadeka.com")
-logfile_path="/home/luka/nixos/scripts/cloudflare/ddns.log"
+declare -a domains=("${VAR_DOMAIN}" "nextcloud.${VAR_DOMAIN}" "seafile.${VAR_DOMAIN}")
+logfile_path="${VAR_HOME_DIR}/nixos/scripts/cloudflare/ddns.log"
 
-auth_email="luka.dekanozishvili1@gmail.com"         # The email used to login 'https://dash.cloudflare.com'
+auth_email="${VAR_EMAIL}"                           # The email used to login 'https://dash.cloudflare.com'
 auth_method="global"                                # Set to "global" for Global API Key or "token" for Scoped API Token
 auth_key="$(< /etc/env/cloudflare/auth_key)"        # Your API Token or Global API Key
 zone_identifier="$(< /etc/env/cloudflare/zone_identifier)" # Can be found in the "Overview" tab of your domain

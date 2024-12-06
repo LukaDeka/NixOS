@@ -49,6 +49,14 @@
   networking.networkmanager.enable = true;
   networking.wireless.enable = false; # Use Wi-Fi wia NetworkManager
 
+  # Rename the network interface
+  systemd.network.links = {
+    "10-eth0" = {
+      matchConfig.PermanentMACAddress = config.vars.ethernetMAC;
+      linkConfig.Name = "eth0";
+    };
+  };
+
   # Add fonts
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "CascadiaMono" ]; })
