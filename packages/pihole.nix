@@ -26,5 +26,8 @@ in
       "--dns=1.1.1.1"
     ];
   };
+
+  networking.firewall.allowedTCPPorts = [ 53 ];
+  networking.firewall.allowedUDPPorts = [ 53 ];
 }
 

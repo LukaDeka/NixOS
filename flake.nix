@@ -2,7 +2,6 @@
   description = "Nixos config flake";
 
   inputs = {
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
@@ -28,8 +27,6 @@
           ./packages/pihole.nix # DNS server/adblocker
           ./packages/deluge.nix # Torrent client
 
-          # ./packages/samba.nix # TODO: Figure out what to do with Samba
-
           ######## Text editors/navigation ########
           ./packages/neovim.nix # Tiny configuration
           # ./packages/fish.nix # TODO: Learn fish
@@ -40,8 +37,8 @@
           ./packages/aliases.nix # BASH aliases
 
           ######## User-specific ########
-          ./hosts/berlin/printing.nix # Cloud printing advertised to LAN
           ./hosts/berlin/zfs.nix # Raid
+          ./hosts/berlin/printing.nix # Cloud printing advertised to LAN
         ];
       };
 
@@ -52,19 +49,24 @@
           ./hosts/tbilisi/configuration.nix
 
           ######## Server configuration ########
+          ./packages/seafile.nix
+          ./packages/nginx.nix
           # ./packages/nextcloud.nix
-          # ./packages/seafile.nix
-          # ./packages/vaultwarden.nix
 
           ######## Networking ########
-          ./packages/wireguard.nix
           ./packages/ssh.nix
+          ./packages/wireguard.nix
+
+          ######## Text editors/navigation ########
+          ./packages/neovim.nix
 
           ######## etc. ########
           ./scripts/scripts.nix
           ./packages/extra.nix
           ./packages/aliases.nix
-          # ./hosts/tbilisi/zfs.nix
+
+          ######## User-specific ########
+          ./hosts/tbilisi/zfs.nix
         ];
       };
     };

@@ -34,11 +34,6 @@
       default = null;
     };
 
-    # TODO: make this work
-    #strippedDomain = let
-    #  parts = lib.splitString "." config.vars.domain;
-    #in if builtins.length parts > 1 then builtins.elemAt parts 0 else config.domain;
-
     ddnsDomain = lib.mkOption {
       type = lib.types.str;
       description = "The DDNS domain name for SSH access etc.";

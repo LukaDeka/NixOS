@@ -34,7 +34,7 @@ in
   networking.firewall = {
     enable = true;
 
-    allowedTCPPorts = [ 53 80 443 3000 ];
-    allowedUDPPorts = [ 53 39999 ];
+    # allowedTCPPorts = [];
+    # allowedUDPPorts = [];
   };
 }

@@ -9,7 +9,7 @@ in
     declarative = true;
 
     # dataDir = "${storageDir}/deluge";
-    authFile = "/etc/env/deluge/authfile";
+    authFile = "/etc/env/deluge/authfile"; # TODO: Doesn't work?
 
     config = {
       download_location = "${storageDir}/downloads/deluge";

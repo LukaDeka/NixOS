@@ -16,7 +16,6 @@ in
       f = "vim ${homeDir}/nixos/flake.nix";
       c = "vim ${homeDir}/nixos/hosts/${host}/configuration.nix";
       s = "git add ${homeDir}/nixos/. && sudo nixos-rebuild switch --flake ${homeDir}/nixos";
-      vim = "nvim";
     };
     shellInit = ''
       export COLORTERM=truecolor;

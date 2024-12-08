@@ -25,7 +25,7 @@ in
 
       fileserver = {
         # use_go_fileserver = true; # TODO: Diagnose why this option is broken
-	host = "unix:/run/seafile/server.sock";
+        host = "unix:/run/seafile/server.sock";
         web_token_expire_time = 18000; # Set max "upload time" to 5h
       };
     };

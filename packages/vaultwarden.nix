@@ -8,7 +8,7 @@ in
   services.vaultwarden = {
     enable = true;
     environmentFile = "/etc/env/vaultwarden/secrets";
-    # dbBackend = "postgresql"; # TODO: Move to raid array
+    # dbBackend = "postgresql"; # TODO: Move to ZFS pool
     backupDir = "/var/backup/vaultwarden";
     config = {
       DOMAIN = "https://vaultwarden.${domain}";
@@ -39,7 +39,6 @@ in
     sslCertificateKey = "/etc/env/ssl/${domain}.key";
     locations."/" = {
       proxyPass = "http://127.0.0.1:${toString config.services.vaultwarden.config.ROCKET_PORT}";
-      # root = config.vars.storageDir;
     };
   };
 

@@ -39,8 +39,8 @@ in
         # List of apps we want to install and are already packaged in
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/nextcloud/packages/nextcloud-apps.json
         inherit calendar contacts notes tasks
-	  end_to_end_encryption forms 
-	  spreed whiteboard polls onlyoffice mail; # TODO: Fix/test out these apps
+          end_to_end_encryption forms
+          spreed whiteboard polls onlyoffice mail; # TODO: Fix/test out these apps
     };
 
     settings = {
@@ -48,13 +48,13 @@ in
     };
   };
 
-  #services.onlyoffice = {
-  #  enable = false;
-  #  port = 39990;
-  #  hostname = "onlyoffice.${domain}";
-  #};
+  # services.onlyoffice = {
+  #   enable = false;
+  #   port = 39990;
+  #   hostname = "onlyoffice.${domain}";
+  # };
 
-  #services.nextcloud.webfinger = true;
+  # services.nextcloud.webfinger = true;
   services.nginx.virtualHosts."nextcloud.${domain}" = {
     sslCertificate = "/etc/env/ssl/${domain}.pem";
     sslCertificateKey = "/etc/env/ssl/${domain}.key";
@@ -72,10 +72,9 @@ in
   };
 
   security.acme = {
-    acceptTerms = true;   
-    certs = { 
+    acceptTerms = true;
+    certs = {
       ${config.services.nextcloud.hostName}.email = config.vars.email;
-      #defaults.email = config.vars.email;
-    }; 
+    };
   };
 }
