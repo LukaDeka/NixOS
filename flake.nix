@@ -20,6 +20,7 @@
           ./packages/jellyfin.nix # Media server
           ./packages/vaultwarden.nix # Password manager
           ./packages/nginx.nix # Recommended settings
+          ./packages/uptime-kuma.nix # Monitoring
 
           ######## Networking ########
           ./packages/ssh.nix
@@ -32,9 +33,13 @@
           # ./packages/fish.nix # TODO: Learn fish
 
           ######## etc. ########
-          ./scripts/scripts.nix # Dynamic IP updater scripts
           ./packages/extra.nix # Battery settings, lid close, git, networking...
           ./packages/aliases.nix # BASH aliases
+
+          ######## Scripts ########
+          ./scripts/cloudflare/service.nix # Dynamic IP updater scripts
+          ./scripts/duckdns/service.nix
+          ./scripts/zfs/service.nix # Uptime Kuma monitoring
 
           ######## User-specific ########
           ./hosts/berlin/zfs.nix # Raid
@@ -61,9 +66,13 @@
           ./packages/neovim.nix
 
           ######## etc. ########
-          ./scripts/scripts.nix
           ./packages/extra.nix
           ./packages/aliases.nix
+
+          ######## Scripts ########
+          ./scripts/cloudflare/service.nix # Dynamic IP updater scripts
+          ./scripts/duckdns/service.nix
+          ./scripts/zfs/service.nix # Uptime Kuma monitoring
 
           ######## User-specific ########
           ./hosts/tbilisi/zfs.nix
