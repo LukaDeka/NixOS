@@ -49,8 +49,8 @@
           ./hosts/tbilisi/configuration.nix
 
           ######## Server configuration ########
-          ./packages/seafile.nix
-          ./packages/nginx.nix
+          #./packages/seafile.nix
+          #./packages/nginx.nix
           # ./packages/nextcloud.nix
 
           ######## Networking ########
@@ -66,7 +66,7 @@
           ./packages/aliases.nix
 
           ######## User-specific ########
-          ./hosts/tbilisi/zfs.nix
+          #./hosts/tbilisi/zfs.nix
         ];
       };
     };
