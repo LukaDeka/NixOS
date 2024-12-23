@@ -1,13 +1,15 @@
 [Interface]
 PrivateKey = # Local client private key
-ListenPort = 39999
-Address = 10.20.30.2/24 # Local IP of the client
-DNS = 1.1.1.1
+Address = 10.20.30.2/24 # Local VPN-IP of the client
+DNS = 1.1.1.1 # Or 10.20.30.1 (the VPN-IP of the server) if you're running a DNS server
 
+# Add a kill switch in case VPN tunnel goes down
+PostUp  =  iptables -I OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT && ip6tables -I OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT
+PreDown = iptables -D OUTPUT ! -o %i -m mark ! --mark $(wg show  %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT && ip6tables -D OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT
 
 [Peer]
 PublicKey = # Remote server public key
 # PresharedKey = # Optional
-Endpoint = example.duckdns.org:39999
 AllowedIPs = 0.0.0.0/0, ::/0
+Endpoint = example.duckdns.org:39999
 PersistentKeepalive = 25

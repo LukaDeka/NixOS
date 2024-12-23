@@ -18,7 +18,8 @@
 
   users.users.${config.vars.username} = {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" ];
+    linger = true; # Keep user services running
+    extraGroups = [ "networkmanager" "wheel" "audio" ];
     hashedPassword = "$y$j9T$nTWoHxqAJvwjcV70wHbQQ0$ePd3MfeST62/9eAlaHvi9iquC2j5PNQTCki8U8fznAD";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFXTIyuRIpZhHkPZwwK2ZedlxtqkzAE9UQidyu3ah6xZ lukad@gram" # Win11
@@ -26,6 +27,18 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICY63LU9IuSAAs4juNtaGWc067MuUH8LbhaNxQGKP4A1 u0_a637@localhost" # Termux
     ];
   };
+
+  #security.rtkit.enable = true;
+  #services.pipewire = {
+  #  enable = true;
+
+  #  alsa.enable = true;
+  #  alsa.support32Bit = true;
+  #  pulse.enable = true;
+  #  socketActivation = false;
+  #};
+  # Start WirePlumber (with PipeWire) at boot.
+  #systemd.user.services.wireplumber.wantedBy = [ "default.target" ];
 
   environment.systemPackages = with pkgs; [
     ######## Text editors ########
@@ -93,12 +106,16 @@
     variant = "";
   };
 
-  nix.package = pkgs.nixVersions.latest;
-
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 14d";
+  nix = {
+    package = pkgs.nixVersions.latest;
+    extraOptions = ''
+      warn-dirty = false
+    '';
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 14d";
+    };
   };
 
   # This value determines the NixOS release from which the default

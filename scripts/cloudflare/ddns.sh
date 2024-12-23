@@ -27,7 +27,7 @@ fi
 
 # Use regex to check for proper IPv4 format.
 if [[ ! $ip =~ ^$ipv4_regex$ ]]; then
-    logger -s "DDNS Updater: Failed to find a valid IP"
+    echo "DDNS Updater: Failed to find a valid IP" >&2
     echo "[$(date +'%d/%m/%y %H:%M')] Failed to find a valid IP" >> ${logfile_path}
     exit 2
 fi
@@ -51,8 +51,8 @@ for record_name in "${domains[@]}"; do
 
   # Check if the domain has an A record
   if [[ $record == *"\"count\":0"* ]]; then
-    logger -s "DDNS Updater: Record does not exist, perhaps create one first? (${ip} for ${record_name})"
-    echo "[$(date +'%d/%m/%y %H:%M')] Record does not exist, perhaps create one first? (${ip} for ${record_name})" >> ${logfile_path}
+    echo "DDNS Updater: Record \"${record_name}\" does not exist, perhaps create one first?" >&2
+    echo "[$(date +'%d/%m/%y %H:%M')] Record \"${record_name}\" does not exist, perhaps create one first?" >> ${logfile_path}
     exit 1
   fi
 
@@ -75,6 +75,7 @@ for record_name in "${domains[@]}"; do
 
   case "$update" in
   *"\"success\":false"*)
+    echo "DDNS Updater: Failed updating record: \"${record_name}\"" >&2
     echo "[$(date +'%d/%m/%y %H:%M')] Failed updating record: \"${record_name}\"" >> ${logfile_path}
     exit -1;;
   *)

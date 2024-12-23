@@ -5,33 +5,19 @@ let
   execAfter = [ "network.target" ]; # Ensure network is up
   envVars = {
     VAR_EMAIL = config.vars.email;
-    VAR_DDNS = config.vars.ddnsDomain;
     VAR_DOMAIN = config.vars.domain;
     VAR_HOME_DIR = config.vars.homeDir;
   };
 in
 {
   systemd.services = {
-    "duckdns" = {
-      environment = envVars;
-      after = execAfter;
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        Type = "oneshot";
-	User = "root";
-      };
-      path = with pkgs; [ bash curl ];
-      script = ''
-        bash ${scriptPath}/duckdns/duck.sh
-      '';
-    };
     "cf-ddns-updater" = {
       environment = envVars;
       after = execAfter;
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "oneshot";
-	User = "root";
+        User = "root";
       };
       path = with pkgs; [ bash curl ];
       script = ''
@@ -41,23 +27,15 @@ in
   };
 
   systemd.timers = {
-    "duckdns" = {
+    "cf-ddns-updater" = {
       wantedBy = [ "timers.target" ];
-      partOf = [ "duckdns.service" ];
       timerConfig = {
         Persistent = true; # Execute immediately if missed
         OnUnitActiveSec = "30m"; # Run every x minutes
         Unit = "duckdns.service";
       };
-    };
-    "cf-ddns-updater" = {
-      wantedBy = [ "timers.target" ];
       partOf = [ "cf-ddns-updater.service" ];
-      timerConfig = {
-        Persistent = true;
-        OnUnitActiveSec = "30m";
-        Unit = "cf-ddns-updater.service";
-      };
     };
   };
 }
+
