@@ -54,9 +54,10 @@
           ./hosts/tbilisi/configuration.nix
 
           ######## Server configuration ########
-          #./packages/seafile.nix
-          #./packages/nginx.nix
+          ./packages/seafile.nix
           # ./packages/nextcloud.nix
+          ./packages/uptime-kuma.nix
+          ./packages/nginx.nix
 
           ######## Networking ########
           ./packages/ssh.nix
@@ -70,12 +71,13 @@
           ./packages/aliases.nix
 
           ######## Scripts ########
-          # ./scripts/cloudflare/service.nix # Dynamic IP updater scripts
-          # ./scripts/duckdns/service.nix
-          # ./scripts/zfs/service.nix # Uptime Kuma monitoring
+          ./scripts/cloudflare/service.nix
+          ./scripts/duckdns/service.nix
+          ./scripts/zfs/service.nix
 
           ######## User-specific ########
-          #./hosts/tbilisi/zfs.nix
+          ./hosts/tbilisi/zfs.nix
+          ./hosts/tbilisi/printing.nix
         ];
       };
     };

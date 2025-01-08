@@ -56,5 +56,49 @@
       linkConfig.Name = "eth0";
     };
   };
+
+  # Never prompt "wheel" users for a root password; potential security issue!
+  security.sudo.wheelNeedsPassword = false;
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # Bootloader
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  i18n.extraLocaleSettings = let
+    locale = "en_US.UTF-8";
+  in {
+    LC_ADDRESS = locale;
+    LC_IDENTIFICATION = locale;
+    LC_MEASUREMENT = locale;
+    LC_MONETARY = locale;
+    LC_NAME = locale;
+    LC_NUMERIC = locale;
+    LC_PAPER = locale;
+    LC_TELEPHONE = locale;
+    LC_TIME = locale;
+  };
+
+  # Configure keymap in X11
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
+
+  nix = {
+    package = pkgs.nixVersions.latest;
+    extraOptions = ''
+      warn-dirty = false
+    '';
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 14d";
+    };
+  };
 }
 

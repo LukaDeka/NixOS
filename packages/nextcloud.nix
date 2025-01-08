@@ -33,18 +33,18 @@ in
       adminpassFile = "/etc/env/nextcloud/adminpass";
     };
 
-    autoUpdateApps.enable = true;
-    extraAppsEnable = true;
-    extraApps = with config.services.nextcloud.package.packages.apps; {
-        # List of apps we want to install and are already packaged in
-        # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/nextcloud/packages/nextcloud-apps.json
-        inherit calendar contacts notes tasks
-          end_to_end_encryption forms
-          spreed whiteboard polls onlyoffice mail; # TODO: Fix/test out these apps
-    };
+    # autoUpdateApps.enable = true;
+    # extraAppsEnable = true;
+    # extraApps = with config.services.nextcloud.package.packages.apps; {
+    #     # List of apps we want to install and are already packaged in
+    #     # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/nextcloud/packages/nextcloud-apps.json
+    #     inherit calendar contacts notes tasks
+    #       end_to_end_encryption forms
+    #       spreed whiteboard polls onlyoffice mail; # TODO: Fix/test out these apps
+    # };
 
     settings = {
-      trusted_domains = [ "${ip}" ];
+      trusted_domains = [ "${ip}" "nextcloud.${domain}" ];
     };
   };
 
@@ -55,21 +55,24 @@ in
   # };
 
   # services.nextcloud.webfinger = true;
-  services.nginx.virtualHosts."nextcloud.${domain}" = {
-    sslCertificate = "/etc/env/ssl/${domain}.pem";
-    sslCertificateKey = "/etc/env/ssl/${domain}.key";
-    forceSSL = true;
-    enableACME = true;
-    locations."/" = {
-      root = "${storageDir}/nextcloud";
-      extraConfig = ''
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass unix:/run/phpfpm/nextcloud.sock;
-        include ${pkgs.nginx}/conf/fastcgi_params;
-        include ${pkgs.nginx}/conf/fastcgi.conf;
-      '';
+  services.nginx.virtualHosts = {
+    "nextcloud.${domain}" = {
+      sslCertificate = "/etc/env/ssl/${domain}.pem";
+      sslCertificateKey = "/etc/env/ssl/${domain}.key";
+      forceSSL = true;
+      enableACME = true;
+      locations."/" = {
+        root = "${storageDir}/nextcloud";
+        extraConfig = ''
+          fastcgi_split_path_info ^(.+\.php)(/.+)$;
+          fastcgi_pass unix:/run/phpfpm/nextcloud.sock;
+          include ${pkgs.nginx}/conf/fastcgi_params;
+          include ${pkgs.nginx}/conf/fastcgi.conf;
+        '';
+      };
     };
   };
+
 
   security.acme = {
     acceptTerms = true;
@@ -78,3 +81,4 @@ in
     };
   };
 }
+

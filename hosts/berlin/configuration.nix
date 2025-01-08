@@ -16,6 +16,8 @@
   vars.ethernetMAC = "54:e1:ad:6e:4e:d1";
   vars.storageDir = "/zfs";
 
+  time.timeZone = "Europe/Berlin";
+
   users.users.${config.vars.username} = {
     isNormalUser = true;
     linger = true; # Keep user services running
@@ -27,18 +29,6 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICY63LU9IuSAAs4juNtaGWc067MuUH8LbhaNxQGKP4A1 u0_a637@localhost" # Termux
     ];
   };
-
-  #security.rtkit.enable = true;
-  #services.pipewire = {
-  #  enable = true;
-
-  #  alsa.enable = true;
-  #  alsa.support32Bit = true;
-  #  pulse.enable = true;
-  #  socketActivation = false;
-  #};
-  # Start WirePlumber (with PipeWire) at boot.
-  #systemd.user.services.wireplumber.wantedBy = [ "default.target" ];
 
   environment.systemPackages = with pkgs; [
     ######## Text editors ########
@@ -70,53 +60,6 @@
     iptables
     openssl # Generate secure passwords with: $ openssl rand -base64 48
   ];
-
-  # Never prompt "wheel" users for a root password; potential security issue!
-  security.sudo.wheelNeedsPassword = false;
-
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  # Bootloader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  # Set your time zone.
-  time.timeZone = "Europe/Berlin";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-
-  i18n.extraLocaleSettings = let
-    locale = "de_DE.UTF-8";
-  in {
-    LC_ADDRESS = locale;
-    LC_IDENTIFICATION = locale;
-    LC_MEASUREMENT = locale;
-    LC_MONETARY = locale;
-    LC_NAME = locale;
-    LC_NUMERIC = locale;
-    LC_PAPER = locale;
-    LC_TELEPHONE = locale;
-    LC_TIME = locale;
-  };
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
-  nix = {
-    package = pkgs.nixVersions.latest;
-    extraOptions = ''
-      warn-dirty = false
-    '';
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 14d";
-    };
-  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

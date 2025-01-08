@@ -12,7 +12,7 @@ in
     # "wg0" is the network interface name. You can name the interface arbitrarily.
     wg0 = {
       # Determines the IP/IPv6 address and subnet of the client's end of the tunnel interface
-      address = [ "10.20.30.1/24" ];
+      address = [ "10.20.30.1/24" "192.168.255.0/16" ];
 
       listenPort = 39999;
 
@@ -38,7 +38,7 @@ in
         { # LG Gram
           publicKey = "ru0iGynezM5INvTDk1LmRb3v4+NSIuBFc7CvCj3O1no=";
           presharedKeyFile = "/etc/env/wireguard/psk";
-          allowedIPs = [ "10.20.30.2/32" ];
+          allowedIPs = [ "10.20.30.2/32" "192.168.255.1/32" ];
         }
         { # Moto G30
           publicKey = "vBlpzpyMa170OQL97Zj0bWCJwV0azpSGBnPVUIsJy1Y=";

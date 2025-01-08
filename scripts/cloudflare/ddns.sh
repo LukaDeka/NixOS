@@ -9,7 +9,7 @@ auth_method="global"                                # Set to "global" for Global
 auth_key="$(< /etc/env/cloudflare/auth_key)"        # Your API Token or Global API Key
 zone_identifier="$(< /etc/env/cloudflare/zone_identifier)" # Can be found in the "Overview" tab of your domain
 ttl=3600                                            # Set the record's time to live (seconds)
-proxy="true"                                        # Set the proxy to true or false
+proxy="false"                                       # Set the proxy to true or false
 
 echo "[$(date +'%d/%m/%y %H:%M')] Running script" >> ${logfile_path}
 
