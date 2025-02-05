@@ -22,6 +22,9 @@ in
       expire_link_in_max_days = "14";
       expire_link_in_default_days = "5";
     in ''
+      # MEDIA_ROOT = '${storageDir}/seafile/seahub/media/'
+      # THUMBNAIL_ROOT = '${storageDir}/seafile/seahub/thumbnail/'
+
       SRF_TRUSTED_ORIGINS = ["https://${domain}","${ip}"]
 
       SITE_TITLE = 'Seafile'
@@ -50,6 +53,8 @@ in
       fileserver = {
         host = "unix:/run/seafile/server.sock";
         web_token_expire_time = 18000; # Set max "upload time" to 5h
+        max_download_dir_size = 50000; # 50GB
+        MAX_NUMBER_OF_FILES_FOR_FILEUPLOAD = 100000;
       };
     };
 
@@ -93,13 +98,6 @@ in
           '';
         };
       };
-    };
-    "${domain}" = { # Redirect root domain to seafile
-      forceSSL = true;
-      enableACME = true;
-      sslCertificate = "/etc/env/ssl/${domain}.pem";
-      sslCertificateKey = "/etc/env/ssl/${domain}.key";
-      globalRedirect = "seafile.${domain}";
     };
   };
 

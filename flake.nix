@@ -18,7 +18,7 @@
           ./packages/seafile.nix # File server
           ./packages/nextcloud.nix
           ./packages/jellyfin.nix # Media server
-          ./packages/vaultwarden.nix # Password manager
+          # ./packages/vaultwarden.nix # Password manager
           ./packages/nginx.nix # Recommended settings
           ./packages/uptime-kuma.nix # Monitoring
 

@@ -28,7 +28,7 @@ fi
 # Use regex to check for proper IPv4 format.
 if [[ ! $ip =~ ^$ipv4_regex$ ]]; then
     echo "DDNS Updater: Failed to find a valid IP" >&2
-    echo "[$(date +'%d/%m/%y %H:%M')] Failed to find a valid IP" >> ${logfile_path}
+    echo "[$(date +'%d/%m/%y %H:%M')] Failed to find a valid IP. Got: ${ip}" >> ${logfile_path}
     exit 2
 fi
 

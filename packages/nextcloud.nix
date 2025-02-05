@@ -4,6 +4,7 @@ let
   storageDir = config.vars.storageDir;
   domain = config.vars.domain;
   username = config.vars.username;
+  email = config.vars.email;
   ip = config.vars.ip;
 in
 {
@@ -30,31 +31,26 @@ in
       dbtype = "pgsql";
 
       adminuser = username; # Your main linux username
+      # adminuser = email;
       adminpassFile = "/etc/env/nextcloud/adminpass";
     };
 
-    # autoUpdateApps.enable = true;
-    # extraAppsEnable = true;
-    # extraApps = with config.services.nextcloud.package.packages.apps; {
-    #     # List of apps we want to install and are already packaged in
-    #     # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/nextcloud/packages/nextcloud-apps.json
-    #     inherit calendar contacts notes tasks
-    #       end_to_end_encryption forms
-    #       spreed whiteboard polls onlyoffice mail; # TODO: Fix/test out these apps
-    # };
+    autoUpdateApps.enable = true;
+    extraAppsEnable = true;
+    extraApps = with config.services.nextcloud.package.packages.apps; {
+        # List of apps we want to install and are already packaged in
+        # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/nextcloud/packages/nextcloud-apps.json
+        inherit calendar contacts notes tasks
+          end_to_end_encryption forms
+          deck previewgenerator maps
+          spreed whiteboard polls mail; # TODO: Fix/test out these apps
+    };
 
     settings = {
       trusted_domains = [ "${ip}" "nextcloud.${domain}" ];
     };
   };
 
-  # services.onlyoffice = {
-  #   enable = false;
-  #   port = 39990;
-  #   hostname = "onlyoffice.${domain}";
-  # };
-
-  # services.nextcloud.webfinger = true;
   services.nginx.virtualHosts = {
     "nextcloud.${domain}" = {
       sslCertificate = "/etc/env/ssl/${domain}.pem";
@@ -71,6 +67,14 @@ in
         '';
       };
     };
+    # Commented out since cloudflare is NOT updating my DNS records...
+    # "${domain}" = { # Redirect root domain to nextcloud subdomain
+    #   forceSSL = true;
+    #   enableACME = true;
+    #   sslCertificate = "/etc/env/ssl/${domain}.pem";
+    #   sslCertificateKey = "/etc/env/ssl/${domain}.key";
+    #   globalRedirect = "nextcloud.${domain}";
+    # };
   };
 
 
