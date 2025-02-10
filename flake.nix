@@ -61,7 +61,6 @@
 
           ######## Networking ########
           ./packages/ssh.nix
-          ./packages/wireguard.nix
 
           ######## Text editors/navigation ########
           ./packages/neovim.nix
@@ -76,6 +75,7 @@
           ./scripts/zfs/service.nix
 
           ######## User-specific ########
+          ./hosts/tbilisi/wireguard.nix
           ./hosts/tbilisi/zfs.nix
           ./hosts/tbilisi/printing.nix
         ];
