@@ -30,8 +30,8 @@ in
     config = {
       dbtype = "pgsql";
 
-      adminuser = username; # Your main linux username
-      # adminuser = email;
+      # adminuser = username; # Your main linux username
+      adminuser = email;
       adminpassFile = "/etc/env/nextcloud/adminpass";
     };
 

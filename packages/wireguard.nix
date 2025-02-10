@@ -36,7 +36,7 @@ in
 
       peers = [
         { # LG Gram
-          publicKey = "ru0iGynezM5INvTDk1LmRb3v4+NSIuBFc7CvCj3O1no=";
+          publicKey = "sSi8ZrKc99rlqdXJY6iuQC1QyXe+dKJOHZdq4CL4H0k=";
           presharedKeyFile = "/etc/env/wireguard/psk";
           allowedIPs = [ "10.20.30.2/32" "192.168.255.1/32" ];
         }
