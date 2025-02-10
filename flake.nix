@@ -24,7 +24,6 @@
 
           ######## Networking ########
           ./packages/ssh.nix
-          ./packages/wireguard.nix # VPN
           ./packages/pihole.nix # DNS server/adblocker
           ./packages/deluge.nix # Torrent client
 
@@ -42,6 +41,7 @@
           ./scripts/zfs/service.nix # Uptime Kuma monitoring
 
           ######## User-specific ########
+          ./hosts/berlin/wireguard.nix # VPN
           ./hosts/berlin/zfs.nix # Raid
           ./hosts/berlin/printing.nix # Cloud printing advertised to LAN
         ];
