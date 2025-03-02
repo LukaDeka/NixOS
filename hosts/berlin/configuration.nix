@@ -21,7 +21,7 @@
   users.users.${config.vars.username} = {
     isNormalUser = true;
     linger = true; # Keep user services running
-    extraGroups = [ "networkmanager" "wheel" "audio" ];
+    extraGroups = [ "networkmanager" "wheel" "nextcloud" ];
     hashedPassword = "$y$j9T$nTWoHxqAJvwjcV70wHbQQ0$ePd3MfeST62/9eAlaHvi9iquC2j5PNQTCki8U8fznAD";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/4F45h/xkq+MIRDzhHqDm5uWM4KTpYi3Tv/DtSo28t luka@gram" # EOS
@@ -52,6 +52,7 @@
     ncdu # Disk space
     hdparm
     smartmontools # smartctl
+    dig
 
     ######## Etc. ########
     cowsay

@@ -2,10 +2,10 @@
 
 let
   storageDir = config.vars.storageDir;
-  domain = config.vars.domain;
-  username = config.vars.username;
-  email = config.vars.email;
-  ip = config.vars.ip;
+  domain =     config.vars.domain;
+  username =   config.vars.username;
+  email =      config.vars.email;
+  ip =         config.vars.ip;
 in
 {
   services.postgresql = {
@@ -30,7 +30,6 @@ in
     config = {
       dbtype = "pgsql";
 
-      # adminuser = username; # Your main linux username
       adminuser = email;
       adminpassFile = "/etc/env/nextcloud/adminpass";
     };
@@ -38,16 +37,19 @@ in
     autoUpdateApps.enable = true;
     extraAppsEnable = true;
     extraApps = with config.services.nextcloud.package.packages.apps; {
-        # List of apps we want to install and are already packaged in
-        # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/nextcloud/packages/nextcloud-apps.json
-        inherit calendar contacts notes tasks
-          end_to_end_encryption forms
-          deck previewgenerator maps
-          spreed whiteboard polls mail; # TODO: Fix/test out these apps
+      # List of apps we want to install and are already packaged in
+      # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/nextcloud/packages/nextcloud-apps.json
+      inherit calendar contacts deck
+        previewgenerator memories maps notes
+        end_to_end_encryption unroundedcorners
+        polls forms music
+        richdocuments # for Collabora online
+        mail # TODO: set up Roundcube
+        spreed;
     };
 
     settings = {
-      trusted_domains = [ "${ip}" "nextcloud.${domain}" ];
+      trusted_domains = [ "${ip}" ];
     };
   };
 
@@ -76,7 +78,6 @@ in
     #   globalRedirect = "nextcloud.${domain}";
     # };
   };
-
 
   security.acme = {
     acceptTerms = true;

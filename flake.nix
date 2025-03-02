@@ -17,6 +17,7 @@
           ######## Server configuration ########
           ./packages/seafile.nix # File server
           ./packages/nextcloud.nix
+          ./packages/collabora-online.nix
           ./packages/jellyfin.nix # Media server
           # ./packages/vaultwarden.nix # Password manager
           ./packages/nginx.nix # Recommended settings
@@ -25,7 +26,7 @@
           ######## Networking ########
           ./packages/ssh.nix
           ./packages/pihole.nix # DNS server/adblocker
-          ./packages/deluge.nix # Torrent client
+          # ./packages/deluge.nix # Torrent client
 
           ######## Text editors/navigation ########
           ./packages/neovim.nix # Tiny configuration
