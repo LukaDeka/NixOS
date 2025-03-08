@@ -76,7 +76,7 @@ your administrator account, go to `Administrator settings` -> `Basic settings`
 `Server address`: `smtp.gmail.com`:`465`\
 `Authentication`: `on`\
 `Credentials`: `your_address_without_@gmail.com`\
-`Password`: `your_generated_app_password`\
+`Password`: `your_generated_app_password`
 
 > [!TIP]
 > You can generate the third party password by going to the following link:
