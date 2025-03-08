@@ -70,13 +70,13 @@ To set up a remote SMTP connection to Gmail servers, login to Nextcloud with
 your administrator account, go to `Administrator settings` -> `Basic settings`
 -> `Email server` and set the following fields:
 
-`Send mode`: `SMTP`
-`Encryption`: `SSL`
-`From address`: `youraddress` @ `gmail.com`
-`Server address`: `smtp.gmail.com`:`465`
-`Authentication`: `on`
-`Credentials`: `your_address_without_@gmail.com`
-`Password`: `your_generated_app_password`
+`Send mode`: `SMTP`\
+`Encryption`: `SSL`\
+`From address`: `youraddress` @ `gmail.com`\
+`Server address`: `smtp.gmail.com`:`465`\
+`Authentication`: `on`\
+`Credentials`: `your_address_without_@gmail.com`\
+`Password`: `your_generated_app_password`\
 
 > [!TIP]
 > You can generate the third party password by going to the following link:
