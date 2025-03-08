@@ -15,9 +15,8 @@
           ./hosts/berlin/configuration.nix
 
           ######## Server configuration ########
-          ./packages/seafile.nix # File server
           ./packages/nextcloud.nix
-          ./packages/collabora-online.nix
+          ./packages/seafile.nix # File server
           ./packages/jellyfin.nix # Media server
           # ./packages/vaultwarden.nix # Password manager
           ./packages/nginx.nix # Recommended settings

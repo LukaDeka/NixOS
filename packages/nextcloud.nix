@@ -8,6 +8,8 @@ let
   ip =         config.vars.ip;
 in
 {
+  imports = [ ./collabora-online.nix ];
+
   services.postgresql = {
     enable = true;
     dataDir = "${storageDir}/postgresql/${config.services.postgresql.package.psqlSchema}";
@@ -50,6 +52,9 @@ in
 
     settings = {
       trusted_domains = [ "${ip}" ];
+      # mail_smtphost = "smtp.gmail.com";
+      # mail_smtpauth = "1";
+      # mail_smtpport = "465";
     };
   };
 
