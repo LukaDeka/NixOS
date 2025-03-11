@@ -2,21 +2,22 @@
   description = "Nixos config flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url =        "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
   };
 
   outputs = { nixpkgs, ... } @ inputs: {
+    # nixpkgs.overlays = [( import ./packages/collabora-online-overlay.nix )];
     nixosConfigurations = {
-
       berlin = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+        system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/berlin/configuration.nix
 
           ######## Server configuration ########
           ./packages/nextcloud.nix
-          ./packages/seafile.nix # File server
+          # ./packages/seafile.nix # File server
           ./packages/jellyfin.nix # Media server
           # ./packages/vaultwarden.nix # Password manager
           ./packages/nginx.nix # Recommended settings
