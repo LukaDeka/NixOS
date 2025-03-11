@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 let
   domain = config.vars.domain;
@@ -7,7 +7,11 @@ in
 {
   services.collabora-online = {
     enable = true;
+
+    # The unstable package is currently broken
+    package = inputs.nixpkgs-stable.legacyPackages.${pkgs.system}.collabora-online;
     port = 9980; # Default
+
     settings = {
       # Rely on reverse proxy for SSL
       ssl = {
@@ -54,7 +58,6 @@ in
     wopi_allowlist = lib.concatStringsSep "," [
       "127.0.0.1"
       "::1"
-      # "${ddnsDomain}"
     ];
   in {
     wantedBy = [ "multi-user.target" ];

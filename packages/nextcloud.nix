@@ -17,18 +17,17 @@ in
 
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud30;
+    package = pkgs.nextcloud31;
 
     hostName = "nextcloud.${domain}";
     https = true;
 
-    configureRedis = true;
-    database.createLocally = true;
-    maxUploadSize = "50G";
-
     datadir = "${storageDir}/nextcloud";
     home = "${storageDir}/nextcloud";
 
+    maxUploadSize = "50G";
+    configureRedis = true;
+    database.createLocally = true;
     config = {
       dbtype = "pgsql";
 
@@ -42,19 +41,40 @@ in
       # List of apps we want to install and are already packaged in
       # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/nextcloud/packages/nextcloud-apps.json
       inherit calendar contacts deck
-        previewgenerator memories maps notes
-        end_to_end_encryption unroundedcorners
-        polls forms music
-        richdocuments # for Collabora online
-        mail # TODO: set up Roundcube
-        spreed;
+      previewgenerator memories notes # maps
+      end_to_end_encryption unroundedcorners
+      polls forms music
+      richdocuments
+      spreed;
+      # TODO: wait until snappymail works on NC31
+      # snappymail = pkgs.php.buildComposerProject (finalAttrs: {
+      #   pname = "snappymail";
+      #   version = "2.38.2";
+      #   src = pkgs.fetchFromGitHub {
+      #     owner = "the-djmaze";
+      #     repo = "snappymail";
+      #     rev = "70aebb498188e29e098176e47b7c31c03fc9d20f";
+      #     hash = "sha256-s9xWy/yISny43hQBtEJQx5xYLhdISbOBdWKHathtbLU=";
+      #   };
+      #   composerNoDev = true;
+      #   composerNoPlugins = true;
+      #   composerNoScripts = true;
+      #   vendorHash = "sha256-PCWWu/SqTUGnZXUnXyL8c72p8L14ZUqIxoa5i49XPH4=";
+      #   postInstall = ''
+      #     cp -r $out/share/php/snappymail/* $out/
+      #     rm -r $out/share
+      #   '';
+      # });
     };
+          # snappymail = pkgs.fetchNextcloudApp {
+          #   # url = "https://github.com/the-djmaze/snappymail/releases/download/v2.38.2/snappymail-2.38.2.tar.gz";
+          #   url = "https://github.com/the-djmaze/snappymail/archive/refs/tags/v2.38.2.tar.gz";
+          #   sha256 = "sha256-Jb38nfz8+4tMl4XIIvcW4WrzUi6Ss/uPNGpgv4mElDI=";
+          #   license = "gpl3";
+          # };
 
     settings = {
       trusted_domains = [ "${ip}" ];
-      # mail_smtphost = "smtp.gmail.com";
-      # mail_smtpauth = "1";
-      # mail_smtpport = "465";
     };
   };
 
