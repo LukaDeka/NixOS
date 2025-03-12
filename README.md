@@ -48,11 +48,11 @@ to update the IP address, in case it has changed.
 # Nextcloud
 
 This is the main app I use for *photo synchronisation, calendar, file sharing, live spreadsheets*
-*in the web (Collabora online), notes, polls, tasks* etc. It's a replacement for the following services:
+*in the web (Collabora online), notes, polls, tasks, contacts* etc. It's a replacement for the following services:
 *Google Photos/Calendar/Drive/Docs/Sheets/Notes/Tasks* etc.
 
 I found these Android apps available from [F-Droid](https://f-droid.org/en/) to integrate best with Nextcloud:
-*Nextcloud, Nextcloud Memories, OneCalendar, Nextcloud Deck, Quillpad (for notes).*
+*Nextcloud, Nextcloud Memories, Fossify Calendar, DAVx5, Nextcloud Deck, Quillpad (for notes).*
 
 ## Email
 
