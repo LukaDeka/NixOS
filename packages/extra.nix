@@ -29,7 +29,7 @@
       CPU_MIN_PERF_ON_AC = 0;
       CPU_MAX_PERF_ON_AC = 100;
       CPU_MIN_PERF_ON_BAT = 0;
-      CPU_MAX_PERF_ON_BAT = 30;
+      CPU_MAX_PERF_ON_BAT = 20;
 
       START_CHARGE_THRESH_BAT0 = config.vars.startChargeThresh;
       STOP_CHARGE_THRESH_BAT0 = config.vars.stopChargeThresh;
@@ -39,15 +39,17 @@
     };
   };
 
-  programs.git.enable = true;
-  programs.git.config = {
-    user.name = config.vars.username;
-    user.email = config.vars.email;
+  programs.git = {
+    enable = true;
+    config = {
+      user.name = config.vars.username;
+      user.email = config.vars.email;
+    };
   };
 
   networking.hostName = config.vars.hostname; # Set the device hostname
-  networking.networkmanager.enable = true;
   networking.wireless.enable = false; # Use Wi-Fi wia NetworkManager
+  networking.networkmanager.enable = true;
 
   # Rename the network interface
   systemd.network.links = {
@@ -56,11 +58,6 @@
       linkConfig.Name = "eth0";
     };
   };
-
-  # Never prompt "wheel" users for a root password; potential security issue!
-  security.sudo.wheelNeedsPassword = false;
-
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bootloader
   boot.loader.systemd-boot.enable = true;
@@ -90,15 +87,22 @@
   };
 
   nix = {
+    settings.experimental-features = [ "nix-command" "flakes" ];
+    optimise.automatic = true;
+
     package = pkgs.nixVersions.latest;
+
+    # Remove warning each rebuild that files aren't commited to git
     extraOptions = ''
       warn-dirty = false
     '';
+
     gc = {
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 14d";
     };
+
   };
 }
 

@@ -18,6 +18,9 @@
 
   time.timeZone = "Europe/Berlin";
 
+  # Never prompt "wheel" users for a root password; potential security issue!
+  security.sudo.wheelNeedsPassword = false;
+
   users.users.${config.vars.username} = {
     isNormalUser = true;
     linger = true; # Keep user services running
@@ -32,15 +35,11 @@
   environment.systemPackages = with pkgs; [
     ######## Text editors ########
     vim
-    # lunarvim
-    # helix
-    # nil # Nix language server
 
-    ######## CLI tools ########
+    ######## CLI QoL tools ########
     tmux
     wget
     fzf # TODO: Learn how to use fzf
-    wireguard-tools
 
     ######## Monitoring & tools ########
     fastfetch
@@ -52,6 +51,7 @@
     ncdu # Disk space
     hdparm
     smartmontools # smartctl
+    wireguard-tools
     dig
 
     ######## Etc. ########
