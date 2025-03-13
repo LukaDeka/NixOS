@@ -7,7 +7,6 @@
   };
 
   outputs = { nixpkgs, ... } @ inputs: {
-    # nixpkgs.overlays = [( import ./packages/collabora-online-overlay.nix )];
     nixosConfigurations = {
       berlin = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
