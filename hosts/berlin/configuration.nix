@@ -53,6 +53,7 @@
     smartmontools # smartctl
     wireguard-tools
     dig
+    ffmpeg
 
     ######## Etc. ########
     cowsay
