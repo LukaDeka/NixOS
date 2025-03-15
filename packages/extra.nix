@@ -6,12 +6,12 @@
     AllowSuspend=no
   '';
 
-    #AllowHibernation=no
-    #AllowHybridSleep=no
-    #AllowSuspendThenHibernate=no
-  #services.logind.lidSwitch = "ignore";
-  #services.logind.lidSwitchExternalPower = "ignore";
-  #services.logind.lidSwitchDocked = "ignore";
+    # AllowHibernation=no
+    # AllowHybridSleep=no
+    # AllowSuspendThenHibernate=no
+  # services.logind.lidSwitch = "ignore";
+  # services.logind.lidSwitchExternalPower = "ignore";
+  # services.logind.lidSwitchDocked = "ignore";
 
   # Prevents the overheating of Intel CPUs
   services.thermald.enable = true;
@@ -65,7 +65,6 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-
   i18n.extraLocaleSettings = let
     locale = "en_US.UTF-8";
   in {
@@ -102,7 +101,6 @@
       dates = "weekly";
       options = "--delete-older-than 14d";
     };
-
   };
 }
 
