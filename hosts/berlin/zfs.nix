@@ -11,5 +11,8 @@
 
   # Set the name of the pool to import it on boot
   boot.zfs.extraPools = [ "zfs0" ];
+
+  # Defaults to once a week
+  services.zfs.autoScrub.enable = true;
 }
 
