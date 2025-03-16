@@ -9,6 +9,7 @@ let
 in
 {
   imports = [ ./collabora-online.nix ];
+  # imports = [ ./onlyoffice.nix ];
 
   services.postgresql = {
     enable = true;
@@ -26,14 +27,6 @@ in
     home = "${storageDir}/nextcloud";
 
     maxUploadSize = "50G";
-    configureRedis = true;
-    database.createLocally = true;
-    config = {
-      dbtype = "pgsql";
-
-      adminuser = email;
-      adminpassFile = "/etc/env/nextcloud/adminpass";
-    };
 
     autoUpdateApps.enable = true;
     extraAppsEnable = true;
@@ -43,40 +36,55 @@ in
       inherit calendar contacts deck
       previewgenerator memories notes # maps
       end_to_end_encryption unroundedcorners
-      polls forms music
-      richdocuments
+      polls forms richdocuments
+      # phonetrack
+      # onlyoffice
       spreed;
+      # recognize = pkgs.fetchNextcloudApp {
+      #   url = "https://github.com/nextcloud/recognize/releases/download/v9.0.0/recognize-9.0.0.tar.gz";
+      #   sha256 = "sha256-hhHWCzaSfV41Ysuq4WXjy63mflgEsb2qdGapHE8fuA8=";
+      #   license = "gpl3";
+      #   appName = "recognize";
+      #   appVersion = "9.0.0";
+      # };
       # TODO: wait until snappymail works on NC31
-      # snappymail = pkgs.php.buildComposerProject (finalAttrs: {
-      #   pname = "snappymail";
-      #   version = "2.38.2";
-      #   src = pkgs.fetchFromGitHub {
-      #     owner = "the-djmaze";
-      #     repo = "snappymail";
-      #     rev = "70aebb498188e29e098176e47b7c31c03fc9d20f";
-      #     hash = "sha256-s9xWy/yISny43hQBtEJQx5xYLhdISbOBdWKHathtbLU=";
-      #   };
-      #   composerNoDev = true;
-      #   composerNoPlugins = true;
-      #   composerNoScripts = true;
-      #   vendorHash = "sha256-PCWWu/SqTUGnZXUnXyL8c72p8L14ZUqIxoa5i49XPH4=";
-      #   postInstall = ''
-      #     cp -r $out/share/php/snappymail/* $out/
-      #     rm -r $out/share
-      #   '';
-      # });
+      # snappymail = pkgs.fetchNextcloudApp {
+      #   # url = "https://github.com/the-djmaze/snappymail/releases/download/v2.38.2/snappymail-2.38.2.tar.gz";
+      #   url = "https://github.com/the-djmaze/snappymail/archive/refs/tags/v2.38.2.tar.gz";
+      #   sha256 = "sha256-Jb38nfz8+4tMl4XIIvcW4WrzUi6Ss/uPNGpgv4mElDI=";
+      #   license = "gpl3";
+      # };
     };
-          # snappymail = pkgs.fetchNextcloudApp {
-          #   # url = "https://github.com/the-djmaze/snappymail/releases/download/v2.38.2/snappymail-2.38.2.tar.gz";
-          #   url = "https://github.com/the-djmaze/snappymail/archive/refs/tags/v2.38.2.tar.gz";
-          #   sha256 = "sha256-Jb38nfz8+4tMl4XIIvcW4WrzUi6Ss/uPNGpgv4mElDI=";
-          #   license = "gpl3";
-          # };
+
+    # pfp-fpm optimization settings. For more details refer to this guide:
+    # https://tideways.com/profiler/blog/an-introduction-to-php-fpm-tuning
+    poolSettings = {
+      pm = "dynamic";
+      "pm.max_children" = "200";
+      "pm.start_servers" = "16";     # CPU cores * 4
+      "pm.max_spare_servers" = "16"; # CPU cores * 4
+      "pm.min_spare_servers" = "8";  # CPU cores * 2
+    };
+
+    phpOptions = {
+      "opcache.interned_strings_buffer" = "32"; # Default is 8 MB
+    };
+
+    configureRedis = true;
+    database.createLocally = true;
+    config = {
+      dbtype = "pgsql";
+      adminuser = email;
+      adminpassFile = "/etc/env/nextcloud/adminpass";
+    };
 
     settings = {
       trusted_domains = [ "${ip}" ];
     };
   };
+
+  # Add packages to env path
+  systemd.services.nextcloud-cron.path = [ pkgs.ffmpeg pkgs.perl ];
 
   services.nginx.virtualHosts = {
     "nextcloud.${domain}" = {
