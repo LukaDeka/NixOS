@@ -103,13 +103,13 @@ in
       };
     };
     # Commented out since cloudflare is NOT updating my DNS records...
-    # "${domain}" = { # Redirect root domain to nextcloud subdomain
-    #   forceSSL = true;
-    #   enableACME = true;
-    #   sslCertificate = "/etc/env/ssl/${domain}.pem";
-    #   sslCertificateKey = "/etc/env/ssl/${domain}.key";
-    #   globalRedirect = "nextcloud.${domain}";
-    # };
+    "${domain}" = { # Redirect root domain to nextcloud subdomain
+      forceSSL = true;
+      enableACME = true;
+      sslCertificate = "/etc/env/ssl/${domain}.pem";
+      sslCertificateKey = "/etc/env/ssl/${domain}.key";
+      globalRedirect = "nextcloud.${domain}";
+    };
   };
 
   security.acme = {

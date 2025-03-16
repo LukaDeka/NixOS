@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # A list of domain names to be synced
-declare -a domains=("${VAR_DOMAIN}" "nextcloud.${VAR_DOMAIN}" "seafile.${VAR_DOMAIN}" "collabora.${VAR_DOMAIN}")
+declare -a domains=("${VAR_DOMAIN}" "ddns.${VAR_DOMAIN}" "nextcloud.${VAR_DOMAIN}" "collabora.${VAR_DOMAIN}" "jellyfin.${VAR_DOMAIN}")
 logfile_path="${VAR_HOME_DIR}/nixos/scripts/cloudflare/ddns.log"
 
 auth_email="${VAR_EMAIL}"                           # The email used to login 'https://dash.cloudflare.com'
