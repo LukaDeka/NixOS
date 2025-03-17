@@ -147,13 +147,15 @@ access to outside the home network (e.g. NOT a cloud printer).
 
 The only ports I have forwarded on my router are:
 * `Port 80 (TCP)` for [Let's Encrypt](https://letsencrypt.org/) TLS certificates
-* `Port 443 (TCP)` for hosting Nextcloud (password-protected)
-* `Port 6968 (TCP)` for SSH (pubkey authentication)
+* `Port 443 (TCP)` for hosting Nextcloud and others (password-protected)
+* `Port 6968 (TCP)` for SSH (pubkey auth)
 * `Port 39999 (UDP)` for the Wireguard VPN
 
 # Troubleshooting
 
 > `acme-${domain}.service` failed while rebuilding the system.
-
 You may need to disable `Always Use HTTPS` in Cloudflare's dashboard and turn off the proxy temporarily.
+
+> Cloudflare Obervatory performance test fails with status 403:
+Disable `Security` -> `Bots` -> `Bot Fight Mode` temporarily.
 
