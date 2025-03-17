@@ -68,9 +68,10 @@ in
 
     phpOptions = {
       "opcache.interned_strings_buffer" = "32"; # Default is 8 MB
+      "opcache.jit" = "1255";
+      "opcache.jit_buffer_size" = "8M";
     };
 
-    configureRedis = true;
     database.createLocally = true;
     config = {
       dbtype = "pgsql";
@@ -78,7 +79,14 @@ in
       adminpassFile = "/etc/env/nextcloud/adminpass";
     };
 
+    configureRedis = true;
     settings = {
+      memcache = {
+        local = "\\OC\\Memcache\\Redis";
+        distributed = "\\OC\\Memcache\\Redis";
+        locking = "\\OC\\Memcache\\Redis";
+      };
+
       trusted_domains = [ "${ip}" ];
     };
   };
@@ -102,7 +110,6 @@ in
         '';
       };
     };
-    # Commented out since cloudflare is NOT updating my DNS records...
     "${domain}" = { # Redirect root domain to nextcloud subdomain
       forceSSL = true;
       enableACME = true;
