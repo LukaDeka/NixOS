@@ -170,5 +170,6 @@ Disable `Security` -> `Bots` -> `Bot Fight Mode` temporarily.
 > `nextcloud-occ files:scan --all` - `[file] will not be accessible due to incompatible encoding`:
 
 Convert the file names to the appropriate encoding using:
+
 `convmv -f utf-8 -t utf-8 -r --notest --nfc <nextcloud-data-folder>`
 
