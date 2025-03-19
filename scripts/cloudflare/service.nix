@@ -34,7 +34,6 @@ in
         OnUnitActiveSec = "30m"; # Run every x minutes
         Unit = "duckdns.service";
       };
-      partOf = [ "cf-ddns-updater.service" ];
     };
   };
 }
