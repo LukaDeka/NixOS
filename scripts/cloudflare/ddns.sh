@@ -19,7 +19,7 @@ declare -A is_proxied=(
   ["jellyfin.${VAR_DOMAIN}"]="true"
 )
 
-ttl=3600 # Only applies to non-proxied domains
+ttl=300 # Only applies to non-proxied domains
 
 logfile_path="${VAR_HOME_DIR}/nixos/scripts/cloudflare/ddns.log"
 
