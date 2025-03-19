@@ -1,15 +1,38 @@
 #!/bin/bash
 
 # A list of domain names to be synced
-declare -a domains=("${VAR_DOMAIN}" "ddns.${VAR_DOMAIN}" "nextcloud.${VAR_DOMAIN}" "collabora.${VAR_DOMAIN}" "jellyfin.${VAR_DOMAIN}")
+declare -a domains=(
+  "${VAR_DOMAIN}"
+  "ddns.${VAR_DOMAIN}"
+  "nextcloud.${VAR_DOMAIN}"
+  "collabora.${VAR_DOMAIN}"
+  "jellyfin.${VAR_DOMAIN}"
+)
+
+# Specify which DNS records should point to Cloudflare's
+# proxies and which directly to your public IP
+declare -A is_proxied=(
+  ["${VAR_DOMAIN}"]="true"
+  ["ddns.${VAR_DOMAIN}"]="false"
+  ["nextcloud.${VAR_DOMAIN}"]="true"
+  ["collabora.${VAR_DOMAIN}"]="true"
+  ["jellyfin.${VAR_DOMAIN}"]="true"
+)
+
+ttl=3600 # Only applies to non-proxied domains
+
 logfile_path="${VAR_HOME_DIR}/nixos/scripts/cloudflare/ddns.log"
 
-auth_email="${VAR_EMAIL}"                           # The email used to login 'https://dash.cloudflare.com'
-auth_method="global"                                # Set to "global" for Global API Key or "token" for Scoped API Token
-auth_key="$(< /etc/env/cloudflare/auth_key)"        # Your API Token or Global API Key
-zone_identifier="$(< /etc/env/cloudflare/zone_identifier)" # Can be found in the "Overview" tab of your domain
-ttl=3600                                            # Set the record's time to live (seconds)
-proxy="false"                                       # Set the proxy to true or false
+auth_email="${VAR_EMAIL}" # The email used to login 'https://dash.cloudflare.com'
+auth_method="global"      # Set to "global" for Global API Key or "token" for Scoped API Token
+
+# Your API Token or Global API Key
+auth_key="$(< /etc/env/cloudflare/auth_key)"
+
+# Can be found in the "Overview" tab of your domain
+zone_identifier="$(< /etc/env/cloudflare/zone_identifier)"
+
+
 
 echo "[$(date +'%d/%m/%y %H:%M')] Running script" >> ${logfile_path}
 
@@ -17,15 +40,15 @@ echo "[$(date +'%d/%m/%y %H:%M')] Running script" >> ${logfile_path}
 # Check if we have a public IP
 ipv4_regex='([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])'
 ip=$(curl -s -4 https://cloudflare.com/cdn-cgi/trace | grep -E '^ip'); ret=$?
-if [[ ! $ret == 0 ]]; then # In the case that cloudflare failed to return an ip.
-    # Attempt to get the ip from other websites.
+if [[ ! $ret == 0 ]]; then # In the case that Cloudflare failed to return an IP
+    # Attempt to get the IP from other websites
     ip=$(curl -s https://api.ipify.org || curl -s https://ipv4.icanhazip.com)
 else
-    # Extract just the ip from the ip line from cloudflare.
+    # Extract just the IP from the IP line from Cloudflare
     ip=$(echo "$ip" | sed -E "s/^ip=($ipv4_regex)$/\1/")
 fi
 
-# Use regex to check for proper IPv4 format.
+# Use regex to check for proper IPv4 format
 if [[ ! $ip =~ ^$ipv4_regex$ ]]; then
     echo "DDNS Updater: Failed to find a valid IP" >&2
     echo "[$(date +'%d/%m/%y %H:%M')] Failed to find a valid IP. Got: ${ip}" >> ${logfile_path}
@@ -66,7 +89,9 @@ for record_name in "${domains[@]}"; do
   # Set the record identifier from result
   record_identifier=$(echo "$record" | sed -E 's/.*"id":"([A-Za-z0-9_]+)".*/\1/')
 
-  # Change the IP@Cloudflare using the API
+  proxy="${is_proxied[$record_name]}"
+
+  # Update the IP using the API
   update=$(curl -s -X PATCH "https://api.cloudflare.com/client/v4/zones/$zone_identifier/dns_records/$record_identifier" \
     -H "X-Auth-Email: $auth_email" \
     -H "$auth_header $auth_key" \
