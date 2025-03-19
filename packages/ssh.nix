@@ -10,10 +10,10 @@ in
     ports = [ 6968 ];
     settings = {
       PasswordAuthentication = false;
-      AllowUsers = [ "${username}" ]; # Only allow your user to login
+      AllowUsers = [ "${username}" "root" ]; # Only allow your user to login
       UseDns = true;
       X11Forwarding = false;
-      PermitRootLogin = "no";
+      PermitRootLogin = "prohibit-password";
     };
   };
 
@@ -38,3 +38,4 @@ in
     # allowedUDPPorts = [];
   };
 }
+
