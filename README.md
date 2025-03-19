@@ -159,3 +159,7 @@ You may need to disable `Always Use HTTPS` in Cloudflare's dashboard and turn of
 > Cloudflare Obervatory performance test fails with status 403:
 Disable `Security` -> `Bots` -> `Bot Fight Mode` temporarily.
 
+> `nextcloud-occ files:scan --all` - `[file] will not be accessible due to incompatible encoding`:
+Convert the file names to the appropriate encoding using:
+`convmv -f utf-8 -t utf-8 -r --notest --nfc <nextcloud-data-folder>`
+
