@@ -8,41 +8,42 @@ can be set in `configuration.nix`, so that there aren't many hard-coded values.
 
 > [!CAUTION]
 > Do not clone my configuration blindly without understanding how each
-> component works. Make sure you handle your and others' data responsibly
-> and add services/features one-by-one.
+> component works. Make sure you handle your and others' data responsibly.
 
 # Cloudflare
 
 If your router is behind a CGNAT or you're unable to forward ports in your router/firewall,
 using `Cloudflare Zero Trust` is a must. I don't have it set up since there's no need.
 
-Cloudflare also allows you to use their proxy, if you don't want your IP address exposed to
-the public (in your DNS records), and want to enable *Geoblocking, DDOS protection, WAF rules*
-and many other useful features.
+Cloudflare also allows you to use their proxies, if you don't want your IP address exposed to
+the public (in your DNS records), and want to enable *Geoblocking, DDOS protection, WAF rules,*
+*their Content Delivery Network (CDN)* and many other useful features.
 
 ## DNS setup
 
-After purchasing your domain, set the nameservers so Cloudflare's ones in your domain
+After purchasing your domain, set the nameservers to Cloudflare's ones in your domain
 registarar's website. After the records have propagated, proceed with the setup and
 make the DNS records for the services you want available outside the home network.
 You can set a placeholder IP address in the `Content` tab since the script located in
-`scripts/cloudflare/ddns.sh` updates the records similarly to *DuckDNS*. Check the log
-in the same directory to see if it succeeded.
+`scripts/cloudflare/ddns.sh` updates the records (more on that in the next section).
 
 > [!IMPORTANT]
 > If you decide to use Cloudflare's proxies (set in the `DNS` section), **make sure to enable**
 > `Full (strict)` **encryption under** `SSL/TLS` to ensure proper encryption.
-> Refer to [this blog by Cloudflare](https://community.cloudflare.com/t/why-you-should-choose-full-strict-and-only-full-strict/286652) for details.
+> Refer to [this blog by Cloudflare](https://community.cloudflare.com/t/why-you-should-choose-full-strict-and-only-full-strict/286652) for why this is important.
 
 
-# DuckDNS
+## DDNS
 
-[DuckDNS](https://www.duckdns.org/) allows you to create a Dynamic DNS (DDNS) record that points to
-your dynamic IP address. This is very useful when you don't have a static IP address
-from your ISP and want a reliable way to have a hostname resolve to your IP.
+Using Cloudflare's API and a script you can update your residential public IP every time it changes.
+This is very useful when you don't have a static IP address from your ISP and want a reliable way
+to have hostnames resolve to your IP.
 
-I'm running a *systemd service* in `scripts/duckdns/service.nix` every 30 minutes that tries
-to update the IP address, in case it has changed.
+This is necessary if you want to access basically any service outside of your home network (LAN).
+Remembering a record name is also much easier than remembering an IP address.
+
+I'm running a *systemd service* in `scripts/cloudflare/service.nix` every 30 minutes that tries
+to update the IP address for all subdomains in Cloudflare, in case it has changed.
 
 
 # Nextcloud
@@ -103,12 +104,15 @@ easy and convenient ad-blocking features are unavailable (e.g. mobile apps). Thi
 DNS queries and website loading faster. Compared to only using a browser extention, the queries
 aren't sent outside the local network and the resources aren't loaded before being blocked by the extention.
 
+Setting up your own DNS server also allowes you to bypass Cloudflare's proxies on your home network by creating
+local records pointing directly to the local IP, which allows you to load the resources significantly faster.
+
 > [!TIP]
 > Set both the DNS servers to the static IP of your server in your router's admin interface,
 > otherwise ad-blocking won't be so effective.
 
 > [!NOTE]
-> If your server becomes unavailable, DNS queries won't be resolved.
+> If your server becomes unavailable, DNS queries won't be resolved and your internet will become unusable.
 
 
 # Cloud printing
@@ -147,7 +151,7 @@ access to outside the home network (e.g. NOT a cloud printer).
 
 The only ports I have forwarded on my router are:
 * `Port 80 (TCP)` for [Let's Encrypt](https://letsencrypt.org/) TLS certificates
-* `Port 443 (TCP)` for hosting Nextcloud and others (password-protected)
+* `Port 443 (TCP)` hosting websites with reverse-proxy nginx
 * `Port 6968 (TCP)` for SSH (pubkey auth)
 * `Port 39999 (UDP)` for the Wireguard VPN
 
