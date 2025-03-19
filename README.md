@@ -157,13 +157,18 @@ The only ports I have forwarded on my router are:
 
 # Troubleshooting
 
-> `acme-${domain}.service` failed while rebuilding the system.
+> `acme-${domain}.service failed while rebuilding the system`:
+
 You may need to disable `Always Use HTTPS` in Cloudflare's dashboard and turn off the proxy temporarily.
 
+
 > Cloudflare Obervatory performance test fails with status 403:
+
 Disable `Security` -> `Bots` -> `Bot Fight Mode` temporarily.
 
+
 > `nextcloud-occ files:scan --all` - `[file] will not be accessible due to incompatible encoding`:
+
 Convert the file names to the appropriate encoding using:
 `convmv -f utf-8 -t utf-8 -r --notest --nfc <nextcloud-data-folder>`
 
