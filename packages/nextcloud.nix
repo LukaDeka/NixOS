@@ -88,6 +88,8 @@ in
       };
 
       trusted_domains = [ "${ip}" ];
+
+      filesystem_check_changes = "1"; # Check for changes outside of NC
     };
   };
 
