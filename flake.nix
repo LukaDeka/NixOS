@@ -38,7 +38,6 @@
 
           ######## Scripts ########
           ./scripts/cloudflare/service.nix # Dynamic IP updater scripts
-          ./scripts/duckdns/service.nix
           ./scripts/zfs/service.nix # Uptime Kuma monitoring
 
           ######## User-specific ########
