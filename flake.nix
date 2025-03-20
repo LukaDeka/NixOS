@@ -13,6 +13,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/berlin/configuration.nix
+          # ./hosts/berlin/bindfs.nix
 
           ######## Server configuration ########
           ./packages/nextcloud.nix
