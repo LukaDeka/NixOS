@@ -61,9 +61,9 @@ in
     poolSettings = {
       pm = "dynamic";
       "pm.max_children" = "200";
-      "pm.start_servers" = "16";     # CPU cores * 4
-      "pm.max_spare_servers" = "16"; # CPU cores * 4
-      "pm.min_spare_servers" = "8";  # CPU cores * 2
+      "pm.start_servers" = "16";
+      "pm.max_spare_servers" = "64";
+      "pm.min_spare_servers" = "16";
     };
 
     phpOptions = {
@@ -90,6 +90,7 @@ in
       trusted_domains = [ "${ip}" ];
 
       filesystem_check_changes = "1"; # Check for changes outside of NC
+      maintenance_window_start = "1"; # Run bg jobs between 01:00-05:00 UTC
     };
   };
 
