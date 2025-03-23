@@ -17,11 +17,11 @@
 
           ######## Server configuration ########
           ./packages/nextcloud.nix
-          # ./packages/seafile.nix # File server
           ./packages/jellyfin.nix # Media server
-          # ./packages/vaultwarden.nix # Password manager
           ./packages/nginx.nix # Recommended settings
           ./packages/uptime-kuma.nix # Monitoring
+          # ./packages/seafile.nix # File server
+          # ./packages/vaultwarden.nix # Password manager
 
           ######## Networking ########
           ./packages/ssh.nix

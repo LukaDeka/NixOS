@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 let
   domain = config.vars.domain;
@@ -9,6 +9,7 @@ in
 {
   services.seafile = {
     enable = true;
+    seahubPackage = inputs.nixpkgs-stable.legacyPackages.${pkgs.system}.seahub;
     adminEmail = email;
     initialAdminPassword = "mananakitrisad";
     ccnetSettings.General.SERVICE_URL = "https://seafile.${domain}";
