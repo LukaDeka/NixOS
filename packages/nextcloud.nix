@@ -37,6 +37,7 @@ in
       previewgenerator memories notes # maps
       end_to_end_encryption unroundedcorners
       polls forms richdocuments
+      # news
       # phonetrack
       # onlyoffice
       spreed;
@@ -91,6 +92,7 @@ in
 
       filesystem_check_changes = "1"; # Check for changes outside of NC
       maintenance_window_start = "1"; # Run bg jobs between 01:00-05:00 UTC
+      simpleSignUpLink.shown = "false"; # Remove signup option when sharing
     };
   };
 
