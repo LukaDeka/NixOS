@@ -16,6 +16,8 @@ in
       gp = "git push";
       gr = "git restore";
 
+      du = "du -sh";
+
       ".." = "cd ..";
 
       n = "cd ${homeDir}/nixos";
