@@ -39,6 +39,8 @@
           ######## Scripts ########
           ./scripts/cloudflare/service.nix # Dynamic IP updater scripts
           ./scripts/zfs/service.nix # Uptime Kuma monitoring
+          ./scripts/virtualisation/update-containers.nix # Runs podman pull weekly
+          ./scripts/virtualisation/restart-pihole.nix
 
           ######## User-specific ########
           ./hosts/berlin/wireguard.nix # VPN
