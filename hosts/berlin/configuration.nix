@@ -62,6 +62,7 @@
     wireguard-tools
     dig
     ffmpeg
+    unzip
 
     ######## Etc. ########
     cowsay
