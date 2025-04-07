@@ -173,3 +173,8 @@ Convert the file names to the appropriate encoding using:
 
 `convmv -f utf-8 -t utf-8 -r --notest --nfc <nextcloud-data-folder>`
 
+> `/nix/store` entry does not get found for nextcloud
+
+The old nix store entries get incorrectly garbage collected by Nix. To fix, specify the `/nix/store`
+path manually.
+
