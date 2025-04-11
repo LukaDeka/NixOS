@@ -47,6 +47,7 @@ in
     };
   };
 
+  # TODO: Update the way these records are loaded and make it more declarative
   # Create local records to point to the server directly
   # to bypass Cloudflare proxies
   system.activationScripts.copyLocalRecords = ''
