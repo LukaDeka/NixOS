@@ -90,8 +90,23 @@ in
 
       trusted_domains = [ "${ip}" ];
 
+      default_phone_region = "DE";
+      default_language = "en";
+      default_locale = "de_DE";
+      reduce_to_languages = [ "en" "de" "ge" "ru" ]; # Only show these languages
+
+      knowledgebaseenabled = false; # Disable help menu
+      lost_password_link = "disabled"; # Disable "reset password"
+      trashbin_retention_obligation = "auto, 15"; # Delete files after 15 days
+
+      preview_max_x = "2048"; # Save on filesize, default is 4096x4096
+      preview_max_y = "2048";
+
+      ldapUserCleanupInterval = "7200"; # Clean up deleted users every 5 days
+      upgrade.disable-web = false;
+
       filesystem_check_changes = "1"; # Check for changes outside of NC
-      maintenance_window_start = "1"; # Run bg jobs between 01:00-05:00 UTC
+      maintenance_window_start = "1"; # Run BG jobs between 01:00-05:00 UTC
       simpleSignUpLink.shown = "false"; # Remove signup option when sharing
     };
   };
