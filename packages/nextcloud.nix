@@ -36,7 +36,7 @@ in
       inherit calendar contacts deck
       previewgenerator memories notes # maps
       end_to_end_encryption unroundedcorners
-      polls forms richdocuments
+      forms richdocuments
       # news
       # phonetrack
       # onlyoffice
