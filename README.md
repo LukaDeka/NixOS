@@ -104,12 +104,12 @@ easy and convenient ad-blocking features are unavailable (e.g. mobile apps). Thi
 DNS queries and website loading faster. Compared to only using a browser extention, the queries
 aren't sent outside the local network and the resources aren't loaded before being blocked by the extention.
 
-Setting up your own DNS server also allowes you to bypass Cloudflare's proxies on your home network by creating
-local records pointing directly to the local IP, which allows you to load the resources significantly faster.
+Setting up your own DNS server also allows you to bypass Cloudflare's proxies on your home network by creating
+local records pointing directly to the local IP, which loads the resources significantly faster.
 
 > [!TIP]
 > Set both the DNS servers to the static IP of your server in your router's admin interface,
-> otherwise ad-blocking won't be so effective.
+> otherwise ad-blocking won't be effective.
 
 > [!NOTE]
 > If your server becomes unavailable, DNS queries won't be resolved and your internet will become unusable.
@@ -171,10 +171,10 @@ Disable `Security` -> `Bots` -> `Bot Fight Mode` temporarily.
 
 Convert the file names to the appropriate encoding using:
 
-`convmv -f utf-8 -t utf-8 -r --notest --nfc <nextcloud-data-folder>`
+`convmv -f utf-8 -t utf-8 -r --nfc <nextcloud-data-folder>`
 
-> `/nix/store` entry does not get found for nextcloud
+> `/nix/store` entry does not get found for Nextcloud
 
-The old nix store entries get incorrectly garbage collected by Nix. To fix, specify the `/nix/store`
-path manually.
+The old nix store entries get incorrectly garbage collected by Nix. To fix this, specify the `/nix/store`
+path manually in `config.php`.
 
