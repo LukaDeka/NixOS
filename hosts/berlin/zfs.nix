@@ -16,6 +16,13 @@
   services.zfs = {
     autoSnapshot = {
       enable = true;
+
+      monthly = 4;
+      weekly = 4;
+      daily = 7;
+      hourly = 24;
+      frequent = 4;
+
       flags = "-k -p --utc";
     };
 
