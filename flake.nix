@@ -13,7 +13,6 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/berlin/configuration.nix
-          # ./hosts/berlin/bindfs.nix
 
           ######## Server configuration ########
           ./packages/nextcloud.nix
@@ -26,6 +25,7 @@
           ######## Networking ########
           ./packages/ssh.nix
           ./packages/pihole.nix # DNS server/adblocker
+          ./packages/incus.nix # VMs
           # ./packages/deluge.nix # Torrent client
 
           ######## Text editors/navigation ########
