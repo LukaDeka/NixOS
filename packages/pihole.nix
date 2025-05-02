@@ -15,8 +15,8 @@ in
   virtualisation.oci-containers.containers.pihole = {
     image = "pihole/pihole:latest";
     ports = [
-      "0.0.0.0:53:53/tcp" # Accept DNS queries from all IPs TODO: Restrict to local network
-      "0.0.0.0:53:53/udp"
+      "${ip}:53:53/tcp"
+      "${ip}:53:53/udp"
       "3080:80"
       "30443:443"
     ];
