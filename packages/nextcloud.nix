@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   storageDir = config.vars.storageDir;
@@ -40,13 +40,17 @@ in
       # news
       # phonetrack
       # onlyoffice
+      # recognize
       spreed;
-      # recognize = pkgs.fetchNextcloudApp {
-      #   url = "https://github.com/nextcloud/recognize/releases/download/v9.0.0/recognize-9.0.0.tar.gz";
-      #   sha256 = "sha256-hhHWCzaSfV41Ysuq4WXjy63mflgEsb2qdGapHE8fuA8=";
+      # epubviewer = pkgs.fetchNextcloudApp {
+      #   url = "https://github.com/devnoname120/epubviewer/releases/download/1.7.3/epubviewer-1.7.3.tar.gz";
+      #   sha256 = "sha256-XOU6adVhi2ek7/Ri36XjMre55tfMFGkSLgkUKdGiMNc=";
       #   license = "gpl3";
-      #   appName = "recognize";
-      #   appVersion = "9.0.0";
+      # };
+      # facerecognition = pkgs.fetchNextcloudApp {
+      #   url = "https://github.com/matiasdelellis/facerecognition/archive/refs/tags/v0.9.70.tar.gz";
+      #   sha256 = "sha256-yx+nuIDgd6+h5YD5/mT2+IpmuU3aXwGLAFUm67e88aY=";
+      #   license = "gpl3";
       # };
       # TODO: wait until snappymail works on NC31
       # snappymail = pkgs.fetchNextcloudApp {
