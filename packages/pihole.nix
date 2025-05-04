@@ -17,8 +17,12 @@ in
     ports = [
       "${ip}:53:53/tcp"
       "${ip}:53:53/udp"
-      "3080:80"
-      "30443:443"
+      "${ip}:3080:80/tcp"
+      "${ip}:30443:443/tcp"
+      # "0.0.0.0:53:53/tcp"
+      # "0.0.0.0:53:53/udp"
+      # "3080:80"
+      # "30443:443"
     ];
 
     volumes = [
@@ -31,11 +35,11 @@ in
     extraOptions = [
       "--cap-add=NET_ADMIN"
       "--dns=127.0.0.1"
-      "--dns=1.1.1.1"
+      "--dns=9.9.9.9"
     ];
   };
 
-  networking.firewall.allowedTCPPorts = [ 53 ];
+  networking.firewall.allowedTCPPorts = [ 53 3080 30443 ];
   networking.firewall.allowedUDPPorts = [ 53 ];
 
   # Auto-prune old containers
