@@ -15,12 +15,12 @@ in
   virtualisation.oci-containers.containers.pihole = {
     image = "pihole/pihole:latest";
     ports = [
-      "${ip}:53:53/tcp"
-      "${ip}:53:53/udp"
+      # "${ip}:53:53/tcp"
+      # "${ip}:53:53/udp"
       "${ip}:3080:80/tcp"
       "${ip}:30443:443/tcp"
-      # "0.0.0.0:53:53/tcp"
-      # "0.0.0.0:53:53/udp"
+      "0.0.0.0:53:53/tcp"
+      "0.0.0.0:53:53/udp"
       # "3080:80"
       # "30443:443"
     ];
