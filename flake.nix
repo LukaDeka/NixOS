@@ -43,7 +43,7 @@
           ./scripts/virtualisation/restart-pihole.nix
 
           ######## User-specific ########
-          ./hosts/berlin/wireguard.nix # VPN
+          # ./hosts/berlin/wireguard.nix # VPN
           ./hosts/berlin/zfs.nix # Raid
           ./hosts/berlin/printing.nix # Cloud printing advertised to LAN
         ];
