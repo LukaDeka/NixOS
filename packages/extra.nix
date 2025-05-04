@@ -6,13 +6,6 @@
     AllowSuspend=no
   '';
 
-    # AllowHibernation=no
-    # AllowHybridSleep=no
-    # AllowSuspendThenHibernate=no
-  # services.logind.lidSwitch = "ignore";
-  # services.logind.lidSwitchExternalPower = "ignore";
-  # services.logind.lidSwitchDocked = "ignore";
-
   # Prevents the overheating of Intel CPUs
   services.thermald.enable = true;
 
@@ -51,11 +44,15 @@
   networking.wireless.enable = false; # Use Wi-Fi wia NetworkManager
   networking.networkmanager.enable = true;
 
-  # Rename the network interface
+  # Rename the network interfaces
   systemd.network.links = {
     "10-eth0" = {
       matchConfig.PermanentMACAddress = config.vars.ethernetMAC;
       linkConfig.Name = "eth0";
+    };
+    "10-wlan0" = {
+      matchConfig.PermanentMACAddress = config.vars.wirelessMAC;
+      linkConfig.Name = "wlan0";
     };
   };
 

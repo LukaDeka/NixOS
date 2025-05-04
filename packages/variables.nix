@@ -55,6 +55,13 @@
       default = null;
     };
 
+    wirelessMAC = lib.mkOption {
+      type = lib.types.str;
+      description = "The MAC address of the main wireless interface to be renamed.";
+      example = "00:B0:D0:63:C2:26";
+      default = null;
+    };
+
     storageDir = lib.mkOption {
       type = lib.types.str;
       description = "The path where to store data/databases. Change if you mounted additional drives.";
@@ -90,6 +97,9 @@
     }
     {
       assertion = options.vars.ethernetMAC.isDefined;
+    }
+    {
+      assertion = options.vars.wirelessMAC.isDefined;
     }
   ];
 }

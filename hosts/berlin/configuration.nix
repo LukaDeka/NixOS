@@ -14,6 +14,7 @@
   vars.ddnsDomain = "lukadeka.duckdns.org";
   vars.ip = "10.10.10.10";
   vars.ethernetMAC = "54:e1:ad:6e:4e:d1";
+  vars.wirelessMAC = "ea:2e:1b:6c:2a:0c";
   vars.storageDir = "/zfs";
 
   time.timeZone = "Europe/Berlin";
