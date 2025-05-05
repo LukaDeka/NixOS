@@ -44,15 +44,11 @@
   networking.wireless.enable = false; # Use Wi-Fi wia NetworkManager
   networking.networkmanager.enable = true;
 
-  # Rename the network interfaces
+  # Rename the network interface
   systemd.network.links = {
     "10-eth0" = {
       matchConfig.PermanentMACAddress = config.vars.ethernetMAC;
       linkConfig.Name = "eth0";
-    };
-    "10-wlan0" = {
-      matchConfig.PermanentMACAddress = config.vars.wirelessMAC;
-      linkConfig.Name = "wlan0";
     };
   };
 
