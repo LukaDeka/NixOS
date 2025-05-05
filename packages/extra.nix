@@ -41,7 +41,7 @@
   };
 
   networking.hostName = config.vars.hostname; # Set the device hostname
-  networking.wireless.enable = false; # Use Wi-Fi wia NetworkManager
+  networking.wireless.enable = false; # Use Wi-Fi via NetworkManager
   networking.networkmanager.enable = true;
 
   # Rename the network interface
