@@ -69,6 +69,7 @@
     qrencode
     iptables
     openssl # Generate secure passwords with: $ openssl rand -base64 48
+    distrobuilder
   ];
 
   # This value determines the NixOS release from which the default
