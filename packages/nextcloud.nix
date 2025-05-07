@@ -65,10 +65,10 @@ in
     # https://tideways.com/profiler/blog/an-introduction-to-php-fpm-tuning
     poolSettings = {
       pm = "dynamic";
-      "pm.max_children" = "200";
-      "pm.start_servers" = "16";
-      "pm.max_spare_servers" = "64";
-      "pm.min_spare_servers" = "16";
+      "pm.max_children" = "129";
+      "pm.start_servers" = "32";
+      "pm.min_spare_servers" = "32";
+      "pm.max_spare_servers" = "96";
     };
 
     phpOptions = {
