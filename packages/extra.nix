@@ -91,7 +91,7 @@
 
     gc = {
       automatic = true;
-      dates = "weekly";
+      dates = "Fri *-*-* 04:00:00";
       options = "--delete-older-than 14d";
     };
   };
