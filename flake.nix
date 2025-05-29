@@ -47,6 +47,7 @@
           ./hosts/berlin/wireguard.nix # VPN
           ./hosts/berlin/zfs.nix # Raid
           ./hosts/berlin/printing.nix # Cloud printing advertised to LAN
+          ./hosts/berlin/retroarch.nix # Retro game emulation
         ];
       };
 
