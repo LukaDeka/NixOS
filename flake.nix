@@ -19,6 +19,7 @@
           ./packages/jellyfin.nix # Media server
           ./packages/nginx.nix # Recommended settings
           ./packages/uptime-kuma.nix # Monitoring
+          ./packages/retroarch.nix # Retro game emulation
           ./packages/craftycontroller.nix
           # ./packages/seafile.nix # File server
           # ./packages/vaultwarden.nix # Password manager
@@ -47,7 +48,6 @@
           ./hosts/berlin/wireguard.nix # VPN
           ./hosts/berlin/zfs.nix # Raid
           ./hosts/berlin/printing.nix # Cloud printing advertised to LAN
-          ./hosts/berlin/retroarch.nix # Retro game emulation
         ];
       };
 

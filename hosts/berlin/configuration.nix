@@ -50,19 +50,25 @@
     fzf # TODO: Learn how to use fzf
 
     ######## Monitoring & tools ########
-    fastfetch
     zfs # Raid
+    ffmpeg
+    fastfetch
+    wireguard-tools
     btop # Task manager
     iotop
     dool # dstat "fork"
     acpi # Battery level
     ncdu # Disk space
-    hdparm
+    usbutils
     smartmontools # smartctl
-    wireguard-tools
+    hdparm
     dig
-    ffmpeg
     unzip
+
+    bluez
+    bluez-tools
+    bluetui # TUI for bluetooth
+    alsa-utils # For speaker-test
 
     ######## Etc. ########
     cowsay
