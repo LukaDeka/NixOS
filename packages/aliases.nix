@@ -10,7 +10,7 @@ in
       ll = "ls -Ahlv --time-style=iso --group-directories-first";
       l  = "ls -hgov --time-style=iso --group-directories-first";
 
-      done = "speaker-test -t wav -w /=${homeDir}/nixos/misc/done_sfx.wav -l 1 >/dev/null";
+      done = "speaker-test -t wav -w ${homeDir}/nixos/misc/done_sfx.wav -l 1 >/dev/null";
 
       gs = "git status";
       ga = "git add .";
