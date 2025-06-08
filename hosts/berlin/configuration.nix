@@ -66,9 +66,6 @@
     dig
     unzip
 
-    bluez
-    bluez-tools
-    bluetui # TUI for bluetooth
     alsa-utils # For speaker-test
 
     ######## Etc. ########

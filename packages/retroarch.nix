@@ -43,16 +43,15 @@
   hardware.graphics.enable32Bit = true;
 
   # Enable bluetooth for controllers
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-
-    settings = {
-      General = {
-        ControllerMode = "bredr";
-      };
-    };
-  };
+  # hardware.bluetooth = {
+  #   enable = true;
+  #   powerOnBoot = true;
+  #   settings = {
+  #     General = {
+  #       ControllerMode = "bredr";
+  #     };
+  #   };
+  # };
 
   # Audio settings
   services.pipewire = {
