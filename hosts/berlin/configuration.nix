@@ -67,6 +67,7 @@
     unzip
 
     alsa-utils # For speaker-test
+    powertop
 
     ######## Etc. ########
     cowsay
