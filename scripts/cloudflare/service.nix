@@ -32,7 +32,7 @@ in
       timerConfig = {
         Persistent = true; # Execute immediately if missed
         OnUnitActiveSec = "30m"; # Run every x minutes
-        Unit = "duckdns.service";
+        Unit = "cf-ddns-updater.service";
       };
     };
   };
