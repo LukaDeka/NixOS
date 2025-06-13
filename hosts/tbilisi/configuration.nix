@@ -1,22 +1,23 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ../../packages/variables.nix # Provides config.vars.<option>
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../packages/variables.nix # Provides config.vars.<option>
+  ];
 
   vars.username = "luka";
   vars.hostname = "tbilisi";
   vars.email = "luka.dekanozishvili1@gmail.com";
   vars.domain = "dekanozishvili.cloud";
-  vars.ddnsDomain = "lukatbilisi.duckdns.org";
   vars.ip = "192.168.1.50";
   vars.ethernetMAC = "28:d2:44:e8:bc:b5";
   vars.storageDir = "/zfs";
 
   time.timeZone = "Asia/Tbilisi";
+
+  # Never prompt "wheel" users for a root password; potential security issue!
+  security.sudo.wheelNeedsPassword = false;
 
   users.users.${config.vars.username} = {
     isNormalUser = true;
@@ -29,39 +30,9 @@
   };
 
   environment.systemPackages = with pkgs; [
-    ######## Text editors ########
-    vim
-    # lunarvim
-    # helix
-    # nil # Nix language server
-
-    ######## CLI tools ########
-    tmux
-    wget
-    wireguard-tools
-
-    ######## Monitoring & tools ########
-    fastfetch
     zfs # Raid
-    btop # Task manager
-    dool # dstat "fork"
-    acpi # Battery level
-    ncdu # Disk space
-    hdparm
-    smartmontools # smartctl
-
-    ######## Etc. ########
-    zfs
-    iptables
-    openssl # Generate secure passwords with: $ openssl rand -base64 48
   ];
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "24.05";
 }
 
