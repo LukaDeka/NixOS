@@ -65,7 +65,7 @@
           ######## User-specific ########
           ./hosts/tbilisi/configuration.nix
           ./packages/laptop-server.nix
-          # ./packages/common-packages.nix # TODO: Add this
+          ./packages/common-packages.nix
 
           ./hosts/tbilisi/wireguard.nix
           ./hosts/tbilisi/zfs.nix
@@ -78,7 +78,7 @@
           ./packages/nginx.nix
 
           ######## Networking ########
-          ./packages/ssh.nix
+          ./packages/server-ssh.nix
 
           ######## Text editors/navigation ########
           ./packages/neovim.nix
@@ -89,7 +89,6 @@
 
           ######## Scripts ########
           ./scripts/cloudflare/service.nix
-          ./scripts/duckdns/service.nix
           ./scripts/zfs/service.nix
         ];
       };
