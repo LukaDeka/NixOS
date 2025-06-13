@@ -2,7 +2,6 @@
 
 let
   username = config.vars.username;
-  hostname = config.vars.hostname;
 in
 {
   services.openssh = {
@@ -23,14 +22,6 @@ in
     ignoreIP = [ "143.58.100.0/24" ];
   };
 
-  # Open ports in the firewall:
-  #
-  # 53    TCP/UDP - DNS queries to Pihole
-  # 80    TCP     - nginx
-  # 443   TCP     - nginx
-  # 6968  TCP     - SSH
-  # 25565 TCP     - Minecraft server
-  # 39999     UDP - WireGuard VPN
   networking.firewall = {
     enable = true;
 
