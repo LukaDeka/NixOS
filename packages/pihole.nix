@@ -38,15 +38,6 @@ in
   networking.firewall.allowedTCPPorts = [ 53 3080 30443 ];
   networking.firewall.allowedUDPPorts = [ 53 ];
 
-  # Auto-prune old containers
-  virtualisation.podman = {
-    enable = true;
-    autoPrune = {
-      enable = true;
-      flags = [ "--all" ];
-    };
-  };
-
   # TODO: Update the way these records are loaded and make it more declarative
   # Create local records to point to the server directly
   # to bypass Cloudflare proxies

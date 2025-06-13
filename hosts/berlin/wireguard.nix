@@ -1,8 +1,5 @@
 { config, pkgs, ... }:
 
-let
-  homeDir = config.vars.homeDir;
-in
 {
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1; # Enable IP forwarding
 
@@ -22,16 +19,12 @@ in
       postUp = ''
         ${pkgs.iptables}/bin/iptables -A FORWARD -i wg0 -j ACCEPT
         ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.20.20.0/24 -o br0 -j MASQUERADE
-        ${pkgs.iptables}/bin/ip6tables -A FORWARD -i wg0 -j ACCEPT
-        ${pkgs.iptables}/bin/ip6tables -t nat -A POSTROUTING -s fdc9:281f:04d7:9ee9::1/64 -o br0 -j MASQUERADE
       '';
 
       # Undo the above
       preDown = ''
         ${pkgs.iptables}/bin/iptables -D FORWARD -i wg0 -j ACCEPT
         ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.20.20.0/24 -o br0 -j MASQUERADE
-        ${pkgs.iptables}/bin/ip6tables -D FORWARD -i wg0 -j ACCEPT
-        ${pkgs.iptables}/bin/ip6tables -t nat -D POSTROUTING -s fdc9:281f:04d7:9ee9::1/64 -o br0 -j MASQUERADE
       '';
 
       peers = [
@@ -40,7 +33,7 @@ in
           presharedKeyFile = "/etc/env/wireguard/psk";
           allowedIPs = [ "10.20.20.20/32" ];
         }
-        { # Moto G30
+        { # S
           publicKey = "vBlpzpyMa170OQL97Zj0bWCJwV0azpSGBnPVUIsJy1Y=";
           allowedIPs = [ "10.20.20.30/32" ];
         }

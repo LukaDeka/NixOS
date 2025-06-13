@@ -4,15 +4,25 @@
   inputs = {
     nixpkgs.url =        "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nixpkgs, ... } @ inputs: {
+  outputs = { nixpkgs, disko, ... } @ inputs: {
     nixosConfigurations = {
       berlin = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
+          ######## User-specific ########
           ./hosts/berlin/configuration.nix
+          ./packages/common-packages.nix
+          ./packages/laptop-server.nix
+
+          # ./hosts/berlin/wireguard.nix # VPN
+          ./hosts/berlin/zfs.nix # Raid
+          ./hosts/berlin/printing.nix # Cloud printing advertised to LAN
+
 
           ######## Server configuration ########
           ./packages/nextcloud.nix
@@ -25,7 +35,9 @@
           # ./packages/vaultwarden.nix # Password manager
 
           ######## Networking ########
-          ./packages/ssh.nix
+          ./packages/server-ssh.nix
+          ./packages/wireguard-client.nix
+          ./packages/virtualization.nix
           ./packages/pihole.nix # DNS server/adblocker
           ./packages/incus.nix # VMs
           # ./packages/deluge.nix # Torrent client
@@ -39,15 +51,10 @@
           ./packages/aliases.nix # BASH aliases
 
           ######## Scripts ########
-          ./scripts/cloudflare/service.nix # Dynamic IP updater scripts
+          # ./scripts/cloudflare/service.nix # Dynamic IP updater scripts
           ./scripts/zfs/service.nix # Uptime Kuma monitoring
           ./scripts/virtualisation/update-containers.nix # Runs podman pull weekly
           ./scripts/virtualisation/restart-pihole.nix
-
-          ######## User-specific ########
-          ./hosts/berlin/wireguard.nix # VPN
-          ./hosts/berlin/zfs.nix # Raid
-          ./hosts/berlin/printing.nix # Cloud printing advertised to LAN
         ];
       };
 
@@ -55,7 +62,14 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
+          ######## User-specific ########
           ./hosts/tbilisi/configuration.nix
+          ./packages/laptop-server.nix
+          # ./packages/common-packages.nix # TODO: Add this
+
+          ./hosts/tbilisi/wireguard.nix
+          ./hosts/tbilisi/zfs.nix
+          ./hosts/tbilisi/printing.nix
 
           ######## Server configuration ########
           ./packages/seafile.nix
@@ -77,11 +91,30 @@
           ./scripts/cloudflare/service.nix
           ./scripts/duckdns/service.nix
           ./scripts/zfs/service.nix
+        ];
+      };
 
+      hetzner = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
           ######## User-specific ########
-          ./hosts/tbilisi/wireguard.nix
-          ./hosts/tbilisi/zfs.nix
-          ./hosts/tbilisi/printing.nix
+          ./hosts/gateway/configuration.nix
+          ./hosts/gateway/disk-config.nix
+          ./packages/common-packages.nix
+          disko.nixosModules.disko
+
+          ######## Networking ########
+          ./packages/gateway-ssh.nix
+          ./packages/virtualization.nix
+          ./packages/wireguard-server.nix
+
+          ######## Text editors/navigation ########
+          ./packages/neovim.nix
+
+          ######## etc. ########
+          ./packages/extra.nix
+          ./packages/aliases.nix
         ];
       };
     };
