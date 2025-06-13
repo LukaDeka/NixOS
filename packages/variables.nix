@@ -82,12 +82,12 @@
     {
       assertion = options.vars.email.isDefined;
     }
-    {
-      assertion = options.vars.ddnsDomain.isDefined;
-    }
-    {
-      assertion = options.vars.ip.isDefined;
-    }
+    # {
+    #   assertion = options.vars.ddnsDomain.isDefined;
+    # }
+    # {
+    #   assertion = options.vars.ip.isDefined;
+    # }
     {
       assertion = options.vars.ethernetMAC.isDefined;
     }
