@@ -10,14 +10,27 @@ can be set in `configuration.nix`, so that there aren't many hard-coded values.
 > Do not clone my configuration blindly without understanding how each
 > component works. Make sure you handle your and others' data responsibly.
 
-# Cloudflare
+# Networking
 
 If your router is behind a CGNAT or you're unable to forward ports in your router/firewall,
-using `Cloudflare Zero Trust` is a must. I don't have it set up since there's no need.
+you can use *Cloudflare Tunnels* to tunnel your services through Cloudflare's proxies. Alternatively,
+you can rent a VPS and use that as a VPN-proxy.
 
-Cloudflare also allows you to use their proxies, if you don't want your IP address exposed to
-the public (in your DNS records), and want to enable *Geoblocking, DDOS protection, WAF rules,*
-*their Content Delivery Network (CDN)* and many other useful features.
+Since my ISP recently placed a CGNAT (Carrier Grade NAT) behind my public IP, I bought a cheap
+server from *Hetzner Cloud* and set it up as a proxy (`gateway`) that forwards ports to my server.
+
+My local server reaches out to the `gateway` and establishes a VPN connection permanently. This
+way, the `gateway` has a way to connect to the local server.
+
+## Cloudflare
+
+Cloudflare allows you to use their proxies to tunnel traffic to your server. This is particularly
+useful if you have a public-facing IP and don't want to expose it in your DNS records.
+
+Cloudflare also allows you to use these features: *Geoblocking, DDOS protection, WAF rules,*
+*their Content Delivery Network (CDN)*, and many others.
+
+At the moment, I mostly use it for managing my DNS records.
 
 ## DNS setup
 
@@ -35,12 +48,16 @@ You can set a placeholder IP address in the `Content` tab since the script locat
 
 ## DDNS
 
+> [!NOTE]
+> DDNS is practically useless if you're behind a CGNAT.
+
 Using Cloudflare's API and a script you can update your residential public IP every time it changes.
 This is very useful when you don't have a static IP address from your ISP and want a reliable way
 to have hostnames resolve to your IP.
 
-This is necessary if you want to access basically any service outside of your home network (LAN).
-Remembering a record name is also much easier than remembering an IP address.
+This is necessary if you have a public facing IP (i.e., you're not behind a CGNAT), and want to
+access basically any service outside of your home network (LAN).
+Remembering a domain is also much easier than remembering an IP address.
 
 I'm running a *systemd service* in `scripts/cloudflare/service.nix` every 30 minutes that tries
 to update the IP address for all subdomains in Cloudflare, in case it has changed.
