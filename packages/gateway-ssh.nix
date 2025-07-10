@@ -22,11 +22,6 @@ in
     ignoreIP = [ "143.58.100.0/24" ]; # Ignore CGNAT IPs
   };
 
-  networking.firewall = {
-    enable = true;
-
-    # allowedTCPPorts = [];
-    # allowedUDPPorts = [];
-  };
+  networking.firewall.enable = true;
 }
 
