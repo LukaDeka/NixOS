@@ -4,11 +4,9 @@
   inputs = {
     nixpkgs.url =        "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
-    disko.url = "github:nix-community/disko";
-    disko.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nixpkgs, disko, ... } @ inputs: {
+  outputs = { nixpkgs, ... } @ inputs: {
     nixosConfigurations = {
       berlin = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -19,7 +17,7 @@
           ./packages/common-packages.nix
           ./packages/laptop-server.nix
 
-          # ./hosts/berlin/wireguard.nix # VPN
+          # ./hosts/berlin/wireguard.nix # VPN to home server
           ./hosts/berlin/zfs.nix # Raid
           ./hosts/berlin/printing.nix # Cloud printing advertised to LAN
 
@@ -99,14 +97,12 @@
         modules = [
           ######## User-specific ########
           ./hosts/gateway/configuration.nix
-          ./hosts/gateway/disk-config.nix
           ./packages/common-packages.nix
-          disko.nixosModules.disko
 
           ######## Networking ########
           ./packages/gateway-ssh.nix
-          ./packages/virtualization.nix
-          ./packages/wireguard-server.nix
+          ./packages/zitadel.nix
+          ./packages/netbird.nix
 
           ######## Text editors/navigation ########
           ./packages/neovim.nix
@@ -114,6 +110,7 @@
           ######## etc. ########
           ./packages/extra.nix
           ./packages/aliases.nix
+          ./packages/virtualization.nix
         ];
       };
     };

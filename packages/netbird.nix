@@ -1,9 +1,8 @@
 { config, lib, ... }:
 
 let
-  domain = config.vars.domain;
-  username = config.vars.username;
   clientId = "328123977882992641";
+  domain = config.vars.domain;
   netbirdDomain = "netbird.${domain}";
 in
 {
@@ -16,7 +15,6 @@ in
       enable = true;
       domain = netbirdDomain;
       passwordFile = "/etc/env/netbird/turn_password";
-      # useAcmeCertificates = true; # ?
     };
 
     signal = {
@@ -33,8 +31,6 @@ in
         AUTH_AUTHORITY = "https://auth.${domain}";
         AUTH_CLIENT_ID = clientId;
         AUTH_AUDIENCE = clientId;
-        # AUTH_CLIENT_ID = "netbird";
-        # AUTH_AUDIENCE = "netbird";
       };
     };
 
@@ -48,57 +44,18 @@ in
       settings = {
         Signal.URI = "${netbirdDomain}:443";
 
-        HttpConfig = {
-          AuthAudience = clientId;
-          # AuthAudience = "netbird";
+        HttpConfig.AuthAudience = clientId;
+        IdpManagerConfig.ClientConfig.ClientID = clientId;
+        DeviceAuthorizationFlow.ProviderConfig = {
+          Audience = clientId;
+          ClientID = clientId;
         };
-        IdpManagerConfig = {
-          # ManagerType = "none";
-          ClientConfig = {
-            # Issuer = "";
-            # TokenEndpoint = "";
-            ClientID = clientId;
-            # ClientSecret = "";
-            # GrantType = "client_credentials";
-          };
-        };
-        DeviceAuthorizationFlow = {
-          # Provider = "none";
-          ProviderConfig = {
-            Audience = clientId;
-            # Domain = null;
-            ClientID = clientId;
-            # TokenEndpoint = null;
-            # DeviceAuthEndpoint = "";
-            # Scope = "openid profile email offline_access api";
-            # UseIDToken = false;
-          };
-        };
-        PKCEAuthorizationFlow = {
-          ProviderConfig = {
-            Audience = clientId;
-            ClientID = clientId;
-            # ClientSecret = "";
-            # AuthorizationEndpoint = "";
-            # TokenEndpoint = "";
-            # Scope = "openid profile email offline_access api";
-            # RedirectURLs = "http://localhost:53000";
-            # UseIDToken = false;
-          };
+        PKCEAuthorizationFlow.ProviderConfig = {
+          Audience = clientId;
+          ClientID = clientId;
         };
 
-        # TURNConfig = {
-        #   Turns = [{
-        #     Proto = "udp";
-        #     URI = "turn:${netbirdDomain}:3478";
-        #     Username = username;
-        #     Password._secret = "/etc/env/netbird/turn_password";
-        #   }];
-        # };
-        TURNConfig = {
-          Secret._secret = "/etc/env/netbird/turn_password";
-        };
-
+        TURNConfig.Secret._secret = "/etc/env/netbird/turn_password";
         DataStoreEncryptionKey._secret = "/etc/env/netbird/data_store_encryption_key";
       };
     };
