@@ -34,7 +34,6 @@
 
           ######## Networking ########
           ./packages/server-ssh.nix
-          ./packages/wireguard-client.nix
           ./packages/virtualization.nix
           ./packages/pihole.nix # DNS server/adblocker
           ./packages/incus.nix # VMs
