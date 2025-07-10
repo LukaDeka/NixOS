@@ -37,12 +37,12 @@
   ];
 
   boot.loader.grub = {
-    efiSupport = true;
-    efiInstallAsRemovable = true;
+    enable = true;
+    device = "/dev/sda";
   };
 
   nix.settings.trusted-users = [ config.vars.username ];
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "25.05";
 }
 
