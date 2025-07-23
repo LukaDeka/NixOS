@@ -6,6 +6,8 @@ let
   netbirdDomain = "netbird.${domain}";
 in
 {
+  imports = [ ./zitadel.nix ];
+
   services.netbird.enable = true; # Enable the client as well
   services.netbird.server = {
     enable = true;
