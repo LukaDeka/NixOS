@@ -38,6 +38,8 @@
     };
   };
 
+  services.netbird.enable = true;
+
   environment.systemPackages = with pkgs; [
     fzf # TODO: Learn how to use fzf
 
@@ -47,9 +49,7 @@
     alsa-utils # For speaker-test
     powertop
 
-    cowsay
     qrencode
-
     iperf
   ];
 

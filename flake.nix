@@ -4,9 +4,10 @@
   inputs = {
     nixpkgs.url =        "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
   };
 
-  outputs = { nixpkgs, ... } @ inputs: {
+  outputs = { nixpkgs, nixpkgs-stable, nixos-mailserver, ... } @ inputs: {
     nixosConfigurations = {
       berlin = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -14,8 +15,6 @@
         modules = [
           ######## User-specific ########
           ./hosts/berlin/configuration.nix
-          ./packages/common-packages.nix
-          ./packages/laptop-server.nix
 
           # ./hosts/berlin/wireguard.nix # VPN to home server
           ./hosts/berlin/zfs.nix # Raid
@@ -34,9 +33,8 @@
 
           ######## Networking ########
           ./packages/server-ssh.nix
-          ./packages/virtualization.nix
           ./packages/pihole.nix # DNS server/adblocker
-          ./packages/incus.nix # VMs
+          ./packages/incus.nix # VM management
           # ./packages/deluge.nix # Torrent client
 
           ######## Text editors/navigation ########
@@ -44,12 +42,14 @@
           # ./packages/fish.nix # TODO: Learn fish
 
           ######## etc. ########
-          ./packages/extra.nix # Battery settings, lid close, git, networking...
+          ./packages/common-packages.nix
+          ./packages/laptop-server.nix
+          ./packages/extra.nix
           ./packages/aliases.nix # BASH aliases
+          ./packages/virtualisation.nix
 
           ######## Scripts ########
-          # ./scripts/cloudflare/service.nix # Dynamic IP updater scripts
-          ./scripts/zfs/service.nix # Uptime Kuma monitoring
+          ./scripts/zfs-healthcheck/service.nix # Uptime Kuma monitoring
           ./scripts/virtualisation/update-containers.nix # Runs podman pull weekly
           ./scripts/virtualisation/restart-pihole.nix
         ];
@@ -61,8 +61,6 @@
         modules = [
           ######## User-specific ########
           ./hosts/tbilisi/configuration.nix
-          ./packages/laptop-server.nix
-          ./packages/common-packages.nix
 
           ./hosts/tbilisi/wireguard.nix
           ./hosts/tbilisi/zfs.nix
@@ -81,12 +79,14 @@
           ./packages/neovim.nix
 
           ######## etc. ########
+          ./packages/common-packages.nix
+          ./packages/laptop-server.nix
           ./packages/extra.nix
           ./packages/aliases.nix
 
           ######## Scripts ########
-          ./scripts/cloudflare/service.nix
-          ./scripts/zfs/service.nix
+          ./scripts/cloudflare/service.nix # Dynamic IP updater scripts
+          ./scripts/zfs-healthcheck/service.nix
         ];
       };
 
@@ -94,22 +94,26 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
+          nixos-mailserver.nixosModule
           ######## User-specific ########
           ./hosts/gateway/configuration.nix
-          ./packages/common-packages.nix
+          ./hosts/gateway/ssh.nix
 
           ######## Networking ########
-          ./packages/gateway-ssh.nix
-          ./packages/zitadel.nix
           ./packages/netbird.nix
+          ./packages/nextcloud-vps.nix
+          # ./packages/collabora-online-vps.nix
+          ./packages/jellyfin-vps.nix
+          ./packages/mailserver.nix
 
           ######## Text editors/navigation ########
           ./packages/neovim.nix
 
           ######## etc. ########
+          ./packages/common-packages.nix
           ./packages/extra.nix
           ./packages/aliases.nix
-          ./packages/virtualization.nix
+          ./packages/virtualisation.nix
         ];
       };
     };

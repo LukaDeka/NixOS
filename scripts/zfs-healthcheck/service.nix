@@ -19,7 +19,7 @@ in
       };
       path = with pkgs; [ bash curl zfs ];
       script = ''
-        bash ${scriptPath}/zfs/uptime-kuma.sh
+        bash ${scriptPath}/zfs-healthcheck/uptime-kuma.sh
       '';
     };
   };

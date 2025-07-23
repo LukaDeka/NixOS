@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   nixpkgs.config.allowUnfree = true;
@@ -42,7 +42,8 @@
 
   services.samba = {
     enable = true;
-    package = pkgs.sambaFull;
+    # package = pkgs.sambaFull;
+    package = inputs.nixpkgs-stable.legacyPackages.${pkgs.system}.sambaFull;
     openFirewall = true;
     settings = {
       global = {
