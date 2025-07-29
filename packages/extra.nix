@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 
 {
+  powerManagement.powertop.enable = true;
+
   programs.git = {
     enable = true;
     config = {

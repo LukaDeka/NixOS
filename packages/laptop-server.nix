@@ -9,8 +9,6 @@
   # Prevents the overheating of Intel CPUs
   services.thermald.enable = true;
 
-  powerManagement.powertop.enable = true;
-
   # Enable battery care (charge up to 50% by default)
   services.tlp = {
     enable = true;
