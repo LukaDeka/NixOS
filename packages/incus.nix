@@ -12,7 +12,6 @@ in
       br0.macAddress = ethernetMAC; # To make sure the MAC never changes
       br0.useDHCP = true; # Make sure you set a static IP in your router
       eth0.useDHCP = false;
-      wlan0.useDHCP = false; # Disable Wi-Fi, since it interferes with br0
     };
     bridges.br0.interfaces = [ "eth0" ]; # Bind eth0 to the bridge
 
@@ -27,17 +26,23 @@ in
   virtualisation.incus.ui.enable = true;
   virtualisation.incus.preseed = {
     profiles = [ {
-      name = "main";
+      name = "default";
       devices = {
         eth0 = {
           name = "eth0";
           type = "nic";
-          network = "br0";
+          nictype = "bridged";
+          parent = "br0";
         };
+        # eth0 = {
+        #   name = "eth0";
+        #   type = "nic";
+        #   network = "br0";
+        # };
         root = {
           path = "/";
           pool = "default";
-          size = "30GiB";
+          size = "100GiB";
           type = "disk";
         };
       };
@@ -45,11 +50,28 @@ in
 
     storage_pools = [ {
       name = "default";
-      driver = "dir";
+      driver = "zfs";
       config = {
-        source = "/var/lib/incus/storage-pools/default";
+        source = "nvmepool/incus";
       };
     } ];
+
+    # networks = [ {
+    #   name = "br0";
+    #   type = "bridge";
+    #   config = {
+    #     "ipv4.address" = "auto";
+    #     "ipv6.address" = "none";
+    #   };
+    # } ];
+
+    # storage_pools = [ {
+    #   name = "default";
+    #   driver = "dir";
+    #   config = {
+    #     source = "/var/lib/incus/storage-pools/default";
+    #   };
+    # } ];
   };
 }
 
