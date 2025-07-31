@@ -2,7 +2,7 @@
 
 let
   domain = config.vars.domain;
-  ip = config.vars.ip;
+  # ip = config.vars.privateIp;
 in
 {
   environment.systemPackages = [

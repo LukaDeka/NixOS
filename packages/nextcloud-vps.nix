@@ -2,6 +2,7 @@
 
 let
   domain = config.vars.domain;
+  ip = config.vars.serverNetbirdIp
 in
 {
   services.nginx.virtualHosts = {
@@ -9,7 +10,7 @@ in
       forceSSL = true;
       enableACME = true;
       locations."/" = {
-        proxyPass = "http://100.124.116.159";
+        proxyPass = "http://${ip}";
         proxyWebsockets = true;
         extraConfig = ''
           proxy_set_header Host $host;

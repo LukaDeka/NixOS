@@ -10,9 +10,12 @@
   vars.hostname = "berlin";
   vars.email = "luka.dekanozishvili1@gmail.com";
   vars.domain = "lukadeka.com";
-  vars.ip = "10.10.10.10";
-  vars.ethernetMAC = "54:e1:ad:6e:4e:d1";
   vars.storageDir = "/zfs";
+
+  vars.privateIp = "10.10.10.10";
+  vars.serverNetbirdIp = "100.124.116.159"; # This server's IP
+  vars.proxyNetbirdIp = "100.124.117.109";
+  vars.ethernetMAC = "54:e1:ad:6e:4e:d1";
 
   time.timeZone = "Europe/Berlin";
 
@@ -28,6 +31,7 @@
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/4F45h/xkq+MIRDzhHqDm5uWM4KTpYi3Tv/DtSo28t luka@gram"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIT+vMzh2ngUeqnVJS8Zl1m1HQMBkDOqoGdoARPyJgDM u0_a380@localhost" # s
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF7OvW6MffYFshZyarEaWvWjEmhodn/P+NLcnqbbMpma luka@conway"
       ];
     };
     "root" = { # For sshfs

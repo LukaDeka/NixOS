@@ -2,7 +2,7 @@
 
 let
   domain = config.vars.domain;
-  ip = "100.124.116.159";
+  ip = config.vars.serverNetbirdIp;
 in
 {
   services.nginx.virtualHosts = {

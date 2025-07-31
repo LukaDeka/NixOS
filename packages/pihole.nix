@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  ip = config.vars.ip;
+  ip = config.vars.privateIp;
   domain = config.vars.domain;
 
   # localRecords = ''

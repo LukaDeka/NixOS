@@ -10,7 +10,10 @@
   vars.hostname = "gateway";
   vars.email = "me@lukadeka.com";
   vars.domain = "lukadeka.com";
-  vars.ip = "91.99.69.65";
+
+  # vars.ip = "91.99.69.65"; # TODO: change this
+  vars.proxyNetbirdIp = "100.124.117.109"; # This server's IP
+  vars.serverNetbirdIp = "100.124.116.159"; # Server to proxy to
   vars.ethernetMAC = "96:00:04:5d:d2:0d";
 
   time.timeZone = "Europe/Berlin";

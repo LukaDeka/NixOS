@@ -4,7 +4,7 @@ let
   scriptPath = "${config.vars.homeDir}/nixos/scripts";
   execAfter = [ "network.target" ]; # Ensure network is up
   envVars = {
-    VAR_IP = config.vars.ip;
+    VAR_IP = config.vars.privateIp;
   };
 in
 {

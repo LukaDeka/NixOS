@@ -41,10 +41,24 @@
       default = null;
     };
 
-    ip = lib.mkOption {
+    privateIp = lib.mkOption {
       type = lib.types.str;
-      description = "The static IP address of the device.";
+      description = "The private IP address of the device.";
       example = "192.168.0.100";
+      default = null;
+    };
+
+    serverNetbirdIp = lib.mkOption {
+      type = lib.types.str;
+      description = "The Netbird IP address of the server that's being served by the proxy.";
+      example = "100.124.11.22";
+      default = null;
+    };
+
+    proxyNetbirdIp = lib.mkOption {
+      type = lib.types.str;
+      description = "The Netbird IP address of the proxy.";
+      example = "100.124.11.23";
       default = null;
     };
 
@@ -77,17 +91,14 @@
 
   config.assertions = [
     {
+      assertion = options.vars.username.isDefined;
+    }
+    {
       assertion = options.vars.hostname.isDefined;
     }
     {
       assertion = options.vars.email.isDefined;
     }
-    # {
-    #   assertion = options.vars.ddnsDomain.isDefined;
-    # }
-    # {
-    #   assertion = options.vars.ip.isDefined;
-    # }
     {
       assertion = options.vars.ethernetMAC.isDefined;
     }

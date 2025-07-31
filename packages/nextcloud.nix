@@ -2,14 +2,15 @@
 
 let
   storageDir = config.vars.storageDir;
-  domain =     config.vars.domain;
-  username =   config.vars.username;
-  email =      config.vars.email;
-  ip =         config.vars.ip;
+  domain = config.vars.domain;
+  username = config.vars.username;
+  email = config.vars.email;
+  privateIp = config.vars.privateIp;
+  # serverNetbirdIp = config.vars.serverNetbirdIp;
+  proxyNetbirdIp =  config.vars.proxyNetbirdIp;
 in
 {
   # imports = [ ./collabora-online.nix ]; # TODO: Add this back
-  # imports = [ ./onlyoffice.nix ];
 
   services.postgresql = {
     enable = true;
@@ -93,8 +94,8 @@ in
         locking = "\\OC\\Memcache\\Redis";
       };
 
-      trusted_domains = [ "${ip}" "100.124.116.159" ];
-      trusted_proxies = [ "100.124.116.159/32" ];
+      trusted_domains = [ "nextcloud.${domain}" "${privateIp}" ];
+      trusted_proxies = [ "${proxyNetbirdIp}/32" ];
 
       default_phone_region = "DE";
       default_language = "en";
