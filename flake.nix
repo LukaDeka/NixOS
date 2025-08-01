@@ -118,6 +118,7 @@
 
           ######## Networking ########
           ./packages/server-ssh.nix
+          ./packages/restic-server.nix # Backups
 
           ######## Text editors/navigation ########
           ./packages/neovim.nix
