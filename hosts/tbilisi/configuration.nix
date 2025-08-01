@@ -10,9 +10,11 @@
   vars.hostname = "tbilisi";
   vars.email = "luka.dekanozishvili1@gmail.com";
   vars.domain = "dekanozishvili.cloud";
-  vars.ip = "192.168.1.50";
-  vars.ethernetMAC = "28:d2:44:e8:bc:b5";
   vars.storageDir = "/zfs";
+
+  vars.privateIp = "192.168.1.50";
+  vars.serverNetbirdIp = "100.124.204.78";
+  vars.ethernetMAC = "28:d2:44:e8:bc:b5";
 
   time.timeZone = "Asia/Tbilisi";
 
@@ -35,6 +37,9 @@
   environment.systemPackages = with pkgs; [
     zfs # Raid
   ];
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   system.stateVersion = "24.05";
 }

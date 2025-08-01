@@ -2,14 +2,15 @@
 
 let
   storageDir = config.vars.storageDir;
-  domain =     config.vars.domain;
-  username =   config.vars.username;
-  email =      config.vars.email;
-  ip =         config.vars.ip;
+  domain = config.vars.domain;
+  username = config.vars.username;
+  email = config.vars.email;
+  privateIp = config.vars.privateIp;
+  # serverNetbirdIp = config.vars.serverNetbirdIp;
+  proxyNetbirdIp =  config.vars.proxyNetbirdIp;
 in
 {
-  imports = [ ./collabora-online.nix ];
-  # imports = [ ./onlyoffice.nix ];
+  # imports = [ ./collabora-online.nix ]; # TODO: Add this back
 
   services.postgresql = {
     enable = true;
@@ -22,6 +23,7 @@ in
 
     hostName = "nextcloud.${domain}";
     https = true;
+    # https = false;
 
     datadir = "${storageDir}/nextcloud";
     home = "${storageDir}/nextcloud";
@@ -92,7 +94,8 @@ in
         locking = "\\OC\\Memcache\\Redis";
       };
 
-      trusted_domains = [ "${ip}" ];
+      trusted_domains = [ "nextcloud.${domain}" "${privateIp}" ];
+      trusted_proxies = [ "${proxyNetbirdIp}/32" ];
 
       default_phone_region = "DE";
       default_language = "en";
@@ -118,35 +121,27 @@ in
   # Add packages to env path
   systemd.services.nextcloud-cron.path = [ pkgs.ffmpeg pkgs.perl ];
 
-  services.nginx.virtualHosts = {
-    "nextcloud.${domain}" = {
-      sslCertificate = "/etc/env/ssl/${domain}.pem";
-      sslCertificateKey = "/etc/env/ssl/${domain}.key";
-      forceSSL = true;
-      enableACME = true;
-      locations."/" = {
-        root = "${storageDir}/nextcloud";
-        extraConfig = ''
-          fastcgi_split_path_info ^(.+\.php)(/.+)$;
-          fastcgi_pass unix:/run/phpfpm/nextcloud.sock;
-          include ${pkgs.nginx}/conf/fastcgi_params;
-          include ${pkgs.nginx}/conf/fastcgi.conf;
-        '';
-      };
-    };
-    "${domain}" = { # Redirect root domain to nextcloud subdomain
-      forceSSL = true;
-      enableACME = true;
-      sslCertificate = "/etc/env/ssl/${domain}.pem";
-      sslCertificateKey = "/etc/env/ssl/${domain}.key";
-      globalRedirect = "nextcloud.${domain}";
+  services.nginx.virtualHosts."nextcloud.${domain}" = {
+    listen = [{
+      addr = "0.0.0.0";
+      port = 80;
+    }];
+    forceSSL = false;
+    enableACME = false;
+    locations."/" = {
+      root = "${storageDir}/nextcloud";
+      extraConfig = ''
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass unix:/run/phpfpm/nextcloud.sock;
+        include ${pkgs.nginx}/conf/fastcgi_params;
+        include ${pkgs.nginx}/conf/fastcgi.conf;
+      '';
     };
   };
-
-  security.acme = {
-    acceptTerms = true;
-    certs = {
-      ${config.services.nextcloud.hostName}.email = config.vars.email;
+  # TODO: Is this necessary?
+  services.phpfpm.pools.nextcloud = {
+    settings = {
+      "listen" = "/run/phpfpm/nextcloud.sock";
     };
   };
 }

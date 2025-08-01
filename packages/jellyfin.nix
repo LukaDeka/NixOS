@@ -2,7 +2,7 @@
 
 let
   domain = config.vars.domain;
-  ip = config.vars.ip;
+  # ip = config.vars.privateIp;
 in
 {
   environment.systemPackages = [
@@ -24,23 +24,19 @@ in
     extraGroups = [ "render" ];
   };
 
-  services.nginx.virtualHosts = {
-    "jellyfin.${domain}" = {
-      sslCertificate = "/etc/env/ssl/${domain}.pem";
-      sslCertificateKey = "/etc/env/ssl/${domain}.key";
-      forceSSL = true;
-      enableACME = true;
-      locations."/" = {
-        proxyPass = "http://${ip}:8096";
-        proxyWebsockets = true;
-      };
-    };
-  };
+  networking.firewall.allowedTCPPorts = [ 8096 ];
 
-
-  # Enable vaapi on OS-level
-  # nixpkgs.config.packageOverrides = pkgs: {
-  #   vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+  # services.nginx.virtualHosts = {
+  #   "jellyfin.${domain}" = {
+  #     sslCertificate = "/etc/env/ssl/${domain}.pem";
+  #     sslCertificateKey = "/etc/env/ssl/${domain}.key";
+  #     forceSSL = true;
+  #     enableACME = true;
+  #     locations."/" = {
+  #       proxyPass = "http://${ip}:8096";
+  #       proxyWebsockets = true;
+  #     };
+  #   };
   # };
 
   boot.kernelParams = [
@@ -54,8 +50,6 @@ in
       intel-vaapi-driver
       vaapiVdpau
       intel-compute-runtime-legacy1
-      # intel-compute-runtime
-      intel-media-sdk
     ];
   };
 }

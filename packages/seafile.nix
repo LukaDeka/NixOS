@@ -2,7 +2,7 @@
 
 let
   domain = config.vars.domain;
-  ip = config.vars.ip;
+  ip = config.vars.privateIp;
   email = config.vars.email;
   storageDir = config.vars.storageDir;
 in
@@ -14,7 +14,6 @@ in
     initialAdminPassword = "mananakitrisad";
     ccnetSettings.General.SERVICE_URL = "https://seafile.${domain}";
 
-    # TODO: Figure out how to architect local access with proxy
     # seahubAddress = "127.0.0.1:39997";
     seahubExtraConf =
     let
@@ -70,8 +69,8 @@ in
   services.nginx.enable = true;
   services.nginx.virtualHosts = {
     "seafile.${domain}" = {
-      sslCertificate = "/etc/env/ssl/${domain}.pem";
-      sslCertificateKey = "/etc/env/ssl/${domain}.key";
+      # sslCertificate = "/etc/env/ssl/${domain}.pem";
+      # sslCertificateKey = "/etc/env/ssl/${domain}.key";
       forceSSL = true;
       enableACME = true;
       locations = {

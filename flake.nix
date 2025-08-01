@@ -4,11 +4,10 @@
   inputs = {
     nixpkgs.url =        "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
-    disko.url = "github:nix-community/disko";
-    disko.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
   };
 
-  outputs = { nixpkgs, disko, ... } @ inputs: {
+  outputs = { nixpkgs, nixpkgs-stable, nixos-mailserver, ... } @ inputs: {
     nixosConfigurations = {
       berlin = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -16,10 +15,8 @@
         modules = [
           ######## User-specific ########
           ./hosts/berlin/configuration.nix
-          ./packages/common-packages.nix
-          ./packages/laptop-server.nix
 
-          # ./hosts/berlin/wireguard.nix # VPN
+          # ./hosts/berlin/wireguard.nix # VPN to home server
           ./hosts/berlin/zfs.nix # Raid
           ./hosts/berlin/printing.nix # Cloud printing advertised to LAN
 
@@ -36,10 +33,8 @@
 
           ######## Networking ########
           ./packages/server-ssh.nix
-          ./packages/wireguard-client.nix
-          ./packages/virtualization.nix
           ./packages/pihole.nix # DNS server/adblocker
-          ./packages/incus.nix # VMs
+          ./packages/incus.nix # VM management
           # ./packages/deluge.nix # Torrent client
 
           ######## Text editors/navigation ########
@@ -47,14 +42,60 @@
           # ./packages/fish.nix # TODO: Learn fish
 
           ######## etc. ########
-          ./packages/extra.nix # Battery settings, lid close, git, networking...
+          ./packages/common-packages.nix
+          ./packages/laptop-server.nix
+          ./packages/extra.nix
           ./packages/aliases.nix # BASH aliases
+          ./packages/virtualisation.nix
 
           ######## Scripts ########
-          # ./scripts/cloudflare/service.nix # Dynamic IP updater scripts
-          ./scripts/zfs/service.nix # Uptime Kuma monitoring
+          ./scripts/zfs-healthcheck/service.nix # Uptime Kuma monitoring
           ./scripts/virtualisation/update-containers.nix # Runs podman pull weekly
           ./scripts/virtualisation/restart-pihole.nix
+        ];
+      };
+
+      conway = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ######## User-specific ########
+          ./hosts/conway/configuration.nix
+
+          # ./hosts/berlin/wireguard.nix # VPN to home server
+          ./hosts/conway/zfs.nix # Raid
+          # ./hosts/conway/printing.nix # Cloud printing advertised to LAN
+
+
+          ######## Server configuration ########
+          # ./packages/nextcloud.nix
+          # ./packages/jellyfin.nix # Media server
+          # ./packages/nginx.nix # Recommended settings
+          # ./packages/uptime-kuma.nix # Monitoring
+          # ./packages/retroarch.nix # Retro game emulation
+          # ./packages/craftycontroller.nix
+          # ./packages/vaultwarden.nix # Password manager
+
+          ######## Networking ########
+          ./packages/server-ssh.nix
+          # ./packages/pihole.nix # DNS server/adblocker
+          ./packages/incus.nix # VM management
+          # ./packages/deluge.nix # Torrent client
+
+          ######## Text editors/navigation ########
+          ./packages/neovim.nix # Tiny configuration
+          # ./packages/fish.nix # TODO: Learn fish
+
+          ######## etc. ########
+          ./packages/common-packages.nix
+          ./packages/extra.nix
+          ./packages/aliases.nix # BASH aliases
+          ./packages/virtualisation.nix
+
+          ######## Scripts ########
+          # ./scripts/zfs-healthcheck/service.nix # Uptime Kuma monitoring
+          # ./scripts/virtualisation/update-containers.nix # Runs podman pull weekly
+          # ./scripts/virtualisation/restart-pihole.nix
         ];
       };
 
@@ -64,8 +105,6 @@
         modules = [
           ######## User-specific ########
           ./hosts/tbilisi/configuration.nix
-          ./packages/laptop-server.nix
-          ./packages/common-packages.nix
 
           ./hosts/tbilisi/wireguard.nix
           ./hosts/tbilisi/zfs.nix
@@ -79,17 +118,20 @@
 
           ######## Networking ########
           ./packages/server-ssh.nix
+          ./packages/restic-server.nix # Backups
 
           ######## Text editors/navigation ########
           ./packages/neovim.nix
 
           ######## etc. ########
+          ./packages/common-packages.nix
+          ./packages/laptop-server.nix
           ./packages/extra.nix
           ./packages/aliases.nix
 
           ######## Scripts ########
-          ./scripts/cloudflare/service.nix
-          ./scripts/zfs/service.nix
+          ./scripts/cloudflare/service.nix # Dynamic IP updater scripts
+          ./scripts/zfs-healthcheck/service.nix
         ];
       };
 
@@ -97,23 +139,26 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
+          nixos-mailserver.nixosModule
           ######## User-specific ########
           ./hosts/gateway/configuration.nix
-          ./hosts/gateway/disk-config.nix
-          ./packages/common-packages.nix
-          disko.nixosModules.disko
+          ./hosts/gateway/ssh.nix
 
           ######## Networking ########
-          ./packages/gateway-ssh.nix
-          ./packages/virtualization.nix
-          ./packages/wireguard-server.nix
+          ./packages/netbird.nix
+          ./packages/nextcloud-vps.nix
+          # ./packages/collabora-online-vps.nix
+          ./packages/jellyfin-vps.nix
+          ./packages/mailserver.nix
 
           ######## Text editors/navigation ########
           ./packages/neovim.nix
 
           ######## etc. ########
+          ./packages/common-packages.nix
           ./packages/extra.nix
           ./packages/aliases.nix
+          ./packages/virtualisation.nix
         ];
       };
     };

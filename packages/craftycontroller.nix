@@ -7,7 +7,7 @@ in
   virtualisation.oci-containers.containers.craftycontroller = {
     image = "registry.gitlab.com/crafty-controller/crafty-4:latest";
     ports = [
-      "5090:8443/tcp" # Admin interaface
+      "5090:8443/tcp" # Admin interface
       "25565:25565"
     ];
 

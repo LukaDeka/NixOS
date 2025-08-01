@@ -7,15 +7,15 @@
   ];
 
   vars.username = "luka";
-  vars.hostname = "berlin";
-  vars.email = "luka.dekanozishvili1@gmail.com";
+  vars.hostname = "conway";
+  vars.email = "me@lukadeka.com";
   vars.domain = "lukadeka.com";
-  vars.storageDir = "/zfs";
+  #vars.storageDir = "/zfs";
 
-  vars.privateIp = "10.10.10.10";
-  vars.serverNetbirdIp = "100.124.116.159"; # This server's IP
-  vars.proxyNetbirdIp = "100.124.117.109";
-  vars.ethernetMAC = "54:e1:ad:6e:4e:d1";
+  # vars.privateIp = "10.10.10.10";
+  # vars.serverNetbirdIp = ""; # This server's IP
+  # vars.proxyNetbirdIp = "100.124.117.109";
+  vars.ethernetMAC = "34:5a:60:63:d7:42";
 
   time.timeZone = "Europe/Berlin";
 
@@ -27,11 +27,10 @@
       isNormalUser = true;
       linger = true; # Keep user services running
       extraGroups = [ "networkmanager" "wheel" "nextcloud" "docker" "video" "audio" "tty" "input" "gamemode" ];
-      hashedPassword = "$y$j9T$nTWoHxqAJvwjcV70wHbQQ0$ePd3MfeST62/9eAlaHvi9iquC2j5PNQTCki8U8fznAD";
+      hashedPassword = "$y$j9T$6bEHYFO.AGCC2bnKxC3xB/$6/1zmuzaSvDSHID6ZTgnrHiWRS8ayEXhNBp48ugR4z7";
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/4F45h/xkq+MIRDzhHqDm5uWM4KTpYi3Tv/DtSo28t luka@gram"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIT+vMzh2ngUeqnVJS8Zl1m1HQMBkDOqoGdoARPyJgDM u0_a380@localhost" # s
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF7OvW6MffYFshZyarEaWvWjEmhodn/P+NLcnqbbMpma luka@conway"
       ];
     };
     "root" = { # For sshfs
@@ -59,7 +58,8 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.supportedFilesystems = [ "zfs" ];
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "25.05";
 }
 

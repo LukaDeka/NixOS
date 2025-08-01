@@ -22,6 +22,7 @@
     dig
     wget
     unzip
+    nettools
 
     ######## Etc. ########
     iptables
