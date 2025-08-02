@@ -13,7 +13,7 @@
   vars.storageDir = "/zfs";
 
   vars.privateIp = "192.168.1.50";
-  vars.serverNetbirdIp = "100.124.204.78";
+  vars.serverNetbirdIp = "100.124.170.101";
   vars.ethernetMAC = "28:d2:44:e8:bc:b5";
 
   time.timeZone = "Asia/Tbilisi";
@@ -36,6 +36,7 @@
 
   environment.systemPackages = with pkgs; [
     zfs # Raid
+    restic
   ];
 
   boot.loader.systemd-boot.enable = true;

@@ -19,7 +19,7 @@ in
   services.fail2ban = {
     enable = true;
     bantime = "24h"; # Ban IPs for one day on the first ban
-    ignoreIP = [ "143.58.100.0/24" ];
+    ignoreIP = [ "143.58.100.0/24" "100.124.0.0/16" ];
   };
 
   networking.firewall = {
