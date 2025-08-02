@@ -19,6 +19,7 @@
           # ./hosts/berlin/wireguard.nix # VPN to home server
           ./hosts/berlin/zfs.nix # Raid
           ./hosts/berlin/printing.nix # Cloud printing advertised to LAN
+          ./hosts/berlin/restic-client.nix
 
 
           ######## Server configuration ########
@@ -34,7 +35,6 @@
           ######## Networking ########
           ./packages/server-ssh.nix
           ./packages/pihole.nix # DNS server/adblocker
-          ./packages/incus.nix # VM management
           # ./packages/deluge.nix # Torrent client
 
           ######## Text editors/navigation ########
