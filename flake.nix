@@ -146,7 +146,7 @@
           ######## Networking ########
           ./packages/netbird.nix
           ./packages/nextcloud-vps.nix
-          # ./packages/collabora-online-vps.nix
+          ./packages/collabora-online-vps.nix
           ./packages/jellyfin-vps.nix
           ./packages/mailserver.nix
 
@@ -158,6 +158,10 @@
           ./packages/extra.nix
           ./packages/aliases.nix
           ./packages/virtualisation.nix
+
+          ######## Scripts ########
+          ./scripts/virtualisation/update-containers.nix
+          ./scripts/virtualisation/restart-netbird-relay.nix
         ];
       };
     };

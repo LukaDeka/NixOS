@@ -9,7 +9,7 @@ in
     forceSSL = true;
     enableACME = true;
     locations."/" = {
-      proxyPass = "http://${ip}:${toString config.services.collabora-online.port}";
+      proxyPass = "http://${ip}:40080";
       proxyWebsockets = true;
       extraConfig = ''
         proxy_set_header Host $host;
@@ -21,17 +21,3 @@ in
   };
 }
 
-  # services.nginx.virtualHosts = {
-  #   "collabora.${domain}" = {
-  #     listen = [{
-  #       addr = "0.0.0.0";
-  #       port = 80;
-  #     }];
-  #     forceSSL = false;
-  #     enableACME = false;
-  #     locations."/" = {
-  #       proxyPass = "http://[::1]:${toString config.services.collabora-online.port}";
-  #       proxyWebsockets = true;
-  #     };
-  #   };
-  # };

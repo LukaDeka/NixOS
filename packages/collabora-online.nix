@@ -2,15 +2,16 @@
 
 let
   domain = config.vars.domain;
-  ddnsDomain = config.vars.ddnsDomain;
+  serverNetbirdIp = config.vars.serverNetbirdIp;
+  proxyNetbirdIp = config.vars.proxyNetbirdIp;
 in
 {
   services.collabora-online = {
     enable = true;
+    port = 9980;
 
     # The unstable package is currently broken
     # package = inputs.nixpkgs-stable.legacyPackages.${pkgs.system}.collabora-online;
-    port = 9980; # Default
 
     settings = {
       server_name = "collabora.${domain}";
@@ -21,45 +22,46 @@ in
 
       net = {
         listen = "any"; # Default is "any"
-        post_allow.host = [ "0.0.0.0" ];
+        post_allow.host = [ "::1" proxyNetbirdIp serverNetbirdIp ]; # remove server
       };
 
       # Restrict loading documents from WOPI Host nextcloud.example.com
       storage.wopi = {
         "@allow" = true;
-        host = [ "nextcloud.${domain}" ];
+        host = [ "nextcloud.${domain}" "collabora.${domain}" serverNetbirdIp proxyNetbirdIp "127.0.0.1" "::1" ];
       };
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ config.services.collabora-online.port ];
+  networking.firewall.allowedTCPPorts = [ config.services.collabora-online.port 40080 ];
 
-  # services.nginx.virtualHosts = {
-  #   "collabora.${domain}" = {
-  #     listen = [{
-  #       addr = "0.0.0.0";
-  #       port = 80;
-  #     }];
-  #     forceSSL = false;
-  #     enableACME = false;
-  #     locations."/" = {
-  #       proxyPass = "http://[::1]:${toString config.services.collabora-online.port}";
-  #       proxyWebsockets = true;
-  #     };
-  #   };
-  # };
+  services.nginx.virtualHosts."collabora.${domain}" = {
+    listen = [{
+      addr = serverNetbirdIp;
+      port = 40080;
+    }];
+    forceSSL = false;
+    enableACME = false;
+    locations."/" = {
+      proxyPass = "http://[::1]:${toString config.services.collabora-online.port}";
+      proxyWebsockets = true;
+      extraConfig = ''
+        proxy_set_header Host $host;
+      '';
+    };
+  };
 
   # Systemd unit to set Collabora options using occ
   systemd.services.nextcloud-config-collabora = let
     inherit (config.services.nextcloud) occ;
 
-    # wopi_url = "http://[::1]:${toString config.services.collabora-online.port}";
+    wopi_url = "http://[::1]:${toString config.services.collabora-online.port}";
     public_wopi_url = "https://collabora.${domain}";
-    wopi_url = public_wopi_url;
     wopi_allowlist = lib.concatStringsSep "," [
-      "100.124.117.109"
-      # "127.0.0.1"
-      # "::1"
+      "127.0.0.1"
+      "::1"
+      serverNetbirdIp
+      proxyNetbirdIp
     ];
   in {
     wantedBy = [ "multi-user.target" ];
@@ -73,15 +75,13 @@ in
     '';
     serviceConfig = {
       Type = "oneshot";
-      User = "nextcloud";
     };
   };
 
   # Edit /etc/hosts to force Collabora to resolve to localhost
   networking.hosts = {
-    "100.124.117.109" = [ "nextcloud.${domain}" "collabora.${domain}" ];
-    # "127.0.0.1" =       [ "nextcloud.${domain}" "collabora.${domain}" ];
-    # "::1" =             [ "nextcloud.${domain}" "collabora.${domain}" ];
+    "127.0.0.1" = [ "nextcloud.${domain}" "collabora.${domain}" ];
+    "::1"       = [ "nextcloud.${domain}" "collabora.${domain}" ];
   };
 
   # Do not respond to DNS queries from /etc/hosts since Pi-hole is running
