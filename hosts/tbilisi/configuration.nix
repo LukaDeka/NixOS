@@ -36,6 +36,7 @@
 
   environment.systemPackages = with pkgs; [
     zfs # Raid
+    ffmpeg
     restic
   ];
 

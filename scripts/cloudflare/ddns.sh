@@ -6,17 +6,17 @@ declare -a domains=(
   "ddns.${VAR_DOMAIN}"
   "nextcloud.${VAR_DOMAIN}"
   "collabora.${VAR_DOMAIN}"
-  "jellyfin.${VAR_DOMAIN}"
+  # "jellyfin.${VAR_DOMAIN}"
 )
 
 # Specify which DNS records should point to Cloudflare's
 # proxies and which directly to your public IP
 declare -A is_proxied=(
-  ["${VAR_DOMAIN}"]="true"
+  ["${VAR_DOMAIN}"]="false"
   ["ddns.${VAR_DOMAIN}"]="false"
-  ["nextcloud.${VAR_DOMAIN}"]="true"
-  ["collabora.${VAR_DOMAIN}"]="true"
-  ["jellyfin.${VAR_DOMAIN}"]="true"
+  ["nextcloud.${VAR_DOMAIN}"]="false"
+  ["collabora.${VAR_DOMAIN}"]="false"
+  # ["jellyfin.${VAR_DOMAIN}"]="false"
 )
 
 ttl=300 # Only applies to non-proxied domains
