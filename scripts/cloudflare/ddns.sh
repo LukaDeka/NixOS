@@ -11,7 +11,6 @@ declare -a domains=(
 # proxies and which directly to your public IP
 declare -A is_proxied=(
   ["${VAR_DOMAIN}"]="false"
-  ["ddns.${VAR_DOMAIN}"]="false"
   ["nextcloud.${VAR_DOMAIN}"]="false"
   ["collabora.${VAR_DOMAIN}"]="false"
 )
