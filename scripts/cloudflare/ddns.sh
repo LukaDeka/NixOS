@@ -3,10 +3,8 @@
 # A list of domain names to be synced
 declare -a domains=(
   "${VAR_DOMAIN}"
-  "ddns.${VAR_DOMAIN}"
   "nextcloud.${VAR_DOMAIN}"
   "collabora.${VAR_DOMAIN}"
-  # "jellyfin.${VAR_DOMAIN}"
 )
 
 # Specify which DNS records should point to Cloudflare's
@@ -16,7 +14,6 @@ declare -A is_proxied=(
   ["ddns.${VAR_DOMAIN}"]="false"
   ["nextcloud.${VAR_DOMAIN}"]="false"
   ["collabora.${VAR_DOMAIN}"]="false"
-  # ["jellyfin.${VAR_DOMAIN}"]="false"
 )
 
 ttl=300 # Only applies to non-proxied domains
