@@ -10,7 +10,7 @@ let
   proxyNetbirdIp =  config.vars.proxyNetbirdIp;
 in
 {
-  # imports = [ ./collabora-online.nix ]; # TODO: Add this back
+  imports = [ ./collabora-online.nix ];
 
   services.postgresql = {
     enable = true;
@@ -23,7 +23,6 @@ in
 
     hostName = "nextcloud.${domain}";
     https = true;
-    # https = false;
 
     datadir = "${storageDir}/nextcloud";
     home = "${storageDir}/nextcloud";
@@ -33,7 +32,7 @@ in
     autoUpdateApps.enable = true;
     extraAppsEnable = true;
     extraApps = with config.services.nextcloud.package.packages.apps; {
-      # List of apps we want to install and are already packaged in
+      # List of packaged apps:
       # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/nextcloud/packages/nextcloud-apps.json
       inherit calendar contacts deck
       previewgenerator memories notes # maps
@@ -74,7 +73,7 @@ in
     };
 
     phpOptions = {
-      "opcache.interned_strings_buffer" = "32"; # Default is 8 MB
+      "opcache.interned_strings_buffer" = "32";
       "opcache.jit" = "1255";
       "opcache.jit_buffer_size" = "8M";
     };
@@ -94,7 +93,7 @@ in
         locking = "\\OC\\Memcache\\Redis";
       };
 
-      trusted_domains = [ "nextcloud.${domain}" "${privateIp}" ];
+      trusted_domains = [ "nextcloud.${domain}" "collabora.${domain}" privateIp ];
       trusted_proxies = [ "${proxyNetbirdIp}/32" ];
 
       default_phone_region = "DE";
