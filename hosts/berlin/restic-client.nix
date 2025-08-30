@@ -10,9 +10,13 @@ in
     regular-backup = {
       paths = [
         "/var/lib"
-        # "/etc/env"
-        # "/zfs/nextcloud"
+        "/etc/env"
+        "/zfs/nextcloud"
+        "/home/luka"
         # "/zfs/downloads/music"
+      ];
+      exclude = [
+        "/home/luka/.bitmonero"
       ];
       repository = "sftp:${user}@${destNetbirdIp}:/backups/berlin";
       extraOptions = [
@@ -22,9 +26,9 @@ in
       initialize = true;
 
       timerConfig = {
-        OnCalendar = "03:20";
+        OnCalendar = "01:30";
         Persistent = true;
-        RandomizedDelaySec = "10m";
+        RandomizedDelaySec = "30m";
       };
       pruneOpts = [
         "--keep-daily 7"
