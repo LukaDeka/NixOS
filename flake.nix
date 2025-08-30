@@ -107,18 +107,21 @@
           ######## User-specific ########
           ./hosts/tbilisi/configuration.nix
 
-          ./hosts/tbilisi/wireguard.nix
+          # ./hosts/tbilisi/wireguard.nix
           ./hosts/tbilisi/zfs.nix
           ./hosts/tbilisi/printing.nix
+          ./hosts/tbilisi/restic-client.nix
 
           ######## Server configuration ########
-          ./packages/seafile.nix
-          # ./packages/nextcloud.nix
+          # ./packages/seafile.nix
+          ./packages/nextcloud-ip.nix
           ./packages/uptime-kuma.nix
           ./packages/nginx.nix
 
           ######## Networking ########
           ./packages/server-ssh.nix
+          # ./packages/frigate.nix
+          ./packages/frigate-podman.nix
 
           ######## Text editors/navigation ########
           ./packages/neovim.nix
