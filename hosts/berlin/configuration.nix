@@ -39,6 +39,7 @@
       isSystemUser = true;
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/4F45h/xkq+MIRDzhHqDm5uWM4KTpYi3Tv/DtSo28t luka@gram"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF7OvW6MffYFshZyarEaWvWjEmhodn/P+NLcnqbbMpma luka@conway"
       ];
     };
   };
@@ -57,6 +58,8 @@
 
     qrencode
     iperf
+
+    zola
   ];
 
   boot.loader.systemd-boot.enable = true;

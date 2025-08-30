@@ -15,6 +15,7 @@
         modules = [
           ######## User-specific ########
           ./hosts/berlin/configuration.nix
+          # ./hosts/gateway/personal-website.nix # TODO: THIS IS ONLY A TEST
 
           # ./hosts/berlin/wireguard.nix # VPN to home server
           ./hosts/berlin/zfs.nix # Raid
@@ -142,6 +143,7 @@
           ######## User-specific ########
           ./hosts/gateway/configuration.nix
           ./hosts/gateway/ssh.nix
+          ./hosts/gateway/personal-website.nix
 
           ######## Networking ########
           ./packages/netbird.nix

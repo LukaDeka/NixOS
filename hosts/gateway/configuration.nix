@@ -37,6 +37,7 @@
 
   environment.systemPackages = with pkgs; [
     powertop
+    zola
   ];
 
   boot.loader.grub = {
