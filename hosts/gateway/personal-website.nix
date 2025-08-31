@@ -4,11 +4,18 @@ let
   domain = config.vars.domain;
 in
 {
-  services.nginx.virtualHosts.${domain} = {
-    forceSSL = true;
-    enableACME = true;
-    locations."/" = {
-      root = "/var/www/personal-website/";
+  services.nginx.virtualHosts = {
+    "${domain}" = {
+      forceSSL = true;
+      enableACME = true;
+      locations."/" = {
+        root = "/var/www/personal-website/";
+      };
+    };
+    "www.${domain}" = {
+      forceSSL = true;
+      enableACME = true;
+      globalRedirect = domain;
     };
   };
 }
