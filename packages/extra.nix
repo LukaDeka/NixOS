@@ -6,13 +6,13 @@
 
   powerManagement.powertop.enable = true;
 
-  programs.zsh = {
-    enable = true;
-    syntaxHighlighting.enable = true;
-    autosuggestions.enable = true;
-    histSize = 50000;
-  };
-  users.defaultUserShell = pkgs.zsh;
+  # programs.zsh = {
+  #   enable = true;
+  #   syntaxHighlighting.enable = true;
+  #   autosuggestions.enable = true;
+  #   histSize = 50000;
+  # };
+  # users.defaultUserShell = pkgs.zsh;
 
   programs.git = {
     enable = true;
