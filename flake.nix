@@ -141,6 +141,7 @@
           ./hosts/gateway/configuration.nix
           ./hosts/gateway/ssh.nix
           ./hosts/gateway/personal-website.nix
+          ./hosts/gateway/restic-client.nix
 
           ######## Networking ########
           ./packages/netbird.nix
@@ -149,7 +150,6 @@
           ./packages/collabora-online-vps.nix
           ./packages/jellyfin-vps.nix
           ./packages/mailserver.nix
-
           # ./packages/vaultwarden.nix # Password manager
 
           ######## Text editors/navigation ########
