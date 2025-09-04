@@ -18,6 +18,21 @@
 
   time.timeZone = "Europe/Berlin";
 
+  networking = {
+    interfaces = {
+      "eth0".ipv6.addresses = [
+        {
+          address = "2a01:4f8:1c1a:3dbd::";
+          prefixLength = 64;
+        }
+      ];
+    };
+    defaultGateway6 = {
+      address = "fe80::1";
+      interface = "eth0";
+    };
+  };
+
   # Never prompt "wheel" users for a root password; potential security issue!
   security.sudo.wheelNeedsPassword = false;
 
