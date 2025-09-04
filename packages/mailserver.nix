@@ -15,7 +15,7 @@ in
     fullTextSearch = {
       enable = true;
       autoIndex = true;
-      languages = [ "en" "de" "ge" ];
+      languages = [ "en" "de" ];
     };
 
     backup = {
