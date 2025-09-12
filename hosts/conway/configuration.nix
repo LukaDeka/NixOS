@@ -44,6 +44,7 @@
     fzf # TODO: Learn how to use fzf
 
     zfs # Raid
+    sshfs
     ffmpeg
 
     alsa-utils # For speaker-test
