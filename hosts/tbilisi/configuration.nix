@@ -10,9 +10,11 @@
   vars.hostname = "tbilisi";
   vars.email = "luka.dekanozishvili1@gmail.com";
   vars.domain = "dekanozishvili.cloud";
-  vars.ip = "192.168.1.50";
-  vars.ethernetMAC = "28:d2:44:e8:bc:b5";
   vars.storageDir = "/zfs";
+
+  vars.privateIp = "192.168.1.50";
+  vars.serverNetbirdIp = "100.124.170.101";
+  vars.ethernetMAC = "28:d2:44:e8:bc:b5";
 
   time.timeZone = "Asia/Tbilisi";
 
@@ -25,12 +27,17 @@
     hashedPassword = "$y$j9T$nTWoHxqAJvwjcV70wHbQQ0$ePd3MfeST62/9eAlaHvi9iquC2j5PNQTCki8U8fznAD";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/4F45h/xkq+MIRDzhHqDm5uWM4KTpYi3Tv/DtSo28t luka@gram" # EOS
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFxw+URmM/WpNRRwJpBgLL6EmXuYxA3SKItQZZyjXxw6 luka@berlin"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICY63LU9IuSAAs4juNtaGWc067MuUH8LbhaNxQGKP4A1 u0_a637@localhost" # Termux
     ];
   };
 
+  services.netbird.enable = true;
+
   environment.systemPackages = with pkgs; [
     zfs # Raid
+    ffmpeg
+    restic
   ];
 
   boot.loader.systemd-boot.enable = true;

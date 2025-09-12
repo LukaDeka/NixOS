@@ -2,14 +2,15 @@
 
 let
   storageDir = config.vars.storageDir;
-  domain =     config.vars.domain;
-  username =   config.vars.username;
-  email =      config.vars.email;
-  ip =         config.vars.ip;
+  domain = config.vars.domain;
+  username = config.vars.username;
+  email = config.vars.email;
+  privateIp = config.vars.privateIp;
+  # serverNetbirdIp = config.vars.serverNetbirdIp;
+  proxyNetbirdIp =  config.vars.proxyNetbirdIp;
 in
 {
-  # imports = [ ./collabora-online.nix ]; # TODO: Add this back
-  # imports = [ ./onlyoffice.nix ];
+  imports = [ ./collabora-online.nix ];
 
   services.postgresql = {
     enable = true;
@@ -22,7 +23,6 @@ in
 
     hostName = "nextcloud.${domain}";
     https = true;
-    # https = false;
 
     datadir = "${storageDir}/nextcloud";
     home = "${storageDir}/nextcloud";
@@ -32,7 +32,7 @@ in
     autoUpdateApps.enable = true;
     extraAppsEnable = true;
     extraApps = with config.services.nextcloud.package.packages.apps; {
-      # List of apps we want to install and are already packaged in
+      # List of packaged apps:
       # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/nextcloud/packages/nextcloud-apps.json
       inherit calendar contacts deck
       previewgenerator memories notes # maps
@@ -73,7 +73,7 @@ in
     };
 
     phpOptions = {
-      "opcache.interned_strings_buffer" = "32"; # Default is 8 MB
+      "opcache.interned_strings_buffer" = "32";
       "opcache.jit" = "1255";
       "opcache.jit_buffer_size" = "8M";
     };
@@ -93,8 +93,8 @@ in
         locking = "\\OC\\Memcache\\Redis";
       };
 
-      trusted_domains = [ "${ip}" "100.124.116.159" ];
-      trusted_proxies = [ "100.124.116.159/32" ];
+      trusted_domains = [ "nextcloud.${domain}" "collabora.${domain}" privateIp ];
+      trusted_proxies = [ "${proxyNetbirdIp}/32" ];
 
       default_phone_region = "DE";
       default_language = "en";

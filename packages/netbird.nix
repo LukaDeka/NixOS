@@ -75,7 +75,7 @@ in
           ];
         };
         Relay = {
-          Addresses = [ "rel://${netbirdDomain}:33080" ];
+          Addresses = [ "rels://${netbirdDomain}:33080" ];
           CredentialsTTL = "24h";
           Secret._secret = "/etc/env/netbird/relay_secret";
         };
@@ -103,18 +103,29 @@ in
     ports = [
       "33080:33080"
     ];
+    volumes = [
+      "/var/lib/acme/${netbirdDomain}/:/certs:ro"
+    ];
     environment = {
       NB_LOG_LEVEL = "info";
       NB_LISTEN_ADDRESS = ":33080";
-      NB_EXPOSED_ADDRESS = "${netbirdDomain}:33080";
+      NB_EXPOSED_ADDRESS = "rels://${netbirdDomain}:33080";
+      NB_TLS_CERT_FILE = "/certs/fullchain.pem";
+      NB_TLS_KEY_FILE = "/certs/key.pem";
     };
     environmentFiles = [
       "/etc/env/netbird/relay_secret_container"
+    ];
+    extraOptions = [
+      "--cap-add=NET_ADMIN"
+      "--cap-add=SYS_ADMIN"
+      "--cap-add=SYS_RESOURCE"
     ];
   };
 
   networking.firewall.allowedTCPPorts = [ 80 443 3478 10000 33080 ];
   networking.firewall.allowedUDPPorts = [ 3478 5349 33080 ];
-  networking.firewall.allowedUDPPortRanges = [{ from = 40000; to = 40050; }]; # TURN
+  # networking.firewall.allowedUDPPortRanges = [{ from = 40000; to = 40050; }]; # TURN
+  networking.firewall.allowedUDPPortRanges = [{ from = 32768; to = 60999; }]; # TURN
 }
 

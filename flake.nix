@@ -15,11 +15,9 @@
         modules = [
           ######## User-specific ########
           ./hosts/berlin/configuration.nix
-
-          # ./hosts/berlin/wireguard.nix # VPN to home server
-          ./hosts/berlin/zfs.nix # Raid
+          ./hosts/berlin/zfs.nix
           ./hosts/berlin/printing.nix # Cloud printing advertised to LAN
-
+          ./hosts/berlin/restic-client.nix
 
           ######## Server configuration ########
           ./packages/nextcloud.nix
@@ -28,8 +26,6 @@
           ./packages/uptime-kuma.nix # Monitoring
           ./packages/retroarch.nix # Retro game emulation
           ./packages/craftycontroller.nix
-          # ./packages/seafile.nix # File server
-          # ./packages/vaultwarden.nix # Password manager
 
           ######## Networking ########
           ./packages/server-ssh.nix
@@ -106,18 +102,21 @@
           ######## User-specific ########
           ./hosts/tbilisi/configuration.nix
 
-          ./hosts/tbilisi/wireguard.nix
+          # ./hosts/tbilisi/wireguard.nix
           ./hosts/tbilisi/zfs.nix
           ./hosts/tbilisi/printing.nix
+          ./hosts/tbilisi/restic-client.nix
 
           ######## Server configuration ########
-          ./packages/seafile.nix
-          # ./packages/nextcloud.nix
+          # ./packages/seafile.nix
+          ./packages/nextcloud-ip.nix
           ./packages/uptime-kuma.nix
           ./packages/nginx.nix
 
           ######## Networking ########
           ./packages/server-ssh.nix
+          # ./packages/frigate.nix
+          ./packages/frigate-podman.nix
 
           ######## Text editors/navigation ########
           ./packages/neovim.nix
@@ -134,7 +133,7 @@
         ];
       };
 
-      hetzner = nixpkgs.lib.nixosSystem {
+      gateway = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
@@ -142,13 +141,17 @@
           ######## User-specific ########
           ./hosts/gateway/configuration.nix
           ./hosts/gateway/ssh.nix
+          ./hosts/gateway/personal-website.nix
+          ./hosts/gateway/restic-client.nix
 
           ######## Networking ########
           ./packages/netbird.nix
+          ./packages/nginx.nix
           ./packages/nextcloud-vps.nix
-          # ./packages/collabora-online-vps.nix
+          ./packages/collabora-online-vps.nix
           ./packages/jellyfin-vps.nix
           ./packages/mailserver.nix
+          # ./packages/vaultwarden.nix # Password manager
 
           ######## Text editors/navigation ########
           ./packages/neovim.nix
@@ -158,6 +161,10 @@
           ./packages/extra.nix
           ./packages/aliases.nix
           ./packages/virtualisation.nix
+
+          ######## Scripts ########
+          ./scripts/virtualisation/update-containers.nix
+          ./scripts/virtualisation/restart-netbird-relay.nix
         ];
       };
     };

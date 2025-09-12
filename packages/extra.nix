@@ -1,7 +1,18 @@
 { config, pkgs, ... }:
 
 {
+  networking.firewall.allowedUDPPortRanges = [{ from = 40000; to = 40050; }];
+  networking.firewall.allowedUDPPorts = [ 3478 51820 ];
+
   powerManagement.powertop.enable = true;
+
+  # programs.zsh = {
+  #   enable = true;
+  #   syntaxHighlighting.enable = true;
+  #   autosuggestions.enable = true;
+  #   histSize = 50000;
+  # };
+  # users.defaultUserShell = pkgs.zsh;
 
   programs.git = {
     enable = true;

@@ -10,9 +10,12 @@
   vars.hostname = "conway";
   vars.email = "me@lukadeka.com";
   vars.domain = "lukadeka.com";
-  #vars.ip = "10.10.10.10";
-  vars.ethernetMAC = "34:5a:60:63:d7:42";
   #vars.storageDir = "/zfs";
+
+  # vars.privateIp = "10.10.10.10";
+  # vars.serverNetbirdIp = ""; # This server's IP
+  # vars.proxyNetbirdIp = "100.124.117.109";
+  vars.ethernetMAC = "34:5a:60:63:d7:42";
 
   time.timeZone = "Europe/Berlin";
 

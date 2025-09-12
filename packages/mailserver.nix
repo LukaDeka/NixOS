@@ -15,7 +15,7 @@ in
     fullTextSearch = {
       enable = true;
       autoIndex = true;
-      languages = [ "en" "de" "ge" ];
+      languages = [ "en" "de" ];
     };
 
     backup = {
@@ -23,6 +23,29 @@ in
     };
 
     virusScanning = true; # Memory-expensive
+
+    mailboxes = {
+      Drafts = {
+       auto = "subscribe";
+       specialUse = "Drafts";
+      };
+      Sent = {
+        auto = "subscribe";
+        specialUse = "Sent";
+      };
+      Archive = {
+       auto = "subscribe";
+       specialUse = "Archive";
+      };
+      Junk = {
+        auto = "subscribe";
+        specialUse = "Junk";
+      };
+      Trash = {
+        auto = "subscribe";
+        specialUse = "Trash";
+      };
+    };
 
     rejectRecipients = [ # Block mails addressed to:
       "info@${domain}"

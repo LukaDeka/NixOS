@@ -5,9 +5,9 @@ let
 in
 {
   networking = {
-    # Enable a network bridge and route all traffic through it, since
+    # Enable a network bridge and route all traffic through it since
     # the services running on the VMs are inaccessible otherwise.
-    # With this setup, each VM gets an IP address through DHCP
+    # With this setup, each VM gets an IP address through DHCP from the router.
     interfaces = {
       br0.macAddress = ethernetMAC; # To make sure the MAC never changes
       br0.useDHCP = true; # Make sure you set a static IP in your router
@@ -34,11 +34,6 @@ in
           nictype = "bridged";
           parent = "br0";
         };
-        # eth0 = {
-        #   name = "eth0";
-        #   type = "nic";
-        #   network = "br0";
-        # };
         root = {
           path = "/";
           pool = "default";
@@ -55,23 +50,6 @@ in
         source = "nvmepool/incus";
       };
     } ];
-
-    # networks = [ {
-    #   name = "br0";
-    #   type = "bridge";
-    #   config = {
-    #     "ipv4.address" = "auto";
-    #     "ipv6.address" = "none";
-    #   };
-    # } ];
-
-    # storage_pools = [ {
-    #   name = "default";
-    #   driver = "dir";
-    #   config = {
-    #     source = "/var/lib/incus/storage-pools/default";
-    #   };
-    # } ];
   };
 }
 

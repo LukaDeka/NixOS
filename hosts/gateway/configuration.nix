@@ -10,10 +10,28 @@
   vars.hostname = "gateway";
   vars.email = "me@lukadeka.com";
   vars.domain = "lukadeka.com";
-  vars.ip = "91.99.69.65";
+
+  # vars.ip = "91.99.69.65"; # TODO: change this
+  vars.proxyNetbirdIp = "100.124.117.109"; # This server's IP
+  vars.serverNetbirdIp = "100.124.116.159"; # Server to proxy to
   vars.ethernetMAC = "96:00:04:5d:d2:0d";
 
   time.timeZone = "Europe/Berlin";
+
+  # networking = {
+  #   interfaces = {
+  #     "eth1".ipv6.addresses = [
+  #       {
+  #         address = "2a01:4f8:1c1a:3dbd::";
+  #         prefixLength = 64;
+  #       }
+  #     ];
+  #   };
+  #   defaultGateway6 = {
+  #     address = "fe80::1";
+  #     interface = "eth0";
+  #   };
+  # };
 
   # Never prompt "wheel" users for a root password; potential security issue!
   security.sudo.wheelNeedsPassword = false;
@@ -34,6 +52,7 @@
 
   environment.systemPackages = with pkgs; [
     powertop
+    zola
   ];
 
   boot.loader.grub = {
