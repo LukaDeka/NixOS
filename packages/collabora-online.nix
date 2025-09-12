@@ -79,15 +79,15 @@ in
   };
 
   # Edit /etc/hosts to force Collabora to resolve to localhost
-  networking.hosts = {
-    "127.0.0.1" = [ "nextcloud.${domain}" "collabora.${domain}" ];
-    "::1"       = [ "nextcloud.${domain}" "collabora.${domain}" ];
-  };
+  # networking.hosts = {
+  #   "127.0.0.1" = [ "nextcloud.${domain}" "collabora.${domain}" ];
+  #   "::1"       = [ "nextcloud.${domain}" "collabora.${domain}" ];
+  # };
 
   # Do not respond to DNS queries from /etc/hosts since Pi-hole is running
   # TODO: test if this breaks anything without Pi-hole running
-  systemd.tmpfiles.rules = [
-    "f /var/lib/dnsmasq.d/no-hosts.conf 0644 root root - no-hosts"
-  ];
+ # systemd.tmpfiles.rules = [
+  #   "f /var/lib/dnsmasq.d/no-hosts.conf 0644 root root - no-hosts"
+  # ];
 }
 

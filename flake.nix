@@ -30,6 +30,7 @@
           ######## Networking ########
           ./packages/server-ssh.nix
           ./packages/pihole.nix # DNS server/adblocker
+          ./packages/incus.nix # VM management
           # ./packages/deluge.nix # Torrent client
 
           ######## Text editors/navigation ########
