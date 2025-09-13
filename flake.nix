@@ -15,13 +15,9 @@
         modules = [
           ######## User-specific ########
           ./hosts/berlin/configuration.nix
-          # ./hosts/gateway/personal-website.nix # TODO: THIS IS ONLY A TEST
-
-          # ./hosts/berlin/wireguard.nix # VPN to home server
-          ./hosts/berlin/zfs.nix # Raid
+          ./hosts/berlin/zfs.nix
           ./hosts/berlin/printing.nix # Cloud printing advertised to LAN
           ./hosts/berlin/restic-client.nix
-
 
           ######## Server configuration ########
           ./packages/nextcloud.nix
@@ -30,12 +26,11 @@
           ./packages/uptime-kuma.nix # Monitoring
           ./packages/retroarch.nix # Retro game emulation
           ./packages/craftycontroller.nix
-          # ./packages/seafile.nix # File server
-          # ./packages/vaultwarden.nix # Password manager
 
           ######## Networking ########
           ./packages/server-ssh.nix
           ./packages/pihole.nix # DNS server/adblocker
+          ./packages/incus.nix # VM management
           # ./packages/deluge.nix # Torrent client
 
           ######## Text editors/navigation ########
@@ -147,13 +142,16 @@
           ./hosts/gateway/configuration.nix
           ./hosts/gateway/ssh.nix
           ./hosts/gateway/personal-website.nix
+          ./hosts/gateway/restic-client.nix
 
           ######## Networking ########
           ./packages/netbird.nix
+          ./packages/nginx.nix
           ./packages/nextcloud-vps.nix
           ./packages/collabora-online-vps.nix
           ./packages/jellyfin-vps.nix
           ./packages/mailserver.nix
+          # ./packages/vaultwarden.nix # Password manager
 
           ######## Text editors/navigation ########
           ./packages/neovim.nix

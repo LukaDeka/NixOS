@@ -30,8 +30,9 @@
       hashedPassword = "$y$j9T$nTWoHxqAJvwjcV70wHbQQ0$ePd3MfeST62/9eAlaHvi9iquC2j5PNQTCki8U8fznAD";
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/4F45h/xkq+MIRDzhHqDm5uWM4KTpYi3Tv/DtSo28t luka@gram"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIT+vMzh2ngUeqnVJS8Zl1m1HQMBkDOqoGdoARPyJgDM u0_a380@localhost"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINWaGWnJ1wi0EqdhB20DqvB8M/zZ606nBTeUNG2MskXx luka@tbilisi"
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIT+vMzh2ngUeqnVJS8Zl1m1HQMBkDOqoGdoARPyJgDM u0_a380@localhost" # s
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG94vDBfeRhPfL7NdduA5bZ3aQZOJVFPABsfSEELGFx/ luka@gateway"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF7OvW6MffYFshZyarEaWvWjEmhodn/P+NLcnqbbMpma luka@conway"
       ];
     };
