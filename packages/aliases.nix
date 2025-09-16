@@ -26,12 +26,37 @@ in
       f = "vim ${homeDir}/nixos/flake.nix";
       c = "vim ${homeDir}/nixos/hosts/${host}/configuration.nix";
 
-      s =  "cd ${homeDir}/nixos; git add . && sudo nixos-rebuild switch --flake ${homeDir}/nixos; cd - &> /dev/null";
-      sr = "cd ${homeDir}/nixos; git add . && export NIX_SSHOPTS='-p 6868' && nixos-rebuild switch --flake ${homeDir}/nixos#gateway --target-host \"luka@91.99.69.65\" --sudo; cd - &> /dev/null";
+      # s = ''
+      #   cd ${homeDir}/nixos;
+      #   git add . &&
+      #   sudo nixos-rebuild switch --flake ${homeDir}/nixos;
+      #   cd - &> /dev/null;
+      # '';
+      # sr = ''
+      #   cd ${homeDir}/nixos;
+      #   git add . &&
+      #   export NIX_SSHOPTS="-p 6868" &&
+      #   nixos-rebuild switch --flake ${homeDir}/nixos#gateway --target-host "luka@91.99.69.65" --sudo;
+      #   cd - &> /dev/null;
+      # '';
     };
-    # shellInit = ''
-    #   export COLORTERM=truecolor;
-    # '';
+    shellInit = ''
+      export COLORTERM=truecolor;
+      s() {
+        cd ${homeDir}/nixos;
+        git add . &&
+        sudo nixos-rebuild switch --flake ${homeDir}/nixos;
+        cd - &> /dev/null;
+      }
+
+      sr() {
+        cd ${homeDir}/nixos;
+        git add . &&
+        export NIX_SSHOPTS="-p 6868" &&
+        nixos-rebuild switch --flake ${homeDir}/nixos#gateway --target-host "luka@91.99.69.65" --sudo;
+        cd - &> /dev/null;
+      }
+    '';
   };
 }
 
