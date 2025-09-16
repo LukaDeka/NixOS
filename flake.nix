@@ -83,7 +83,7 @@
           ./packages/virtualisation.nix
 
           ######## Scripts ########
-          # ./scripts/zfs-healthcheck/service.nix # Uptime Kuma monitoring
+          ./scripts/zfs-healthcheck/service.nix # Uptime Kuma monitoring
           ./scripts/virtualisation/update-containers.nix # Runs podman pull weekly
           ./scripts/virtualisation/restart-pihole.nix
         ];
