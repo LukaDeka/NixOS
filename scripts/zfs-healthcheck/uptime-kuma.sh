@@ -1,5 +1,4 @@
 #! /bin/sh
-# /usr/bin/env nix-shell
 
 push_token=$(< /etc/env/zfs/push-token);
 
