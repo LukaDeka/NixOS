@@ -38,6 +38,7 @@
     zfs # Raid
     ffmpeg
     restic
+    powertop
   ];
 
   boot.loader.systemd-boot.enable = true;
