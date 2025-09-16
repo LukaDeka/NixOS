@@ -10,11 +10,11 @@
   vars.hostname = "conway";
   vars.email = "me@lukadeka.com";
   vars.domain = "lukadeka.com";
-  #vars.storageDir = "/zfs";
+  vars.storageDir = "/ssd";
 
-  # vars.privateIp = "10.10.10.10";
-  # vars.serverNetbirdIp = ""; # This server's IP
-  # vars.proxyNetbirdIp = "100.124.117.109";
+  vars.privateIp = "10.10.10.10";
+  vars.serverNetbirdIp = "100.124.110.100"; # This server's IP
+  vars.proxyNetbirdIp = "100.124.117.109";
   vars.ethernetMAC = "34:5a:60:63:d7:42";
 
   time.timeZone = "Europe/Berlin";
@@ -26,10 +26,12 @@
     ${config.vars.username} = {
       isNormalUser = true;
       linger = true; # Keep user services running
-      extraGroups = [ "networkmanager" "wheel" "nextcloud" "docker" "video" "audio" "tty" "input" "gamemode" ];
+      extraGroups = [ "networkmanager" "wheel" "nextcloud" "docker" "podman" "video" "audio" "tty" "input" "gamemode" ];
       hashedPassword = "$y$j9T$6bEHYFO.AGCC2bnKxC3xB/$6/1zmuzaSvDSHID6ZTgnrHiWRS8ayEXhNBp48ugR4z7";
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/4F45h/xkq+MIRDzhHqDm5uWM4KTpYi3Tv/DtSo28t luka@gram"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINWaGWnJ1wi0EqdhB20DqvB8M/zZ606nBTeUNG2MskXx luka@tbilisi"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG94vDBfeRhPfL7NdduA5bZ3aQZOJVFPABsfSEELGFx/ luka@gateway"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIT+vMzh2ngUeqnVJS8Zl1m1HQMBkDOqoGdoARPyJgDM u0_a380@localhost" # s
       ];
     };
@@ -45,16 +47,11 @@
 
   environment.systemPackages = with pkgs; [
     fzf # TODO: Learn how to use fzf
-
     zfs # Raid
     sshfs
     ffmpeg
-
-    alsa-utils # For speaker-test
     powertop
-
     qrencode
-    iperf
   ];
 
   boot.loader.systemd-boot.enable = true;

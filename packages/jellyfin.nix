@@ -21,7 +21,7 @@ in
   users.users.jellyfin = {
     isSystemUser = true;
     group = "jellyfin";
-    extraGroups = [ "render" ];
+    extraGroups = [ "render" "video" ];
   };
 
   networking.firewall.allowedTCPPorts = [ 8096 ];
@@ -47,9 +47,8 @@ in
     enable = true;
     extraPackages = with pkgs; [
       intel-media-driver
-      intel-vaapi-driver
-      vaapiVdpau
-      intel-compute-runtime-legacy1
+      intel-vaapi-driver # For older processors
+      vpl-gpu-rt # QSV
     ];
   };
 }

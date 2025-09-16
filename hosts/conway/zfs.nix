@@ -5,7 +5,7 @@
   boot.zfs.forceImportRoot = false;
 
   # Set the name of the pool to import it on boot
-  boot.zfs.extraPools = [ "nvmepool" ];
+  boot.zfs.extraPools = [ "nvmepool" "ssdpool" ];
 
   # The unique 32-bit ID of the machine. Used for making sure
   # a ZFS pool isn't accidentally imported on a wrong machine.

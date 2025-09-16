@@ -13,7 +13,7 @@
 
   # vars.ip = "91.99.69.65"; # TODO: change this
   vars.proxyNetbirdIp = "100.124.117.109"; # This server's IP
-  vars.serverNetbirdIp = "100.124.116.159"; # Server to proxy to
+  vars.serverNetbirdIp = "100.124.110.100"; # Server to proxy to
   vars.ethernetMAC = "96:00:04:5d:d2:0d";
 
   time.timeZone = "Europe/Berlin";
@@ -44,6 +44,7 @@
       hashedPassword = "$y$j9T$nTWoHxqAJvwjcV70wHbQQ0$ePd3MfeST62/9eAlaHvi9iquC2j5PNQTCki8U8fznAD";
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/4F45h/xkq+MIRDzhHqDm5uWM4KTpYi3Tv/DtSo28t luka@gram" # EOS
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF7OvW6MffYFshZyarEaWvWjEmhodn/P+NLcnqbbMpma luka@conway"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFxw+URmM/WpNRRwJpBgLL6EmXuYxA3SKItQZZyjXxw6 luka@berlin"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIT+vMzh2ngUeqnVJS8Zl1m1HQMBkDOqoGdoARPyJgDM u0_a380@localhost" # S
       ];

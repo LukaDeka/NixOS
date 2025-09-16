@@ -10,10 +10,11 @@ let
   proxyNetbirdIp =  config.vars.proxyNetbirdIp;
 in
 {
-  imports = [ ./collabora-online.nix ];
+  # imports = [ ./collabora-online.nix ];
 
   services.postgresql = {
     enable = true;
+    package = pkgs.postgresql_15;
     dataDir = "${storageDir}/postgresql/${config.services.postgresql.package.psqlSchema}";
   };
 
@@ -38,26 +39,22 @@ in
       previewgenerator memories notes # maps
       end_to_end_encryption unroundedcorners
       forms richdocuments
-      # news
+      news
+      # mail
       # phonetrack
       # onlyoffice
-      # recognize
+      recognize
       spreed;
-      # epubviewer = pkgs.fetchNextcloudApp {
-      #   url = "https://github.com/devnoname120/epubviewer/releases/download/1.7.3/epubviewer-1.7.3.tar.gz";
-      #   sha256 = "sha256-XOU6adVhi2ek7/Ri36XjMre55tfMFGkSLgkUKdGiMNc=";
-      #   license = "gpl3";
-      # };
-      # facerecognition = pkgs.fetchNextcloudApp {
-      #   url = "https://github.com/matiasdelellis/facerecognition/archive/refs/tags/v0.9.70.tar.gz";
-      #   sha256 = "sha256-yx+nuIDgd6+h5YD5/mT2+IpmuU3aXwGLAFUm67e88aY=";
-      #   license = "gpl3";
-      # };
+      epubviewer = pkgs.fetchNextcloudApp {
+        url = "https://github.com/devnoname120/epubviewer/releases/download/1.7.3/epubviewer-1.7.3.tar.gz";
+        sha256 = "sha256-XOU6adVhi2ek7/Ri36XjMre55tfMFGkSLgkUKdGiMNc=";
+        license = "gpl3";
+      };
       # TODO: wait until snappymail works on NC31
       # snappymail = pkgs.fetchNextcloudApp {
-      #   # url = "https://github.com/the-djmaze/snappymail/releases/download/v2.38.2/snappymail-2.38.2.tar.gz";
-      #   url = "https://github.com/the-djmaze/snappymail/archive/refs/tags/v2.38.2.tar.gz";
-      #   sha256 = "sha256-Jb38nfz8+4tMl4XIIvcW4WrzUi6Ss/uPNGpgv4mElDI=";
+      #   url = "https://github.com/the-djmaze/snappymail/releases/download/v2.38.2/snappymail-2.38.2.tar.gz";
+      #   # url = "https://github.com/the-djmaze/snappymail/archive/refs/tags/v2.38.2.tar.gz";
+      #   sha256 = "sha256-cfHYqQZcyc993QZPXEfMeyVctw5qVnE2R/xz1LeeM+w=";
       #   license = "gpl3";
       # };
     };
@@ -66,10 +63,10 @@ in
     # https://tideways.com/profiler/blog/an-introduction-to-php-fpm-tuning
     poolSettings = {
       pm = "dynamic";
-      "pm.max_children" = "125";
-      "pm.start_servers" = "8";
-      "pm.min_spare_servers" = "4";
-      "pm.max_spare_servers" = "8";
+      "pm.max_children" = "200";
+      "pm.start_servers" = "20";
+      "pm.min_spare_servers" = "10";
+      "pm.max_spare_servers" = "20";
     };
 
     phpOptions = {
@@ -99,7 +96,7 @@ in
       default_phone_region = "DE";
       default_language = "en";
       default_locale = "de_DE";
-      reduce_to_languages = [ "en" "de" "ge" "ru" ]; # Only show these languages
+      reduce_to_languages = [ "en" "de" "ru" ]; # Only show these languages
 
       knowledgebaseenabled = false; # Disable help menu
       lost_password_link = "disabled"; # Disable "reset password"
@@ -135,12 +132,6 @@ in
         include ${pkgs.nginx}/conf/fastcgi_params;
         include ${pkgs.nginx}/conf/fastcgi.conf;
       '';
-    };
-  };
-  # TODO: Is this necessary?
-  services.phpfpm.pools.nextcloud = {
-    settings = {
-      "listen" = "/run/phpfpm/nextcloud.sock";
     };
   };
 }
