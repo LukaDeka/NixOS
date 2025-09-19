@@ -5,15 +5,15 @@ let
 in
 {
   services.nginx.virtualHosts = {
-  #   "http://${domain}" = { # Redirect http to https
-  #     listen = [{
-  #       addr = "0.0.0.0";
-  #       port = 80;
-  #     }];
-  #     locations."/" = {
-  #         return = "301 https://$host$request_uri";
-  #     };
-  #   };
+    # "http://${domain}" = { # Redirect http to https
+    #   listen = [{
+    #     addr = "0.0.0.0";
+    #     port = 80;
+    #   }];
+    #   locations."/" = {
+    #       return = "301 https://$host$request_uri";
+    #   };
+    # };
     "${domain}" = {
       forceSSL = true;
       enableACME = true;

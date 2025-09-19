@@ -6,8 +6,8 @@
 
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
-    # recommendedProxySettings = true;
     recommendedTlsSettings = true;
+    # recommendedProxySettings = true;
 
     # Only allow PFS-enabled ciphers with AES256
     sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
@@ -17,7 +17,7 @@
       add_header 'Referrer-Policy' 'origin-when-cross-origin';
 
       # Disable embedding as a frame
-      add_header X-Frame-Options DENY;
+      add_header X-Frame-Options SAMEORIGIN;
 
       # Prevent injection of code in other mime types (XSS Attacks)
       add_header X-Content-Type-Options nosniff;
