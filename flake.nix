@@ -9,6 +9,46 @@
 
   outputs = { nixpkgs, nixpkgs-stable, nixos-mailserver, ... } @ inputs: {
     nixosConfigurations = {
+      conway = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ######## User-specific ########
+          ./hosts/conway/configuration.nix
+
+          ./hosts/conway/zfs.nix # Raid
+          ./hosts/conway/printing.nix # Cloud printing advertised to LAN
+
+          ######## Server configuration ########
+          ./packages/nextcloud.nix
+          ./packages/jellyfin.nix # Media server
+          ./packages/nginx.nix # Recommended settings
+          ./packages/uptime-kuma.nix # Monitoring
+          ./packages/retroarch.nix # Retro game emulation
+          # ./packages/craftycontroller.nix
+
+          ######## Networking ########
+          ./packages/server-ssh.nix
+          ./packages/pihole.nix # DNS server/adblocker
+          ./packages/incus.nix # VM management
+
+          ######## Text editors/navigation ########
+          ./packages/neovim.nix
+          # ./packages/fish.nix # TODO: Learn fish
+
+          ######## etc. ########
+          ./packages/common-packages.nix
+          ./packages/extra.nix
+          ./packages/aliases.nix # BASH aliases
+          ./packages/virtualisation.nix
+
+          ######## Scripts ########
+          ./scripts/zfs-healthcheck/service.nix # Uptime Kuma monitoring
+          ./scripts/virtualisation/update-containers.nix # Runs podman pull weekly
+          ./scripts/virtualisation/restart-pihole.nix
+        ];
+      };
+
       berlin = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
@@ -38,46 +78,6 @@
           ######## etc. ########
           ./packages/common-packages.nix
           ./packages/laptop-server.nix
-          ./packages/extra.nix
-          ./packages/aliases.nix # BASH aliases
-          ./packages/virtualisation.nix
-
-          ######## Scripts ########
-          ./scripts/zfs-healthcheck/service.nix # Uptime Kuma monitoring
-          ./scripts/virtualisation/update-containers.nix # Runs podman pull weekly
-          ./scripts/virtualisation/restart-pihole.nix
-        ];
-      };
-
-      conway = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ######## User-specific ########
-          ./hosts/conway/configuration.nix
-
-          ./hosts/conway/zfs.nix # Raid
-          ./hosts/conway/printing.nix # Cloud printing advertised to LAN
-
-          ######## Server configuration ########
-          ./packages/nextcloud.nix
-          ./packages/jellyfin.nix # Media server
-          ./packages/nginx.nix # Recommended settings
-          ./packages/uptime-kuma.nix # Monitoring
-          # ./packages/retroarch.nix # Retro game emulation
-          # ./packages/craftycontroller.nix
-
-          ######## Networking ########
-          ./packages/server-ssh.nix
-          ./packages/pihole.nix # DNS server/adblocker
-          ./packages/incus.nix # VM management
-
-          ######## Text editors/navigation ########
-          ./packages/neovim.nix
-          # ./packages/fish.nix # TODO: Learn fish
-
-          ######## etc. ########
-          ./packages/common-packages.nix
           ./packages/extra.nix
           ./packages/aliases.nix # BASH aliases
           ./packages/virtualisation.nix

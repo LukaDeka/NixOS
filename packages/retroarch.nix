@@ -27,13 +27,12 @@
         #   option "preferredmode" "1920x1080_74.97"
         # '';
       }
-
-      "eDP-1" { # Integrated screen
-        output = "eDP-1";
-        monitorConfig = ''
-          Option "Ignore" "true"
-        '';
-      }
+      # "eDP-1" { # Integrated screen of old laptop-server
+      #   output = "eDP-1";
+      #   monitorConfig = ''
+      #     Option "Ignore" "true"
+      #   '';
+      # }
     ];
   };
 
