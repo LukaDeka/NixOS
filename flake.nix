@@ -15,9 +15,9 @@
         modules = [
           ######## User-specific ########
           ./hosts/conway/configuration.nix
-
           ./hosts/conway/zfs.nix # Raid
           ./hosts/conway/printing.nix # Cloud printing advertised to LAN
+          ./hosts/conway/restic-client.nix
 
           ######## Server configuration ########
           ./packages/nextcloud.nix

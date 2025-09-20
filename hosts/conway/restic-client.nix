@@ -3,25 +3,25 @@
 let
   user = config.vars.username;
   homeDir = config.vars.homeDir;
-  destNetbirdIp = "100.124.116.159";
+  destNetbirdIp = "100.124.170.101";
 in
 {
   services.restic.backups = {
     regular-backup = {
       paths = [
-        "/var"
+        "/var/lib"
         "/etc/env"
-        "/home"
+        "/ssd/nextcloud"
+        "/home/luka"
       ];
       exclude = [
-        "/var/log"
-        "/var/cache"
+        "/home/luka/.bitmonero"
       ];
-      repository = "sftp:${user}@${destNetbirdIp}:/ssd/backups/gateway";
+      repository = "sftp:${user}@${destNetbirdIp}:/backups/conway";
       extraOptions = [
         "sftp.command='ssh -p 6968 ${user}@${destNetbirdIp} -i ${homeDir}/.ssh/id_ed25519 -s sftp'"
       ];
-      passwordFile = "/etc/env/restic/conway-password";
+      passwordFile = "/etc/env/restic/tbilisi-password";
       initialize = true;
 
       timerConfig = {
