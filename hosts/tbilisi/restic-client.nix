@@ -13,11 +13,11 @@ in
         "/etc/env"
         "/zfs/nextcloud"
       ];
-      repository = "sftp:${user}@${destNetbirdIp}:/backups/tbilisi";
+      repository = "sftp:${user}@${destNetbirdIp}:/ssd/backups/tbilisi";
       extraOptions = [
         "sftp.command='ssh -p 6968 ${user}@${destNetbirdIp} -i ${homeDir}/.ssh/id_ed25519 -s sftp'"
       ];
-      passwordFile = "/etc/env/restic/berlin-password";
+      passwordFile = "/etc/env/restic/conway-password";
       initialize = true;
 
       timerConfig = {
