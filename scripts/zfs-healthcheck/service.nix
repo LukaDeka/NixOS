@@ -30,7 +30,7 @@ in
       partOf = [ "zfs-uptime-kuma.service" ];
       timerConfig = {
         Persistent = true; # Execute immediately if missed
-        OnUnitActiveSec = "15m"; # Run every x minutes
+        OnUnitActiveSec = "7m"; # Run every x minutes
         Unit = "zfs-uptime-kuma.service";
       };
     };
