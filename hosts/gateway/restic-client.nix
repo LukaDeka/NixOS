@@ -3,7 +3,7 @@
 let
   user = config.vars.username;
   homeDir = config.vars.homeDir;
-  destNetbirdIp = "100.124.116.159";
+  destNetbirdIp = "100.124.110.100";
 in
 {
   services.restic.backups = {
