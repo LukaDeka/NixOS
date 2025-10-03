@@ -140,6 +140,7 @@
           ./hosts/gateway/restic-client.nix
 
           ######## Networking ########
+          ./packages/tailscale.nix
           ./packages/netbird.nix
           ./packages/nginx.nix
           ./packages/nextcloud-vps.nix
