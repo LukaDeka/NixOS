@@ -110,7 +110,7 @@
           ######## Networking ########
           ./packages/server-ssh.nix
           # ./packages/frigate.nix
-          ./packages/frigate-podman.nix
+          # ./packages/frigate-podman.nix
 
           ######## Text editors/navigation ########
           ./packages/neovim.nix
