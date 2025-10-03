@@ -28,6 +28,7 @@
           # ./packages/craftycontroller.nix
 
           ######## Networking ########
+          ./packages/tailscale.nix
           ./packages/server-ssh.nix
           ./packages/pihole.nix # DNS server/adblocker
           ./packages/incus.nix # VM management
