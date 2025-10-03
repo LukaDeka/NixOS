@@ -28,6 +28,7 @@
           # ./packages/craftycontroller.nix
 
           ######## Networking ########
+          ./packages/tailscale.nix
           ./packages/server-ssh.nix
           ./packages/pihole.nix # DNS server/adblocker
           ./packages/incus.nix # VM management
@@ -139,6 +140,7 @@
           ./hosts/gateway/restic-client.nix
 
           ######## Networking ########
+          ./packages/tailscale.nix
           ./packages/netbird.nix
           ./packages/nginx.nix
           ./packages/nextcloud-vps.nix
