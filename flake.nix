@@ -109,6 +109,7 @@
           ./packages/nginx.nix
 
           ######## Networking ########
+          ./packages/tailscale.nix
           ./packages/server-ssh.nix
           # ./packages/frigate.nix
           # ./packages/frigate-podman.nix
