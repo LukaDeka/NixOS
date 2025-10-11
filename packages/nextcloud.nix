@@ -6,8 +6,6 @@ let
   username = config.vars.username;
   email = config.vars.email;
   privateIp = config.vars.privateIp;
-  # serverNetbirdIp = config.vars.serverNetbirdIp;
-  proxyNetbirdIp =  config.vars.proxyNetbirdIp;
 in
 {
   # imports = [ ./collabora-online.nix ];
@@ -91,7 +89,7 @@ in
       };
 
       trusted_domains = [ "nextcloud.${domain}" "collabora.${domain}" privateIp ];
-      trusted_proxies = [ "${proxyNetbirdIp}/32" ];
+      trusted_proxies = [ "100.112.93.9/32" "100.92.201.89/32" ];
 
       default_phone_region = "DE";
       default_language = "en";
