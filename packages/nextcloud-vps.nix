@@ -2,14 +2,13 @@
 
 let
   domain = config.vars.domain;
-  ip = config.vars.serverNetbirdIp;
 in
 {
   services.nginx.virtualHosts."nextcloud.${domain}" = {
     forceSSL = true;
     enableACME = true;
     locations."/" = {
-      proxyPass = "http://${ip}:80";
+      proxyPass = "http://conway:80";
       proxyWebsockets = true;
       extraConfig = ''
         proxy_set_header Host $host;
