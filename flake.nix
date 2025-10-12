@@ -50,46 +50,6 @@
         ];
       };
 
-      berlin = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ######## User-specific ########
-          ./hosts/berlin/configuration.nix
-          ./hosts/berlin/zfs.nix
-          ./hosts/berlin/printing.nix # Cloud printing advertised to LAN
-          ./hosts/berlin/restic-client.nix
-
-          ######## Server configuration ########
-          ./packages/nextcloud.nix
-          ./packages/jellyfin.nix # Media server
-          ./packages/nginx.nix # Recommended settings
-          ./packages/uptime-kuma.nix # Monitoring
-          ./packages/retroarch.nix # Retro game emulation
-          ./packages/craftycontroller.nix
-
-          ######## Networking ########
-          ./packages/server-ssh.nix
-          ./packages/pihole.nix # DNS server/adblocker
-          ./packages/incus.nix # VM management
-
-          ######## Text editors/navigation ########
-          ./packages/neovim.nix # Tiny configuration
-
-          ######## etc. ########
-          ./packages/common-packages.nix
-          ./packages/laptop-server.nix
-          ./packages/extra.nix
-          ./packages/aliases.nix # BASH aliases
-          ./packages/virtualisation.nix
-
-          ######## Scripts ########
-          ./scripts/zfs-healthcheck/service.nix # Uptime Kuma monitoring
-          ./scripts/virtualisation/update-containers.nix # Runs podman pull weekly
-          ./scripts/virtualisation/restart-pihole.nix
-        ];
-      };
-
       tbilisi = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
@@ -97,13 +57,11 @@
           ######## User-specific ########
           ./hosts/tbilisi/configuration.nix
 
-          # ./hosts/tbilisi/wireguard.nix
           ./hosts/tbilisi/zfs.nix
           ./hosts/tbilisi/printing.nix
           ./hosts/tbilisi/restic-client.nix
 
           ######## Server configuration ########
-          # ./packages/seafile.nix
           ./packages/nextcloud-ip.nix
           ./packages/uptime-kuma.nix
           ./packages/nginx.nix
@@ -111,7 +69,6 @@
           ######## Networking ########
           ./packages/tailscale.nix
           ./packages/server-ssh.nix
-          # ./packages/frigate.nix
           # ./packages/frigate-podman.nix
 
           ######## Text editors/navigation ########
@@ -147,7 +104,6 @@
           ./packages/nextcloud-vps.nix
           # ./packages/collabora-online-vps.nix
           ./packages/jellyfin-vps.nix
-          # ./packages/mailserver.nix
           ./packages/stalwart.nix
           # ./packages/vaultwarden.nix # Password manager
 

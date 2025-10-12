@@ -20,6 +20,6 @@
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
   # TODO: this fixes MagicDNS but breaks DNS resolution on LAN (Pihole)
-  # services.resolved.enable = true;
+  services.resolved.enable = true;
 }
 
