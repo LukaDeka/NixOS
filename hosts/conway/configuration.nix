@@ -43,7 +43,7 @@
     };
   };
 
-  services.netbird.enable = true;
+  # services.netbird.enable = true;
 
   environment.systemPackages = with pkgs; [
     fzf # TODO: Learn how to use fzf
