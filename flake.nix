@@ -142,12 +142,13 @@
 
           ######## Networking ########
           ./packages/tailscale.nix
-          ./packages/netbird.nix
+          # ./packages/netbird.nix
           ./packages/nginx.nix
           ./packages/nextcloud-vps.nix
           # ./packages/collabora-online-vps.nix
           ./packages/jellyfin-vps.nix
-          ./packages/mailserver.nix
+          # ./packages/mailserver.nix
+          ./packages/stalwart.nix
           # ./packages/vaultwarden.nix # Password manager
 
           ######## Text editors/navigation ########
@@ -161,7 +162,7 @@
 
           ######## Scripts ########
           ./scripts/virtualisation/update-containers.nix
-          ./scripts/virtualisation/restart-netbird-relay.nix
+          # ./scripts/virtualisation/restart-netbird-relay.nix
         ];
       };
     };
