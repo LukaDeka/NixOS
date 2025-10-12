@@ -23,6 +23,7 @@
     wget
     unzip
     nettools
+    pciutils
 
     ######## Etc. ########
     iptables
