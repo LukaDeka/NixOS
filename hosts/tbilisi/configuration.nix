@@ -33,7 +33,7 @@
     ];
   };
 
-  services.netbird.enable = true;
+  # services.netbird.enable = true;
 
   environment.systemPackages = with pkgs; [
     zfs # Raid
