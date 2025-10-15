@@ -3,7 +3,8 @@
 let
   user = config.vars.username;
   homeDir = config.vars.homeDir;
-  destNetbirdIp = "100.124.110.100";
+  # destNetbirdIp = "100.124.110.100";
+  dest = "conway";
 in
 {
   services.restic.backups = {
@@ -17,9 +18,9 @@ in
         "/var/log"
         "/var/cache"
       ];
-      repository = "sftp:${user}@${destNetbirdIp}:/ssd/backups/gateway";
+      repository = "sftp:${user}@${dest}:/ssd/backups/gateway";
       extraOptions = [
-        "sftp.command='ssh -p 6968 ${user}@${destNetbirdIp} -i ${homeDir}/.ssh/id_ed25519 -s sftp'"
+        "sftp.command='ssh -p 6968 ${user}@${dest} -i ${homeDir}/.ssh/id_ed25519 -s sftp'"
       ];
       passwordFile = "/etc/env/restic/conway-password";
       initialize = true;

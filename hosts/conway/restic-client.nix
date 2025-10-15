@@ -17,6 +17,7 @@ in
       ];
       exclude = [
         "/home/luka/.bitmonero"
+        "/var/lib/lxcfs" # https://forum.restic.net/t/error-message-when-backup-up/6191/11
       ];
       repository = "sftp:${user}@${dest}:/backups/conway";
       extraOptions = [
