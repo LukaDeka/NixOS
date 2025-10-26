@@ -4,10 +4,9 @@
   inputs = {
     nixpkgs.url =        "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
-    nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
   };
 
-  outputs = { nixpkgs, nixpkgs-stable, nixos-mailserver, ... } @ inputs: {
+  outputs = { nixpkgs, nixpkgs-stable, ... } @ inputs: {
     nixosConfigurations = {
       conway = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -45,7 +44,7 @@
           ./packages/virtualisation.nix
 
           ######## Scripts ########
-          ./scripts/zfs-healthcheck/service.nix # Uptime Kuma monitoring
+          # ./scripts/zfs-healthcheck/service.nix # Uptime Kuma monitoring
           ./scripts/virtualisation/update-containers.nix # Runs podman pull weekly
           ./scripts/virtualisation/restart-pihole.nix
         ];
@@ -91,7 +90,6 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
-          nixos-mailserver.nixosModule
           ######## User-specific ########
           ./hosts/gateway/configuration.nix
           ./hosts/gateway/ssh.nix

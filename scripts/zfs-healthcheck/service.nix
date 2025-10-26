@@ -2,16 +2,16 @@
 
 let
   scriptPath = "${config.vars.homeDir}/nixos/scripts";
-  execAfter = [ "network.target" ]; # Ensure network is up
-  envVars = {
+  after = [ "network.target" ]; # Ensure network is up
+  environment = {
     VAR_IP = config.vars.privateIp;
   };
 in
 {
   systemd.services = {
     "zfs-uptime-kuma" = {
-      environment = envVars;
-      after = execAfter;
+      inherit environment;
+      inherit after;
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "oneshot";
