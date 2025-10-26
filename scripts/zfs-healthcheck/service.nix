@@ -10,14 +10,13 @@ in
 {
   systemd.services = {
     "zfs-uptime-kuma" = {
-      inherit environment;
-      inherit after;
+      inherit environment after;
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "oneshot";
         User = "root";
       };
-      path = with pkgs; [ bash curl zfs ];
+      path = with pkgs; [ bash curl zfs jq ];
       script = ''
         bash ${scriptPath}/zfs-healthcheck/uptime-kuma.sh
       '';
