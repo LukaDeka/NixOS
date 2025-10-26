@@ -51,5 +51,24 @@ in
       };
     } ];
   };
+
+  # boot = {
+  #   # Modules required for PCI passthrough
+  #   initrd.kernelModules = [
+  #     "vfio"
+  #     "vfio_iommu_type1"
+  #     "vfio_pci"
+  #   ];
+  #   kernelParams = [
+  #     "intel_iommu=on"
+  #     "vfio-pci.ids=8086:a780"
+  #     "module_blacklist=i915,xe"
+  #     "pci=realloc"
+  #   ];
+  #   extraModprobeConfig = ''
+  #     options vfio-pci disable_vga=1
+  #   '';
+  #   blacklistedKernelModules = [ "i915" "xe" ];
+  # };
 }
 

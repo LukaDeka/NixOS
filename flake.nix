@@ -35,6 +35,7 @@
 
           ######## Text editors/navigation ########
           ./packages/neovim.nix
+          # ./packages/code-server.nix
           # ./packages/fish.nix # TODO: Learn fish
 
           ######## etc. ########
@@ -104,6 +105,7 @@
           ./packages/nextcloud-vps.nix
           # ./packages/collabora-online-vps.nix
           ./packages/jellyfin-vps.nix
+          # ./packages/code-server-vps.nix
           ./packages/stalwart.nix
           # ./packages/vaultwarden.nix # Password manager
 
