@@ -12,12 +12,11 @@
   # Generate it using: $ head -c 8 /etc/machine-id
   networking.hostId = "e25a71ff";
 
-  # Defaults to once a week
   services.zfs = {
     autoSnapshot = {
       enable = true;
 
-      monthly = 4;
+      monthly = 6;
       weekly = 4;
       daily = 7;
       hourly = 24;

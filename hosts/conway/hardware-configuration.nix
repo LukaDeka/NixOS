@@ -39,6 +39,12 @@
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
+  fileSystems."/ssd" =
+    { device = "ssdpool";
+      fsType = "zfs";
+      options = [ "nofail" ];
+    };
+
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
