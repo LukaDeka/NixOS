@@ -8,7 +8,7 @@ in
   services.uptime-kuma = {
     enable = true;
     settings = {
-      NODE_EXTRA_CA_CERTS = "/etc/env/ssl/${domain}.pem";
+      # NODE_EXTRA_CA_CERTS = "/etc/env/ssl/${domain}.pem";
       PORT = "4000";
       HOST = "${ip}";
     };
