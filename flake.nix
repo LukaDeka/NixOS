@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url =        "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
   };
 
   outputs = { nixpkgs, nixpkgs-stable, ... } @ inputs: {
@@ -82,7 +82,7 @@
 
           ######## Scripts ########
           ./scripts/cloudflare/service.nix # Dynamic IP updater scripts
-          ./scripts/zfs-healthcheck/service.nix
+          # ./scripts/zfs-healthcheck/service.nix
         ];
       };
 

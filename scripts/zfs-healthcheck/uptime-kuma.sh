@@ -1,5 +1,6 @@
 #! /bin/sh
 set -euo pipefail
+set -x
 
 push_token=$(< /etc/env/zfs/push-token);
 
