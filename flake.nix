@@ -23,7 +23,7 @@
           ./packages/jellyfin.nix # Media server
           ./packages/nginx.nix # Recommended settings
           ./packages/uptime-kuma.nix # Monitoring
-          ./packages/retroarch.nix # Retro game emulation
+          # ./packages/retroarch.nix # Retro game emulation
           # ./packages/craftycontroller.nix
 
           ######## Networking ########
@@ -44,7 +44,7 @@
           ./packages/virtualisation.nix
 
           ######## Scripts ########
-          ./scripts/zfs-healthcheck/service.nix # Uptime Kuma monitoring
+          # ./scripts/zfs-healthcheck/service.nix # Uptime Kuma monitoring
           ./scripts/virtualisation/update-containers.nix # Runs podman pull weekly
           ./scripts/virtualisation/restart-pihole.nix
         ];
