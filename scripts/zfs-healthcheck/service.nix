@@ -2,7 +2,7 @@
 
 let
   scriptPath = "${config.vars.homeDir}/nixos/scripts";
-  after = [ "network.target" "uptime-kuma.service" ];
+  after = [ "network.target" "NetworkManager.service" "uptime-kuma.service" ];
   environment = {
     VAR_IP = config.vars.privateIp;
   };

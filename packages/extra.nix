@@ -23,7 +23,7 @@
   };
 
   networking.hostName = config.vars.hostname; # Set the device hostname
-  networking.wireless.enable = lib.mkForce false; # Use Wi-Fi via NetworkManager
+  # networking.wireless.enable = lib.mkForce false; # Use Wi-Fi via NetworkManager
   networking.networkmanager.enable = true;
 
   # Rename the network interface

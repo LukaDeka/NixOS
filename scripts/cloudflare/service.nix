@@ -2,7 +2,7 @@
 
 let
   scriptPath = "${config.vars.homeDir}/nixos/scripts";
-  execAfter = [ "network.target" ]; # Ensure network is up
+  execAfter = [ "network.target" "NetworkManager.service" ]; # Ensure network is up
   envVars = {
     VAR_EMAIL = config.vars.email;
     VAR_DOMAIN = config.vars.domain;
