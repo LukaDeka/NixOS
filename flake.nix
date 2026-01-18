@@ -92,23 +92,24 @@
         modules = [
           ######## User-specific ########
           ./hosts/gateway/configuration.nix
-          ./hosts/gateway/ssh.nix
           ./hosts/gateway/personal-website.nix
           ./hosts/gateway/restic-client.nix
 
           ######## Networking ########
           ./packages/tailscale.nix
+          ./packages/server-ssh.nix
           # ./packages/netbird.nix
           ./packages/nginx.nix
           ./packages/nextcloud-vps.nix
-          # ./packages/collabora-online-vps.nix
           ./packages/jellyfin-vps.nix
-          # ./packages/code-server-vps.nix
           ./packages/stalwart.nix
+          # ./packages/collabora-online-vps.nix
+          # ./packages/code-server-vps.nix
           # ./packages/vaultwarden.nix # Password manager
 
-          ######## Text editors/navigation ########
+          ######## Programming ########
           ./packages/neovim.nix
+          ./packages/forgejo.nix
 
           ######## etc. ########
           ./packages/common-packages.nix

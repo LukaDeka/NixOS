@@ -52,7 +52,7 @@ in
       sr() {
         cd ${homeDir}/nixos;
         git add . &&
-        export NIX_SSHOPTS="-p 6868" &&
+        export NIX_SSHOPTS="-p 6968" &&
         nixos-rebuild switch --flake ${homeDir}/nixos#gateway --target-host "luka@91.99.69.65" --sudo;
         cd - &> /dev/null;
       }

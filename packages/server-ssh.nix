@@ -9,7 +9,7 @@ in
     ports = [ 6968 ];
     settings = {
       PasswordAuthentication = false;
-      AllowUsers = [ "${username}" "root" ];
+      AllowUsers = [ "${username}" "root" "forgejo" ];
       UseDns = false; # Disable checking of rDNS records to speed up login
       X11Forwarding = false;
       PermitRootLogin = "prohibit-password";
@@ -19,7 +19,7 @@ in
   services.fail2ban = {
     enable = true;
     bantime = "24h"; # Ban IPs for one day on the first ban
-    ignoreIP = [ "143.58.100.0/24" "100.124.0.0/16" "10.10.0.0/16" ];
+    ignoreIP = [ "100.124.0.0/16" "10.10.0.0/16" ];
   };
 
   networking.firewall = {
