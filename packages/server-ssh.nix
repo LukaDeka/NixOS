@@ -7,6 +7,7 @@ in
   services.openssh = {
     enable = true;
     ports = [ 6968 ];
+    openFirewall = true;
     settings = {
       PasswordAuthentication = false;
       AllowUsers = [ "${username}" "root" "forgejo" ];
@@ -17,7 +18,7 @@ in
   };
 
   services.fail2ban = {
-    enable = true;
+    enable = false;
     bantime = "24h"; # Ban IPs for one day on the first ban
     ignoreIP = [ "100.124.0.0/16" "10.10.0.0/16" ];
   };
@@ -25,7 +26,7 @@ in
   networking.firewall = {
     enable = true;
 
-    # allowedTCPPorts = [];
+    allowedTCPPorts = [ 6968 ];
     # allowedUDPPorts = [];
   };
 }

@@ -2,11 +2,14 @@
   description = "Nixos config flake";
 
   inputs = {
-    nixpkgs.url =        "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
+
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nixpkgs, nixpkgs-stable, ... } @ inputs: {
+  outputs = { nixpkgs, nixpkgs-stable, disko, ... } @ inputs: {
     nixosConfigurations = {
       conway = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -17,6 +20,8 @@
           ./hosts/conway/zfs.nix # Raid
           ./hosts/conway/printing.nix # Cloud printing advertised to LAN
           ./hosts/conway/restic-client.nix
+
+          ./packages/hexname/powerdns-podman.nix
 
           ######## Server configuration ########
           ./packages/nextcloud.nix
@@ -29,7 +34,7 @@
           ######## Networking ########
           ./packages/tailscale.nix
           ./packages/server-ssh.nix
-          ./packages/pihole.nix # DNS server/adblocker
+          # ./packages/pihole.nix # DNS server/adblocker
           ./packages/incus.nix # VM management
 
           ######## Text editors/navigation ########
@@ -120,6 +125,37 @@
           ######## Scripts ########
           ./scripts/virtualisation/update-containers.nix
           # ./scripts/virtualisation/restart-netbird-relay.nix
+        ];
+      };
+
+      hexname-ns1 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          disko.nixosModules.disko
+          ######## User-specific ########
+          ./hosts/hexname-ns1/configuration.nix
+          ./hosts/hexname-ns1/hardware-configuration.nix
+          ./hosts/hexname-ns1/disk-config.nix
+          ./hosts/hexname-ns1/variables.nix
+
+          ######## Server configuration ########
+          #./packages/hexname/powerdns-podman.nix
+          ./packages/nginx.nix
+
+          ######## Networking ########
+          ./packages/server-ssh.nix
+
+          ######## Text editors/navigation ########
+          ./packages/neovim.nix
+
+          ######## etc. ########
+          ./packages/common-packages.nix
+          ./packages/virtualisation.nix
+
+          ######## Scripts ########
+          ./scripts/virtualisation/update-containers.nix # Runs podman pull weekly
+          # ./scripts/virtualisation/restart-pihole.nix
         ];
       };
     };

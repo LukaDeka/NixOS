@@ -1,9 +1,6 @@
 { config, pkgs, lib, ... }:
 
 {
-  networking.firewall.allowedUDPPortRanges = [{ from = 40000; to = 40050; }];
-  networking.firewall.allowedUDPPorts = [ 3478 51820 ];
-
   powerManagement.powertop.enable = true;
 
   # programs.zsh = {
