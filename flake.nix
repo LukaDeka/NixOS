@@ -100,6 +100,11 @@
           ./hosts/gateway/personal-website.nix
           ./hosts/gateway/restic-client.nix
 
+          # HexName
+          ./hosts/gateway/hexname/restart-powerdns.nix
+          ./hosts/gateway/hexname/powerdns.nix
+          # ./hosts/gateway/hexname/postgres.nix
+
           ######## Networking ########
           ./packages/tailscale.nix
           ./packages/server-ssh.nix
@@ -109,12 +114,12 @@
           ./packages/jellyfin-vps.nix
           ./packages/stalwart.nix
           # ./packages/collabora-online-vps.nix
-          # ./packages/code-server-vps.nix
           # ./packages/vaultwarden.nix # Password manager
 
           ######## Programming ########
           ./packages/neovim.nix
           ./packages/forgejo.nix
+          # ./packages/code-server-vps.nix
 
           ######## etc. ########
           ./packages/common-packages.nix
