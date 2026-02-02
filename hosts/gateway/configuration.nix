@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -36,6 +36,9 @@
   # Never prompt "wheel" users for a root password; potential security issue!
   security.sudo.wheelNeedsPassword = false;
 
+  services.openssh.settings.AllowUsers = lib.mkForce [ "luka" "forgejo" "hexname-postgres-backup" ];
+
+  users.groups.hexname-postgres-backup = {};
   users.users  = {
     ${config.vars.username} = {
       isNormalUser = true;
@@ -47,6 +50,15 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF7OvW6MffYFshZyarEaWvWjEmhodn/P+NLcnqbbMpma luka@conway"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFxw+URmM/WpNRRwJpBgLL6EmXuYxA3SKItQZZyjXxw6 luka@berlin"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIT+vMzh2ngUeqnVJS8Zl1m1HQMBkDOqoGdoARPyJgDM u0_a380@localhost" # S
+      ];
+    };
+    "hexname-postgres-backup" = {
+      isNormalUser = true;
+      linger = true;
+      group = "hexname-postgres-backup";
+      extraGroups = [ "restic" ];
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDiKbJcgBLZsJXFDSweP/hTYySFbHiT0v1yKDsMzzwM5 hexname-postgres-backup@hexname-ns1"
       ];
     };
   };

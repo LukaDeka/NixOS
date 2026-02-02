@@ -10,7 +10,7 @@ in
     openFirewall = true;
     settings = {
       PasswordAuthentication = false;
-      AllowUsers = [ "${username}" "root" "forgejo" ];
+      AllowUsers = [ "${username}" "root" ];
       UseDns = false; # Disable checking of rDNS records to speed up login
       X11Forwarding = false;
       PermitRootLogin = "prohibit-password";
