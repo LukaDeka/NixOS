@@ -28,6 +28,10 @@
     '';
   };
 
+  # Delay for 'conway' to resolve
+  systemd.services.nginx.after = [ "network-online.target" ];
+  systemd.services.nginx.wants = [ "network-online.target" ];
+
    security.acme = {
      acceptTerms = true;
      defaults.email = config.vars.email;

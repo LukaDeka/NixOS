@@ -18,7 +18,7 @@ in
 
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud31;
+    package = pkgs.nextcloud32;
 
     hostName = "nextcloud.${domain}";
     https = true;
@@ -37,22 +37,20 @@ in
       previewgenerator memories notes # maps
       end_to_end_encryption unroundedcorners
       forms richdocuments
-      news
+      # news
       # mail
       # phonetrack
       # onlyoffice
       recognize
       spreed;
-      epubviewer = pkgs.fetchNextcloudApp {
-        url = "https://github.com/devnoname120/epubviewer/releases/download/1.7.3/epubviewer-1.7.3.tar.gz";
-        sha256 = "sha256-XOU6adVhi2ek7/Ri36XjMre55tfMFGkSLgkUKdGiMNc=";
-        license = "gpl3";
-      };
-      # TODO: wait until snappymail works on NC31
-      # snappymail = pkgs.fetchNextcloudApp {
-      #   url = "https://github.com/the-djmaze/snappymail/releases/download/v2.38.2/snappymail-2.38.2.tar.gz";
-      #   # url = "https://github.com/the-djmaze/snappymail/archive/refs/tags/v2.38.2.tar.gz";
-      #   sha256 = "sha256-cfHYqQZcyc993QZPXEfMeyVctw5qVnE2R/xz1LeeM+w=";
+      # epubviewer = pkgs.fetchNextcloudApp {
+      #   url = "https://github.com/devnoname120/epubviewer/releases/download/1.7.3/epubviewer-1.7.3.tar.gz";
+      #   sha256 = "sha256-XOU6adVhi2ek7/Ri36XjMre55tfMFGkSLgkUKdGiMNc=";
+      #   license = "gpl3";
+      # };
+      # roundcube = pkgs.fetchNextcloudApp {
+      #   url = "https://github.com/rotdrop/nextcloud-roundcube/archive/refs/tags/v1.2.2.tar.gz";
+      #   sha256 = "sha256-IJV3jTf5RLlVsP3Ypza0GYQ9zty8+5S/Cs/5JM0+AUI=";
       #   license = "gpl3";
       # };
     };

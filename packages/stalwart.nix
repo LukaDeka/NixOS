@@ -6,12 +6,13 @@ let
   roundcubeDomain = "webmail.${domain}";
 
   dataDir = "/var/lib/stalwart-mail";
-  credPath = "/run/credentials/stalwart-mail.service";
+  credPath = "/run/credentials/stalwart.service";
 in
 {
-  services.stalwart-mail = {
+  services.stalwart = {
     enable = true;
-    package = pkgs.stalwart-mail;
+    package = pkgs.stalwart;
+    stateVersion = "25.05";
     openFirewall = true;
 
     settings = {
@@ -184,14 +185,14 @@ in
 
   networking.firewall.allowedTCPPorts = [ 25 143 465 587 993 ];
 
-  systemd.services.stalwart-mail = {
+  systemd.services.stalwart = {
     wants = [ "acme-${stalwartDomain}.service" ];
     after = [ "acme-${stalwartDomain}.service" ];
     preStart = ''
       mkdir -p ${dataDir}/db
     '';
     serviceConfig = {
-      LogsDirectory = "stalwart-mail";
+      LogsDirectory = "stalwart";
       LoadCredential = [
         "cert.pem:${config.security.acme.certs.${stalwartDomain}.directory}/cert.pem"
         "key.pem:${config.security.acme.certs.${stalwartDomain}.directory}/key.pem"
@@ -252,7 +253,7 @@ in
     # https://community.letsencrypt.org/t/please-avoid-3-0-1-and-3-0-2-dane-tlsa-records-with-le-certificates/7022/14
     extraLegoRenewFlags = [ "--reuse-key" ];
     # Restart Stalwart to apply new certificates
-    reloadServices = [ "stalwart-mail.service" ];
+    reloadServices = [ "stalwart.service" ];
   };
 
   # services.restic = {
