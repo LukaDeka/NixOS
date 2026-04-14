@@ -2,9 +2,9 @@
 
 {
   # Keep laptop running with lid closed
-  systemd.sleep.extraConfig = ''
-    AllowSuspend=no
-  '';
+  systemd.sleep.settings.Sleep = {
+    AllowSuspend = "no";
+  };
 
   # Prevents the overheating of Intel CPUs
   services.thermald.enable = true;

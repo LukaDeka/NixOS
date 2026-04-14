@@ -40,8 +40,8 @@
 
   services.samba = {
     enable = true;
-    # package = inputs.nixpkgs-stable.legacyPackages.${pkgs.system}.sambaFull;
-    package = pkgs.sambaFull;
+    package = inputs.nixpkgs-stable.legacyPackages.${pkgs.system}.sambaFull;
+    # package = pkgs.sambaFull;
     openFirewall = true;
     settings = {
       global = {
