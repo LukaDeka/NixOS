@@ -13,7 +13,7 @@
   vars.storageDir = "/zfs";
 
   vars.privateIp = "192.168.1.50";
-  vars.serverNetbirdIp = "100.124.170.101";
+  # vars.serverNetbirdIp = "100.124.170.101";
   vars.ethernetMAC = "28:d2:44:e8:bc:b5";
   # vars.ethernetMAC = "54:e1:ad:6e:4e:d1";
 

@@ -25,6 +25,7 @@
 
           ######## Server configuration ########
           ./packages/nextcloud.nix
+          # ./packages/immich.nix
           ./packages/jellyfin.nix # Media server
           ./packages/nginx.nix # Recommended settings
           ./packages/uptime-kuma.nix # Monitoring
