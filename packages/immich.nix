@@ -9,7 +9,7 @@
 
     mediaLocation = "${config.vars.storageDir}/immich";
 
-    # `null` will give access to all devices.
+    # `null` gives access to all devices.
     accelerationDevices = null;
   };
 }

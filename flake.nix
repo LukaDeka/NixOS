@@ -25,7 +25,7 @@
 
           ######## Server configuration ########
           ./packages/nextcloud.nix
-          # ./packages/immich.nix
+          ./packages/immich.nix
           ./packages/jellyfin.nix # Media server
           ./packages/nginx.nix # Recommended settings
           ./packages/uptime-kuma.nix # Monitoring
@@ -109,11 +109,12 @@
           ######## Networking ########
           ./packages/tailscale.nix
           ./packages/server-ssh.nix
-          # ./packages/netbird.nix
           ./packages/nginx.nix
+          ./packages/stalwart.nix
+          ./packages/immich-vps.nix
           ./packages/nextcloud-vps.nix
           ./packages/jellyfin-vps.nix
-          ./packages/stalwart.nix
+          # ./packages/netbird.nix
           # ./packages/collabora-online-vps.nix
           # ./packages/vaultwarden.nix # Password manager
 
@@ -127,6 +128,7 @@
           ./packages/extra.nix
           ./packages/aliases.nix
           ./packages/virtualisation.nix
+          ./packages/craftycontroller.nix
 
           ######## Scripts ########
           ./scripts/virtualisation/update-containers.nix
