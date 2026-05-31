@@ -24,7 +24,6 @@ in
 
   virtualisation.incus.enable = true;
   virtualisation.incus.ui.enable = true;
-  virtualisation.incus.bucketSupport = false;
   virtualisation.incus.preseed = {
     profiles = [ {
       name = "default";

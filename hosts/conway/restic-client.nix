@@ -13,9 +13,11 @@ in
         "/var/lib"
         "/etc/env"
         "/ssd/nextcloud"
+        "/ssd/immich/library"
         "/home/luka"
       ];
       exclude = [
+        "/ssd/nextcloud/data/luka.dekanozishvili1@gmail.com/files/Media"
         "/home/luka/.bitmonero"
         "/var/lib/lxcfs" # https://forum.restic.net/t/error-message-when-backup-up/6191/11
       ];

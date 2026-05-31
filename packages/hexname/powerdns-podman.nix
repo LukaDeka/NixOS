@@ -8,12 +8,9 @@ in
     hexname-powerdns-postgres = {
       hostname = "pgsql";
       image = "postgres:18-alpine";
-      # ports = [
-      #   "127.0.0.1:5432:5432"
-      # ];
       volumes = [
         "/etc/localtime:/etc/localtime:ro"
-        "pgsql:/var/lib/postgresql/data:Z"
+        "pgsql:/var/lib/postgresql:Z"
       ];
       networks = [ "hexname-powerdns-net" ];
       environmentFiles = [ "/etc/env/hexname/postgres.env" ]; # POSTGRES_PASSWORD=...
