@@ -71,11 +71,11 @@ Proxy\Username=
 
 [Preferences]
 Connection\UPnP=false
+WebUI\Address=*
 WebUI\HostHeaderValidation=false
-WebUI\Password_PBKDF2="$PASS_HASH"
 WebUI\Port=8080
+WebUI\ServerDomains=*
 WebUI\UseUHTTP=false
-WebUI\Username=$WEBUI_USERNAME
 EOF
       chown 994:994 "$conf"
     '';
