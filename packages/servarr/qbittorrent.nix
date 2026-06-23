@@ -1,7 +1,8 @@
 { pkgs, ... }:
 
 # qbittorrent — torrent client
-# WebUI: http://<host>:5252  (default user: admin, password in service logs on first start)
+# WebUI: http://<host>:5252
+# Credentials: set in /etc/env/servarr/qbittorrent.env (WEBUI_USERNAME / WEBUI_PASSWORD)
 #
 # SOCKS5 killswitch:
 #   Container is assigned static IP 10.89.1.100.
@@ -10,16 +11,17 @@
 #   (10.89.1.1:1055) is reached via INPUT — not FORWARD — so it is
 #   unaffected. If the proxy is down, qbittorrent has no external path.
 #
-# SOCKS5 config is written to the config volume on first start by
-# podman-qbittorrent-init.service.
+# To force re-init (e.g. after credential change):
+#   sudo systemctl stop podman-qbittorrent
+#   sudo rm /var/lib/servarr/qbittorrent/qBittorrent/qBittorrent.conf
+#   sudo systemctl restart podman-qbittorrent-init podman-qbittorrent
 
 {
-  # Write qBittorrent.conf with SOCKS5 proxy pre-configured if it doesn't exist.
-  # Runs before the container starts.
   systemd.services.podman-qbittorrent-init = {
-    description = "Initialize qbittorrent SOCKS5 config";
+    description = "Initialize qbittorrent config";
     before = [ "podman-qbittorrent.service" ];
     wantedBy = [ "podman-qbittorrent.service" ];
+    path = [ pkgs.python3 ];
     serviceConfig.Type = "oneshot";
     serviceConfig.RemainAfterExit = true;
     script = ''
@@ -28,7 +30,27 @@
       mkdir -p "$dir"
       chown -R 994:994 /var/lib/servarr/qbittorrent
       [ -f "$conf" ] && exit 0
-      cat > "$conf" <<'EOF'
+
+      WEBUI_USERNAME=admin
+      WEBUI_PASSWORD=admin
+      envfile=/etc/env/servarr/qbittorrent.env
+      if [ -f "$envfile" ]; then
+        val=$(grep '^WEBUI_USERNAME=' "$envfile" | cut -d= -f2-)
+        [ -n "$val" ] && WEBUI_USERNAME=$val
+        val=$(grep '^WEBUI_PASSWORD=' "$envfile" | cut -d= -f2-)
+        [ -n "$val" ] && WEBUI_PASSWORD=$val
+      fi
+
+      PASS_HASH=$(python3 - "$WEBUI_PASSWORD" <<'PYEOF'
+import hashlib, os, base64, sys
+pw = sys.argv[1].encode()
+salt = os.urandom(16)
+dk = hashlib.pbkdf2_hmac('sha1', pw, salt, 100000, dklen=64)
+print('@ByteArray(' + base64.b64encode(salt).decode() + ':' + base64.b64encode(dk).decode() + ')')
+PYEOF
+)
+
+      cat > "$conf" <<EOF
 [BitTorrent]
 Session\DefaultSavePath=/downloads/complete/
 Session\TempPath=/downloads/incomplete/
@@ -36,19 +58,24 @@ Session\TempPathEnabled=true
 
 [Network]
 PortForwardingEnabled=false
-Proxy\Host=10.89.1.1
+Proxy\AuthEnabled=false
 Proxy\HostnameLookupEnabled=true
-Proxy\Port=1055
+Proxy\IP=10.89.1.1
+Proxy\Password=
+Proxy\Port=@Variant(\0\0\0\x85\x4\x1f)
 Proxy\Profiles\BitTorrent=true
 Proxy\Profiles\Misc=true
 Proxy\Profiles\RSS=true
 Proxy\Type=SOCKS5
+Proxy\Username=
 
 [Preferences]
 Connection\UPnP=false
 WebUI\HostHeaderValidation=false
+WebUI\Password_PBKDF2="$PASS_HASH"
 WebUI\Port=8080
 WebUI\UseUHTTP=false
+WebUI\Username=$WEBUI_USERNAME
 EOF
       chown 994:994 "$conf"
     '';
@@ -70,22 +97,19 @@ EOF
     ];
 
     environment = {
-      PUID        = "994";
-      PGID        = "994";
-      TZ          = "Europe/Berlin";
-      UMASK       = "002";
-      WEBUI_PORT  = "8080";
+      PUID            = "994";
+      PGID            = "994";
+      TZ              = "Europe/Berlin";
+      UMASK           = "002";
+      WEBUI_PORT      = "8080";
       TORRENTING_PORT = "6881";
     };
 
     environmentFiles = [ "/etc/servarr/qbittorrent.env" ];
   };
 
-  # nftables killswitch — IP-based, safe to evaluate at build time.
-  # Drops any FORWARD packets from qbittorrent container that are NOT
-  # destined for the servarr bridge (i.e., direct internet bypass attempts).
-  # Drop NEW outbound connections from qbittorrent to the internet (direct bypass).
-  # ESTABLISHED/RELATED packets (WebUI responses back to browser, etc.) are allowed.
+  # nftables killswitch: drops NEW outbound connections from qbittorrent to
+  # the internet. ESTABLISHED/RELATED (WebUI responses to browser) are allowed.
   networking.nftables.tables.servarr-qbt-killswitch = {
     family = "inet";
     content = ''
