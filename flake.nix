@@ -7,6 +7,9 @@
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+
+    # nixarr.url = "github:rasmus-kirk/nixarr";
+    # nixarr.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { nixpkgs, nixpkgs-stable, disko, ... } @ inputs: {
@@ -37,6 +40,10 @@
           ./packages/server-ssh.nix
           # ./packages/pihole.nix # DNS server/adblocker
           ./packages/incus.nix # VM management
+
+          # inputs.nixarr.nixosModules.default
+          # ./packages/nixarr.nix
+          ./packages/servarr/default.nix
 
           ######## Text editors/navigation ########
           ./packages/neovim.nix

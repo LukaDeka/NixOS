@@ -20,6 +20,8 @@ in
         "/ssd/nextcloud/data/luka.dekanozishvili1@gmail.com/files/Media"
         "/home/luka/.bitmonero"
         "/var/lib/lxcfs" # https://forum.restic.net/t/error-message-when-backup-up/6191/11
+        "/var/lib/containers"
+        "/var/lib/jellyfin/metadata"
       ];
       repository = "sftp:${user}@${dest}:/backups/conway";
       extraOptions = [
