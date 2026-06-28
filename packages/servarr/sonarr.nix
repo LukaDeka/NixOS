@@ -18,7 +18,7 @@
 
     volumes = [
       "/var/lib/servarr/sonarr:/config"
-      "/ssd/downloads/movies:/tv"
+      "/ssd/downloads/shows:/tv"
       "/ssd/downloads:/downloads"
     ];
 

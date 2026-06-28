@@ -23,6 +23,7 @@
           ./hosts/conway/zfs.nix # Raid
           ./hosts/conway/printing.nix # Cloud printing advertised to LAN
           ./hosts/conway/restic-client.nix
+          ./hosts/conway/tailscale.nix
 
           ./packages/hexname/powerdns-podman.nix
 
@@ -36,7 +37,6 @@
           # ./packages/craftycontroller.nix
 
           ######## Networking ########
-          ./packages/tailscale.nix
           ./packages/server-ssh.nix
           # ./packages/pihole.nix # DNS server/adblocker
           ./packages/incus.nix # VM management
@@ -73,6 +73,7 @@
           ./hosts/tbilisi/zfs.nix
           ./hosts/tbilisi/printing.nix
           ./hosts/tbilisi/restic-client.nix
+          ./hosts/tbilisi/tailscale.nix
 
           ######## Server configuration ########
           ./packages/nextcloud-ip.nix
@@ -80,7 +81,6 @@
           ./packages/nginx.nix
 
           ######## Networking ########
-          ./packages/tailscale.nix
           ./packages/server-ssh.nix
           # ./packages/frigate-podman.nix
 
@@ -114,7 +114,7 @@
           # ./hosts/gateway/hexname/postgres.nix
 
           ######## Networking ########
-          ./packages/tailscale.nix
+          ./hosts/gateway/tailscale.nix
           ./packages/server-ssh.nix
           ./packages/nginx.nix
           ./packages/stalwart.nix

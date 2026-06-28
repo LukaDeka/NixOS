@@ -11,6 +11,7 @@
     ./lidarr.nix
     ./bazarr.nix
     ./jellyseerr.nix
+    ./flaresolverr.nix
   ];
 
   virtualisation.podman.enable = true;
@@ -36,11 +37,13 @@
     "d /var/lib/servarr/lidarr           0755 servarr servarr -"
     "d /var/lib/servarr/bazarr           0755 servarr servarr -"
     "d /var/lib/servarr/jellyseerr       0755 servarr servarr -"
+    "d /var/lib/servarr/flaresolverr    0755 servarr servarr -"
     "d /ssd/downloads                    0775 servarr servarr -"
     "d /ssd/downloads/movies             0775 servarr servarr -"
     "d /ssd/downloads/music              0775 servarr servarr -"
     "d /ssd/downloads/complete           0775 servarr servarr -"
     "d /ssd/downloads/incomplete         0775 servarr servarr -"
+    "d /ssd/downloads/shows               0775 servarr servarr -"
     "d /etc/servarr                      0750 root    servarr -"
     # Empty env files — edit to add secrets after first boot
     "f /etc/servarr/qbittorrent.env  0640 root servarr -"
@@ -53,9 +56,7 @@
   ];
 
   # Expose all service WebUIs on LAN + Tailscale.
-  # Port 1055 allows qbittorrent container to reach the Tailscale SOCKS5 proxy.
   networking.firewall.allowedTCPPorts = [
-    1055  # Tailscale SOCKS5 proxy (servarr bridge access)
     5252  # qBittorrent WebUI
     5055  # Jellyseerr
     6767  # Bazarr
@@ -63,7 +64,14 @@
     8686  # Lidarr
     8989  # Sonarr
     9696  # Prowlarr
+    8191  # FlareSolverr
   ];
+
+  # Allow the servarr bridge full access to host ports.
+  # The SOCKS5 proxy (port 1055) uses UDP ASSOCIATE for torrent traffic,
+  # which binds a dynamic UDP relay port. The global allowedTCPPorts/UDP
+  # lists can't cover ephemeral ports, so we trust the bridge instead.
+  networking.firewall.trustedInterfaces = [ "servarr-br" ];
 
   networking.nftables.enable = true;
 }
